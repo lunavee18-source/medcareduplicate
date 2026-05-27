@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="theme-color" content="#0a0f2e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="MedCare"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="description" content="MedCare — Your Complete Health Companion"/>
+<link rel="manifest" href="/static/manifest.json"/>
+<link rel="apple-touch-icon" href="/static/icon-192.png"/>
+<title>MedCare — Your Health Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#060b1f;--bg2:#0c1230;--bg3:#111830;--card:#141a35;--card2:#1b2242;
+  --accent:#4f8ef7;--accent2:#7c5ffc;--green:#00e5a0;--red:#ff4d6d;
+  --amber:#ffb830;--cyan:#00d4ff;--pink:#ff6eb4;--white:#f0f4ff;
+  --text:#e8eeff;--text2:#8892b0;--text3:#4a5568;
+  --border:rgba(79,142,247,0.18);--border2:rgba(255,255,255,0.07);
+  --glow:rgba(79,142,247,0.25);--shadow:0 20px 60px rgba(0,0,0,0.5);
+  --r:14px;--r2:20px;--r3:28px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+input,select,textarea{font-family:inherit;outline:none}
+
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.12;animation:orbFloat 12s ease-in-out infinite}
+.glow-orb:nth-child(1){width:700px;height:700px;background:radial-gradient(circle,#4f8ef7,transparent);top:-20%;left:-10%}
+.glow-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,#7c5ffc,transparent);bottom:-10%;right:-5%;animation-delay:-4s}
+.glow-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,#00d4ff,transparent);top:40%;left:30%;animation-delay:-8s;opacity:0.08}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-60px)}66%{transform:translate(-30px,40px)}}
+.grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(79,142,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,142,247,0.04) 1px,transparent 1px);background-size:50px 50px}
+
+#app{position:relative;z-index:1;min-height:100vh}
+
+/* ── AUTH ── */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.auth-card{background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:500px;backdrop-filter:blur(30px);box-shadow:var(--shadow);animation:cardIn .5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes cardIn{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.auth-logo{text-align:center;margin-bottom:2rem}
+.logo-icon-wrap{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 40px var(--glow);animation:logoPulse 3s ease-in-out infinite;position:relative}
+.logo-icon-wrap svg{width:48px;height:48px}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 30px var(--glow)}50%{box-shadow:0 0 60px var(--glow),0 0 100px rgba(79,142,247,0.2)}}
+.auth-logo h1{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px}
+.auth-logo p{color:var(--text2);font-size:.875rem;margin-top:.3rem}
+.role-tabs{display:flex;gap:8px;margin-bottom:1.5rem;background:var(--bg2);border-radius:12px;padding:5px}
+.role-tab{flex:1;padding:.6rem;text-align:center;border-radius:9px;font-size:.85rem;font-weight:600;color:var(--text2);transition:all .25s;background:none;border:none}
+.role-tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 15px var(--glow)}
+.form-section{margin-bottom:1.25rem}
+.section-head{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+.section-head::after{content:'';flex:1;height:1px;background:var(--border2)}
+.form-row{display:grid;gap:.75rem;margin-bottom:.75rem}
+.form-row.cols2{grid-template-columns:1fr 1fr}
+.form-row.cols3{grid-template-columns:1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:.3rem}
+.fg label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
+.fg input,.fg select,.fg textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:.7rem .9rem;color:var(--text);font-size:.9rem;transition:all .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.12)}
+.fg input::placeholder{color:var(--text3)}
+.fg select option{background:var(--bg3)}
+.fg textarea{resize:vertical;min-height:70px}
+.doctor-entry{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:.75rem;margin-bottom:.6rem;position:relative}
+.rem-doc{position:absolute;top:.5rem;right:.5rem;background:rgba(255,77,109,0.15);border:1px solid rgba(255,77,109,0.3);border-radius:6px;color:var(--red);font-size:.75rem;padding:.2rem .5rem;cursor:pointer}
+.add-doctor-btn{width:100%;padding:.6rem;background:rgba(79,142,247,0.08);border:1px dashed var(--border);border-radius:10px;color:var(--accent);font-size:.85rem;font-weight:600;transition:all .2s;margin-top:.5rem}
+.add-doctor-btn:hover{background:rgba(79,142,247,0.15)}
+.err-msg{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);border-radius:8px;padding:.6rem .9rem;font-size:.82rem;color:var(--red);margin-bottom:.75rem;display:none}
+.err-msg.show{display:block}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;color:#fff;font-size:1rem;font-weight:700;letter-spacing:.04em;transition:all .25s;margin-top:.75rem}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.alt-link{text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text2)}
+.alt-link span{color:var(--accent);cursor:pointer;font-weight:600}
+
+/* ── APP SHELL ── */
+.app-shell{display:flex;min-height:100vh}
+.sidebar{width:250px;background:rgba(12,18,48,0.98);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem .875rem;position:fixed;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1)}
+.sb-logo{display:flex;align-items:center;gap:.75rem;padding:.5rem .5rem;margin-bottom:1.75rem}
+.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--glow);flex-shrink:0}
+.sb-logo-icon svg{width:22px;height:22px}
+.sb-logo h2{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px}
+.nav-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:.3rem .6rem;margin-bottom:.2rem}
+.nav-btn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.6rem .75rem;border-radius:10px;background:none;border:none;color:var(--text2);font-size:.875rem;font-weight:500;transition:all .2s;text-align:left;margin-bottom:.15rem;position:relative}
+.nav-btn .ni{font-size:1.1rem;flex-shrink:0}
+.nav-btn:hover{color:var(--text);background:rgba(79,142,247,0.08)}
+.nav-btn.active{color:#fff;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 4px 15px var(--glow)}
+.sb-footer{margin-top:auto;border-top:1px solid var(--border2);padding-top:1rem}
+.user-chip{display:flex;align-items:center;gap:.75rem;padding:.7rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)}
+.uc-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff;flex-shrink:0}
+.uc-info{flex:1;min-width:0}
+.uc-name{font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uc-role{font-size:.68rem;color:var(--text3)}
+.logout-btn{background:none;border:none;color:var(--text3);font-size:1.1rem;transition:color .2s;padding:.25rem}
+.logout-btn:hover{color:var(--red)}
+
+.mob-header{display:none;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;background:rgba(12,18,48,0.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:150;backdrop-filter:blur(20px)}
+.mob-logo-wrap{display:flex;align-items:center;gap:.6rem}
+.mob-logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center}
+.mob-logo-icon svg{width:18px;height:18px}
+.mob-logo{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.menu-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;color:var(--text2);font-size:1.1rem}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199}
+.sidebar-overlay.show{display:block}
+
+.main-content{margin-left:250px;flex:1;padding:1.75rem;min-height:100vh}
+.content-inner{max-width:1080px;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page-head{margin-bottom:1.75rem}
+.page-head h1{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
+.page-head p{color:var(--text2);font-size:.85rem}
+
+/* ── CARDS ── */
+.card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;backdrop-filter:blur(10px);transition:all .3s}
+.card:hover{border-color:rgba(79,142,247,0.3)}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:rgba(20,26,53,0.9);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden;border:1px solid var(--border);transition:all .3s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.stat-card.blue::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.stat-card.green::before{background:linear-gradient(90deg,var(--green),#00ff88)}
+.stat-card.red::before{background:linear-gradient(90deg,var(--red),var(--pink))}
+.stat-card.amber::before{background:linear-gradient(90deg,var(--amber),#ffdd00)}
+.stat-card.purple::before{background:linear-gradient(90deg,var(--accent2),var(--pink))}
+.stat-icon-wrap{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:.7rem}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:700;line-height:1;margin-bottom:.2rem}
+.stat-lbl{font-size:.78rem;color:var(--text2)}
+.stat-sub{font-size:.72rem;color:var(--text3);margin-top:.25rem}
+.progress-wrap{margin-top:.65rem}
+.progress-bar{height:5px;background:rgba(255,255,255,0.06);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;transition:width 1s ease}
+.progress-fill.blue{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.progress-fill.green{background:linear-gradient(90deg,var(--green),#00ff88)}
+.progress-fill.amber{background:linear-gradient(90deg,var(--amber),#ffdd00)}
+.progress-fill.red{background:linear-gradient(90deg,var(--red),var(--pink))}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+
+/* ── CALORIE RING ── */
+.cal-ring-section{display:flex;gap:1.75rem;align-items:center;flex-wrap:wrap}
+.cal-ring-info{flex:1;min-width:180px}
+.macro-row{margin-bottom:.8rem}
+.macro-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text2);margin-bottom:.3rem}
+.macro-label span{color:var(--text);font-weight:600}
+
+/* ── EXERCISE ── */
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ex-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;cursor:pointer;transition:all .3s;position:relative}
+.ex-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 30px var(--glow)}
+.ex-card.done{border-color:rgba(0,229,160,0.4);background:rgba(0,229,160,0.05)}
+.ex-card.done::after{content:'✓';position:absolute;top:.75rem;right:.75rem;width:24px;height:24px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#000;font-weight:700;text-align:center;line-height:24px}
+.ex-icon{font-size:1.8rem;margin-bottom:.5rem;display:block}
+.ex-name{font-weight:700;font-size:.875rem;margin-bottom:.15rem}
+.ex-dur{font-size:.72rem;color:var(--text2)}
+.ex-cal{font-size:.75rem;color:var(--amber);margin-top:.35rem}
+.ex-badge{display:inline-block;margin-top:.5rem;padding:.12rem .45rem;border-radius:5px;font-size:.68rem;font-weight:600}
+.ex-badge.done{background:rgba(0,229,160,0.15);color:var(--green)}
+.ex-badge.todo{background:rgba(79,142,247,0.12);color:var(--accent)}
+
+/* ── HOSPITALS ── */
+.hospitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.hosp-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;cursor:pointer;transition:all .3s}
+.hosp-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 15px 50px var(--glow)}
+.hosp-head{display:flex;gap:.875rem;margin-bottom:.875rem;align-items:flex-start}
+.hosp-logo{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.hosp-name{font-size:.95rem;font-weight:700;margin-bottom:.2rem;line-height:1.3}
+.hosp-addr{font-size:.72rem;color:var(--text2)}
+.hosp-meta{display:flex;gap:1rem;flex-wrap:wrap;margin:.65rem 0}
+.hosp-meta-item{text-align:center}
+.hosp-meta-val{font-size:.95rem;font-weight:700}
+.hosp-meta-lbl{font-size:.62rem;color:var(--text3)}
+.hosp-services{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.65rem}
+.svc-tag{padding:.15rem .45rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:5px;font-size:.65rem;color:var(--accent)}
+.hosp-cta{margin-top:.75rem;font-size:.78rem;color:var(--accent);font-weight:600}
+
+.hosp-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.back-btn{display:flex;align-items:center;gap:.4rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:10px;padding:.45rem .9rem;color:var(--accent);font-size:.82rem;font-weight:600;transition:all .2s}
+.back-btn:hover{background:rgba(79,142,247,0.15)}
+.doctors-list{display:flex;flex-direction:column;gap:.875rem}
+.doc-card{background:rgba(27,34,66,0.9);border:1px solid var(--border2);border-radius:var(--r);padding:1rem;display:flex;gap:.875rem;align-items:flex-start;transition:all .2s}
+.doc-card:hover{border-color:var(--accent)}
+.doc-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;flex-shrink:0}
+.doc-info{flex:1}
+.doc-name{font-weight:700;font-size:.9rem;margin-bottom:.12rem}
+.doc-spec{font-size:.75rem;color:var(--accent);margin-bottom:.2rem}
+.doc-meta{font-size:.72rem;color:var(--text2)}
+.slots-wrap{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.slot{padding:.22rem .5rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer;transition:all .15s;font-weight:500}
+.slot:hover,.slot.sel{background:rgba(0,212,255,0.2);border-color:var(--cyan)}
+
+/* ── CHAT ── */
+.chat-page{display:flex;flex-direction:column;height:calc(100vh - 100px);max-height:780px}
+.chat-top{display:flex;align-items:center;gap:.875rem;padding:1.1rem 1.25rem;background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r2) var(--r2) 0 0;border-bottom:none}
+.bot-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.3rem;animation:botFloat 4s ease-in-out infinite;flex-shrink:0}
+@keyframes botFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bot-name{font-weight:700;font-size:.95rem}
+.bot-status{font-size:.72rem;color:var(--green);display:flex;align-items:center;gap:.35rem}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:statusPulse 1.5s infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.chat-msgs{flex:1;overflow-y:auto;padding:1.1rem;background:rgba(6,11,31,0.8);display:flex;flex-direction:column;gap:.8rem}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.msg{max-width:80%;animation:msgSlide .25s ease}
+@keyframes msgSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end}
+.msg.bot{align-self:flex-start;display:flex;gap:.5rem}
+.msg-bot-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;margin-top:.2rem}
+.msg-bubble{padding:.7rem .95rem;border-radius:16px;font-size:.85rem;line-height:1.6}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-bottom-right-radius:4px}
+.msg.bot .msg-bubble{background:rgba(27,34,66,0.95);border:1px solid var(--border2);color:var(--text);border-bottom-left-radius:4px;white-space:pre-wrap}
+.msg-time{font-size:.62rem;color:var(--text3);margin-top:.25rem}
+.msg.user .msg-time{text-align:right}
+.typing-bubble{background:rgba(27,34,66,0.95);border:1px solid var(--border2);border-radius:16px;border-bottom-left-radius:4px;padding:.7rem .95rem}
+.typing-dots{display:flex;gap:5px}
+.typing-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);animation:typDot 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typDot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+.quick-actions{padding:.5rem 1.1rem;background:rgba(20,26,53,0.9);border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;gap:.4rem;overflow-x:auto}
+.quick-actions::-webkit-scrollbar{height:0}
+.qa-btn{padding:.28rem .65rem;background:rgba(79,142,247,0.1);border:1px solid var(--border);border-radius:20px;color:var(--accent);font-size:.72rem;white-space:nowrap;flex-shrink:0;transition:all .2s}
+.qa-btn:hover{background:rgba(79,142,247,0.2)}
+.chat-bottom{padding:.875rem;background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:0 0 var(--r2) var(--r2);border-top:none;display:flex;gap:.65rem;align-items:flex-end}
+.chat-inp{flex:1;padding:.7rem .9rem;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:.875rem;resize:none;max-height:110px;line-height:1.5;transition:border-color .2s}
+.chat-inp:focus{border-color:var(--accent)}
+.chat-inp::placeholder{color:var(--text3)}
+.chat-send{padding:.7rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;color:#fff;font-size:1rem;transition:all .2s;min-width:44px;display:flex;align-items:center;justify-content:center}
+.chat-send:hover{transform:scale(1.08);box-shadow:0 4px 20px var(--glow)}
+.chat-send:disabled{opacity:.5;transform:none}
+
+/* ── APPOINTMENTS ── */
+.appt-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1rem;transition:all .2s;margin-bottom:.875rem}
+.appt-card:hover{border-color:rgba(79,142,247,0.3)}
+.appt-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.appt-doctor{font-weight:700;font-size:.92rem;margin-bottom:.12rem}
+.appt-spec{font-size:.75rem;color:var(--accent)}
+.appt-hosp{font-size:.72rem;color:var(--text2);margin-top:.1rem}
+.appt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;font-size:.78rem;margin-bottom:.65rem}
+.appt-field{color:var(--text2);margin-bottom:.12rem;font-size:.7rem}
+.appt-val{color:var(--text);font-weight:600}
+.appt-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
+/* ── REMINDERS ── */
+.reminder-list{display:flex;flex-direction:column;gap:.65rem}
+.rem-card{display:flex;align-items:center;gap:.875rem;padding:.875rem 1.1rem;background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);transition:all .2s}
+.rem-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:linear-gradient(135deg,rgba(79,142,247,0.2),rgba(124,95,252,0.2));border:1px solid var(--border)}
+.rem-info{flex:1}
+.rem-name{font-weight:600;font-size:.875rem}
+.rem-time{font-size:.75rem;color:var(--text2);margin-top:.12rem}
+
+/* ── BADGE / BUTTON ── */
+.badge{display:inline-flex;align-items:center;gap:.25rem;padding:.18rem .5rem;border-radius:6px;font-size:.7rem;font-weight:700}
+.b-green{background:rgba(0,229,160,0.12);color:var(--green)}
+.b-red{background:rgba(255,77,109,0.12);color:var(--red)}
+.b-amber{background:rgba(255,184,48,0.12);color:var(--amber)}
+.b-blue{background:rgba(79,142,247,0.12);color:var(--accent)}
+.b-purple{background:rgba(124,95,252,0.12);color:var(--accent2)}
+.btn{padding:.45rem .9rem;border-radius:9px;font-size:.8rem;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;cursor:pointer}
+.btn-sm{padding:.3rem .65rem;font-size:.74rem}
+.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none}
+.btn-accent:hover{box-shadow:0 4px 20px var(--glow);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn-danger{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);color:var(--red)}
+.btn-danger:hover{background:rgba(255,77,109,0.2)}
+.btn-success{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--green)}
+.btn-success:hover{background:rgba(0,229,160,0.2)}
+.sec-title{font-size:.9rem;font-weight:700;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;color:var(--text)}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ── FOOD LOG ── */
+.food-row{display:grid;grid-template-columns:1fr 80px 70px 70px 70px auto;gap:.5rem;align-items:flex-end;margin-bottom:.75rem}
+.food-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .9rem;background:rgba(27,34,66,0.8);border-radius:10px;border:1px solid var(--border2);margin-bottom:.4rem}
+.fi-name{flex:1;font-size:.85rem;font-weight:600}
+.fi-macros{font-size:.7rem;color:var(--text3);display:flex;gap:.5rem}
+.fi-cal{font-size:.8rem;color:var(--amber);font-weight:600}
+.fi-del{background:none;border:none;color:var(--text3);font-size:.95rem;transition:color .2s;padding:.2rem;cursor:pointer}
+.fi-del:hover{color:var(--red)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px)}
+.modal-box{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:cardIn .3s ease;box-shadow:var(--shadow)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.modal-title{font-size:1rem;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.1rem;transition:color .2s;padding:.25rem;cursor:pointer}
+.modal-close:hover{color:var(--red)}
+
+/* ── NOTIF ── */
+.notif-container{position:fixed;top:1rem;right:1rem;z-index:1000;display:flex;flex-direction:column;gap:.4rem}
+.notif{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:12px;padding:.7rem 1.1rem;display:flex;align-items:center;gap:.65rem;box-shadow:var(--shadow);animation:notifIn .3s ease;max-width:320px;backdrop-filter:blur(20px)}
+@keyframes notifIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+.notif.out{animation:notifOut .25s ease forwards}
+@keyframes notifOut{to{opacity:0;transform:translateX(110%)}}
+.notif.success{border-color:rgba(0,229,160,0.4)}
+.notif.error{border-color:rgba(255,77,109,0.4)}
+.notif.alarm{border-color:rgba(255,184,48,0.4)}
+.notif-icon{font-size:1.2rem}
+.notif-text{font-size:.83rem;font-weight:500}
+
+/* ── HOSPITAL PORTAL ── */
+.hosp-portal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.appts-table{width:100%;border-collapse:collapse}
+.appts-table th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:.55rem .9rem;border-bottom:1px solid var(--border2)}
+.appts-table td{padding:.8rem .9rem;border-bottom:1px solid var(--border2);font-size:.83rem;vertical-align:middle}
+.appts-table tr:hover td{background:rgba(79,142,247,0.04)}
+
+/* ── INSTALL BANNER ── */
+.install-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:16px;padding:.875rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);z-index:900;backdrop-filter:blur(20px);max-width:360px;width:calc(100% - 2rem);animation:notifIn .4s ease}
+.install-banner p{font-size:.82rem;color:var(--text2);flex:1}
+.install-banner strong{color:var(--text);display:block;margin-bottom:.15rem}
+
+/* ── LOADING / EMPTY ── */
+.loading{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3)}
+.spin{width:26px;height:26px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-right:.65rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:3rem 1.5rem}
+.empty-icon{font-size:3rem;margin-bottom:.875rem;display:block}
+.empty-state h3{font-size:1rem;margin-bottom:.4rem}
+.empty-state p{font-size:.83rem;color:var(--text2);margin-bottom:1.25rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-250px)}
+  .sidebar.open{transform:translateX(0);box-shadow:var(--shadow)}
+  .mob-header{display:flex}
+  .main-content{margin-left:0;padding:.875rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .hospitals-grid{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr 1fr}
+  .hosp-portal-stats{grid-template-columns:1fr 1fr}
+  .food-row{grid-template-columns:1fr 1fr;row-gap:.5rem}
+  .appt-grid{grid-template-columns:1fr 1fr}
+  .chat-page{height:calc(100vh - 70px)}
+}
+@media(max-width:480px){
+  .stats-grid,.hosp-portal-stats{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr}
+  .auth-card{padding:1.5rem}
+  .form-row.cols2,.form-row.cols3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"><div class="glow-orb"></div><div class="glow-orb"></div><div class="glow-orb"></div></div>
+<div class="grid-overlay"></div>
+<div class="notif-container" id="notif-container"></div>
+<div id="app"></div>
+
+<script>
+// ═══════════════ SVG LOGO ═══════════════
+const LOGO_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.15)"/>
+  <path d="M11 7h2v4h4v2h-4v4h-2v-4H7v-2h4V7z" fill="white"/>
+  <path d="M12 4a8 8 0 100 16A8 8 0 0012 4z" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
+</svg>`;
+
+// ═══════════════ STATE & UTILS ═══════════════
+let STATE = { user:null, hospital:null, page:'health', hospitalDetail:null, chatHistory:[], selectedSlot:{}, reminderIntervals:{} };
+let alarmInterval = null;
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  setTimeout(showInstallBanner, 3000);
+});
+
+async function api(path, method='GET', body=null){
+  try {
+    const opts = { method, credentials:'include', headers:{'Content-Type':'application/json'} };
+    if(body) opts.body = JSON.stringify(body);
+    const r = await fetch(path, opts);
+    const text = await r.text();
+    try { return JSON.parse(text); } catch(e) { return {}; }
+  } catch(err) { console.error("API error:", err); return {}; }
+}
+
+function el(id){ return document.getElementById(id); }
+function showNotif(msg, type='success', dur=4000){
+  const icons={success:'✅',error:'❌',alarm:'🔔',info:'ℹ️'};
+  const d = document.createElement('div');
+  d.className = `notif ${type}`;
+  d.innerHTML = `<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
+  el('notif-container').appendChild(d);
+  setTimeout(()=>{ d.classList.add('out'); setTimeout(()=>d.remove(), 250); }, dur);
+}
+function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function nowTime(){ return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+
+function showInstallBanner(){
+  if(!deferredInstallPrompt) return;
+  if(el('install-banner')) return;
+  const div = document.createElement('div');
+  div.className = 'install-banner';
+  div.id = 'install-banner';
+  div.innerHTML = `
+    <div style="font-size:1.8rem">📱</div>
+    <p><strong>Install MedCare App</strong>Add to your home screen for quick access</p>
+    <div style="display:flex;flex-direction:column;gap:.4rem">
+      <button class="btn btn-accent btn-sm" onclick="installApp()">Install</button>
+      <button class="btn btn-ghost btn-sm" onclick="el('install-banner').remove()">Later</button>
+    </div>`;
+  document.body.appendChild(div);
+}
+
+async function installApp(){
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const result = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  el('install-banner')?.remove();
+}
+
+function startAlarmCheck(){
+  if(alarmInterval) clearInterval(alarmInterval);
+  alarmInterval = setInterval(async ()=>{
+    if(!STATE.user) return;
+    try {
+      const rems = await api('/api/reminders');
+      if(!Array.isArray(rems)) return;
+      const now = new Date();
+      const nowH = now.getHours(), nowM = now.getMinutes();
+      rems.forEach(r=>{
+        if(!r.time_str) return;
+        const [h,m] = r.time_str.split(':').map(Number);
+        if(h===nowH && Math.abs(m-nowM)<1){
+          const key=`alarm_${r.id}_${h}_${m}`;
+          if(!STATE.reminderIntervals[key]){
+            STATE.reminderIntervals[key]=true;
+            showNotif(`Time to take ${r.name}!`,'alarm',10000);
+            if('vibrate' in navigator) navigator.vibrate([400,200,400]);
+          }
+        }
+      });
+    } catch(e){}
+  }, 30000);
+}
+
+// ═══════════════ RENDER ═══════════════
+function render(){
+  if(!STATE.user){ renderAuth(); return; }
+  if(STATE.user.role==='hospital'){ renderHospitalPortal(); return; }
+  renderUserApp();
+}
+
+// ═══════════════ AUTH ═══════════════
+function renderAuth(tab='user', mode='login'){
+  document.title = 'MedCare';
+  el('app').innerHTML = `
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon-wrap">${LOGO_SVG}</div>
+        <h1>MEDCARE</h1>
+        <p>Your Complete Health Companion</p>
+      </div>
+      <div id="auth-inner"></div>
+    </div>
+  </div>`;
+  renderAuthInner(tab, mode);
+}
+
+function renderAuthInner(tab, mode){
+  const inner = el('auth-inner');
+  if(!inner) return;
+  const isHosp = tab==='hospital';
+  inner.innerHTML = `
+  <div class="role-tabs">
+    <button class="role-tab ${!isHosp?'active':''}" onclick="renderAuthInner('user','${mode}')">👤 Patient</button>
+    <button class="role-tab ${isHosp?'active':''}" onclick="renderAuthInner('hospital','${mode}')">🏥 Hospital</button>
+  </div>
+  ${mode==='login' ? loginForm(isHosp) : isHosp ? hospitalSignupForm() : userSignupForm()}
+  <div class="alt-link">
+    ${mode==='login'
+      ? `No account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`
+      : `Have account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}
+  </div>`;
+}
+
+function loginForm(isHosp){ return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-row"><div class="fg"><label>Email</label><input id="l-email" type="email" placeholder="your@email.com"/></div></div>
+  <div class="form-row"><div class="fg"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"/></div></div>
+  <button class="submit-btn" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`; }
+
+function userSignupForm(){ return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-row cols2">
+    <div class="fg"><label>First Name</label><input id="s-fn" type="text" placeholder="Arun"/></div>
+    <div class="fg"><label>Last Name</label><input id="s-ln" type="text" placeholder="Kumar"/></div>
+  </div>
+  <div class="form-row"><div class="fg"><label>Email</label><input id="s-email" type="email" placeholder="arun@email.com"/></div></div>
+  <div class="form-row cols3">
+    <div class="fg"><label>Age</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div>
+    <div class="fg"><label>Gender</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+    <div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div>
+  </div>
+  <div class="form-row cols2">
+    <div class="fg"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div>
+    <div class="fg"><label>Confirm</label><input id="s-cpass" type="password" placeholder="Repeat"/></div>
+  </div>
+  <button class="submit-btn" onclick="doUserSignup()">Create Account →</button>`; }
+
+function hospitalSignupForm(){ return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-section">
+    <div class="section-head">Hospital Details</div>
+    <div class="form-row"><div class="fg"><label>Hospital Name *</label><input id="h-name" type="text" placeholder="City General Hospital"/></div></div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Reg. Number *</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div>
+      <div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200"/></div>
+      <div class="fg"><label>Est. Year</label><input id="h-est" type="number" placeholder="1985"/></div>
+      <div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-2271234"/></div>
+    </div>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Address</div>
+    <div class="form-row"><div class="fg"><label>Full Address *</label><input id="h-addr" type="text" placeholder="B.H. Road, Near Bus Stand"/></div></div>
+    <div class="form-row cols3">
+      <div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div>
+      <div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div>
+      <div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div>
+    </div>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Services & Doctors</div>
+    <div class="form-row"><div class="fg"><label>Services (comma separated)</label><input id="h-services" type="text" placeholder="Cardiology, Neurology, Pediatrics, ICU"/></div></div>
+    <div id="doctors-list"></div>
+    <button class="add-doctor-btn" onclick="addDoctorField()">+ Add Doctor</button>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Login Credentials</div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Email *</label><input id="h-email" type="email" placeholder="hospital@email.com"/></div>
+      <div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 chars"/></div>
+    </div>
+  </div>
+  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`; }
+
+let docCount = 0;
+function addDoctorField(){
+  docCount++;
+  const id = docCount;
+  const div = document.createElement('div');
+  div.className = 'doctor-entry';
+  div.id = `de-${id}`;
+  div.innerHTML = `
+  <button class="rem-doc" onclick="el('de-${id}').remove()">✕</button>
+  <div class="form-row cols2" style="margin-bottom:.5rem">
+    <div class="fg"><label>Doctor Name *</label><input id="dn-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div>
+    <div class="fg"><label>Specialization *</label><input id="ds-${id}" type="text" placeholder="Cardiologist"/></div>
+  </div>
+  <div class="form-row cols3">
+    <div class="fg"><label>Experience (yrs)</label><input id="de-${id}" type="number" placeholder="10"/></div>
+    <div class="fg"><label>Fee (₹)</label><input id="df-${id}" type="number" placeholder="500"/></div>
+    <div class="fg"><label>Slots</label><input id="dsl-${id}" type="text" placeholder="09:00 AM, 02:00 PM"/></div>
+  </div>`;
+  el('doctors-list').appendChild(div);
+}
+
+function gv(id){ const e=el(id); return e?e.value.trim():''; }
+function setErr(msg){ const e=el('auth-err'); if(e){e.textContent=msg;e.classList.toggle('show',!!msg);} }
+
+async function doLogin(role){
+  setErr('');
+  const email=gv('l-email'), pass=gv('l-pass');
+  if(!email||!pass){ setErr('Please enter email and password.'); return; }
+  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/login','POST',{email,password:pass});
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  if(res.user?.role !== role){ setErr(`This is a ${res.user?.role} account. Please select the correct tab.`); return; }
+  STATE.user=res.user; STATE.hospital=res.hospital||null;
+  startAlarmCheck(); render();
+}
+
+async function doUserSignup(){
+  setErr('');
+  const fn=gv('s-fn'),ln=gv('s-ln'),email=gv('s-email'),age=gv('s-age'),gender=gv('s-gender'),phone=gv('s-phone'),pass=gv('s-pass'),cpass=gv('s-cpass');
+  if(!fn||!ln||!email||!age||!gender||!pass){ setErr('Please fill all required fields.'); return; }
+  if(pass!==cpass){ setErr('Passwords do not match.'); return; }
+  if(pass.length<6){ setErr('Password must be at least 6 characters.'); return; }
+  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/signup/user','POST',{name:`${fn} ${ln}`,email,password:pass,age:parseInt(age),gender,phone});
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user=res.user; startAlarmCheck();
+  showNotif(`Welcome to MedCare, ${fn}! 🎉`,'success');
+  render();
+}
+
+async function doHospitalSignup(){
+  setErr('');
+  const name=gv('h-name'),reg=gv('h-reg'),phone=gv('h-phone'),addr=gv('h-addr'),email=gv('h-email'),pass=gv('h-pass');
+  if(!name||!reg||!phone||!addr||!email||!pass){ setErr('Please fill all required fields.'); return; }
+  const doctors=[];
+  document.querySelectorAll('.doctor-entry').forEach(entry=>{
+    const i=entry.id.split('-').pop();
+    const dname=gv(`dn-${i}`),spec=gv(`ds-${i}`);
+    if(dname&&spec){
+      const slots=gv(`dsl-${i}`).split(',').map(s=>s.trim()).filter(Boolean);
+      doctors.push({name:dname,specialty:spec,specialization:spec,experience:parseInt(gv(`de-${i}`)||0),fee:parseInt(gv(`df-${i}`)||0),slots:slots.length?slots:['10:00 AM','02:00 PM']});
+    }
+  });
+  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/signup/hospital','POST',{
+    name,reg_number:reg,phone,address:addr,city:gv('h-city')||'Tumkur',
+    state:gv('h-state')||'Karnataka',pincode:gv('h-pin'),email,password:pass,
+    h_type:gv('h-type')||'Private',beds:parseInt(gv('h-beds')||100),
+    established:parseInt(gv('h-est')||2000),services:gv('h-services'),doctors
+  });
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user=res.user; STATE.hospital=res.hospital;
+  startAlarmCheck(); showNotif('Hospital registered! 🏥','success'); render();
+}
+
+async function logout(){
+  await api('/api/logout','POST');
+  clearInterval(alarmInterval);
+  STATE={user:null,hospital:null,page:'health',hospitalDetail:null,chatHistory:[],selectedSlot:{},reminderIntervals:{}};
+  render();
+}
+
+// ═══════════════ USER APP SHELL ═══════════════
+const USER_PAGES=[
+  {id:'health',icon:'💚',label:'Health Dashboard'},
+  {id:'calories',icon:'🔥',label:'Calories'},
+  {id:'exercise',icon:'🏋️',label:'Exercise'},
+  {id:'hospitals',icon:'🏥',label:'Hospitals'},
+  {id:'chatbot',icon:'🤖',label:'AI Doctor'},
+  {id:'appointments',icon:'📅',label:'Appointments'},
+  {id:'reminders',icon:'⏰',label:'Reminders'},
+];
+
+function renderUserApp(){
+  document.title='MedCare';
+  const u=STATE.user;
+  const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'U';
+  el('app').innerHTML=`
+  <div class="mob-header">
+    <div class="mob-logo-wrap">
+      <div class="mob-logo-icon">${LOGO_SVG}</div>
+      <span class="mob-logo">MEDCARE</span>
+    </div>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+  <div class="app-shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-icon">${LOGO_SVG}</div>
+        <h2>MEDCARE</h2>
+      </div>
+      <div class="nav-label">Navigation</div>
+      ${USER_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="goTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
+      <div class="sb-footer">
+        <div class="user-chip">
+          <div class="uc-av">${initials}</div>
+          <div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-role">Age ${u.age||'?'} • ${u.gender||''}</div></div>
+          <button class="logout-btn" onclick="logout()" title="Logout">⏏</button>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content"><div class="content-inner" id="page-content"></div></main>
+  </div>`;
+  goTo(STATE.page);
+}
+
+function toggleSidebar(){
+  el('sidebar')?.classList.toggle('open');
+  el('sb-overlay')?.classList.toggle('show');
+}
+function closeSidebar(){ el('sidebar')?.classList.remove('open'); el('sb-overlay')?.classList.remove('show'); }
+
+function goTo(page){
+  STATE.page=page; STATE.hospitalDetail=null;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(USER_PAGES.find(p=>p.id===page)?.label)));
+  closeSidebar(); renderPage(page);
+}
+
+async function renderPage(page){
+  const pc=el('page-content');
+  if(!pc) return;
+  pc.innerHTML=`<div class="loading"><div class="spin"></div> Loading…</div>`;
+  if(page==='health') await renderHealth(pc);
+  else if(page==='calories') await renderCalories(pc);
+  else if(page==='exercise') await renderExercise(pc);
+  else if(page==='hospitals') await renderHospitals(pc);
+  else if(page==='chatbot') renderChatbot(pc);
+  else if(page==='appointments') await renderAppointments(pc);
+  else if(page==='reminders') await renderReminders(pc);
+}
+
+// ═══════════════ HEALTH DASHBOARD ═══════════════
+async function renderHealth(pc){
+  let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[],exercises:[]};
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  const EXERCISES=getExerciseList(STATE.user.age||25);
+  const exDone=Array.isArray(log.exercises)?log.exercises:[];
+  const calBurned=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
+  const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
+
+  pc.innerHTML=`
+  <div class="page-head"><h1>Health Dashboard</h1><p>${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}</p></div>
+  <div class="stats-grid">
+    <div class="stat-card amber">
+      <div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div>
+      <div class="stat-val" style="color:var(--amber)">${calBurned}</div>
+      <div class="stat-lbl">Calories Burned</div>
+      <div class="stat-sub">From ${exDone.length} exercise${exDone.length!==1?'s':''}</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">🍽️</div>
+      <div class="stat-val" style="color:var(--green)">${log.cal_consumed||0}</div>
+      <div class="stat-lbl">Calories In</div>
+      <div class="stat-sub">Goal: ${log.cal_goal||2000} kcal</div>
+      <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill green" style="width:${calP}%"></div></div></div>
+    </div>
+    <div class="stat-card ${(log.cal_consumed-calBurned)>300?'red':'blue'}">
+      <div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">⚖️</div>
+      <div class="stat-val" style="color:var(--accent)">${(log.cal_consumed||0)-calBurned>0?'+':''}${(log.cal_consumed||0)-calBurned}</div>
+      <div class="stat-lbl">Net Calories</div>
+      <div class="stat-sub">${(log.cal_consumed||0)-calBurned>300?'Surplus':'Balanced'}</div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="sec-title">Today's Activity</div>
+      ${exDone.length===0?`<div class="empty-state" style="padding:1.5rem 1rem"><span class="empty-icon">🏃</span><p style="color:var(--text2)">No exercises yet. Go to Exercise page!</p><button class="btn btn-accent btn-sm" style="margin-top:.75rem" onclick="goTo('exercise')">Start Exercising →</button></div>`:
+      `<div style="display:flex;flex-direction:column;gap:.5rem">
+        ${exDone.map(id=>{const ex=EXERCISES.find(e=>e.id===id);return ex?`<div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px"><span style="font-size:1.2rem">${ex.icon}</span><div style="flex:1"><div style="font-weight:600;font-size:.83rem">${ex.name}</div><div style="font-size:.7rem;color:var(--text2)">${ex.duration} • ${ex.cal} cal</div></div><span class="badge b-green">✓</span></div>`:''}).join('')}
+        <div style="padding:.55rem .8rem;background:var(--bg3);border-radius:10px;display:flex;justify-content:space-between;margin-top:.2rem"><span style="font-size:.78rem;color:var(--text2)">Total Burned</span><span style="font-weight:700;color:var(--green)">${calBurned} kcal</span></div>
+      </div>`}
+    </div>
+    <div class="card">
+      <div class="sec-title">Wellness Summary</div>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">💧</span><div><div style="font-size:.83rem;font-weight:600">Water Intake</div><div style="font-size:.7rem;color:var(--text2)">Recommended daily</div></div></div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--cyan)">2.5 L</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🌙</span><div><div style="font-size:.83rem;font-weight:600">Sleep Target</div><div style="font-size:.7rem;color:var(--text2)">For age ${STATE.user.age||25}</div></div></div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--accent2)">${(STATE.user.age||25)>60?'8-9':'7-8'} hrs</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🧘</span><div><div style="font-size:.83rem;font-weight:600">Today's Status</div><div style="font-size:.7rem;color:var(--text2)">Activity level</div></div></div>
+          <div style="font-size:1rem;font-weight:700;color:${exDone.length>0?'var(--green)':'var(--text2)'}">${exDone.length>2?'Very Active 💪':exDone.length>0?'Active 🏃':'Rest Day 😴'}</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🍽️</span><div><div style="font-size:.83rem;font-weight:600">Meals Logged</div><div style="font-size:.7rem;color:var(--text2)">Today</div></div></div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--amber)">${Array.isArray(log.food_log)?log.food_log.length:0} items</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════ CALORIES ═══════════════
+async function renderCalories(pc){
+  let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[]};
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
+  const food=Array.isArray(log.food_log)?log.food_log:[];
+
+  pc.innerHTML=`
+  <div class="page-head"><h1>Calorie Tracker</h1><p>Monitor your daily nutrition and macros</p></div>
+  <div class="g2">
+    <div class="card">
+      <div class="sec-title">Today's Calories</div>
+      <div class="cal-ring-section">
+        <div>
+          <svg viewBox="0 0 140 140" width="130" height="130">
+            <circle cx="70" cy="70" r="55" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="13"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="url(#cg1)" stroke-width="13" stroke-linecap="round"
+              stroke-dasharray="${Math.round(calP*3.456)},345.6" transform="rotate(-90 70 70)"/>
+            <defs><linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4f8ef7"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+            <text x="70" y="65" text-anchor="middle" fill="#f0f4ff" font-size="17" font-weight="700" font-family="Orbitron">${calP}%</text>
+            <text x="70" y="81" text-anchor="middle" fill="#8892b0" font-size="8.5">of daily goal</text>
+          </svg>
+        </div>
+        <div class="cal-ring-info">
+          <div style="font-size:1.9rem;font-weight:700;color:var(--amber);font-family:Orbitron">${log.cal_consumed||0}</div>
+          <div style="font-size:.78rem;color:var(--text2);margin-bottom:1rem">of ${log.cal_goal||2000} kcal goal</div>
+          <div class="macro-row"><div class="macro-label">Protein <span>${Math.round(log.protein||0)}g</span></div><div class="progress-bar"><div class="progress-fill green" style="width:${Math.min(100,Math.round(((log.protein||0)/150)*100))}%"></div></div></div>
+          <div class="macro-row"><div class="macro-label">Carbs <span>${Math.round(log.carbs||0)}g</span></div><div class="progress-bar"><div class="progress-fill amber" style="width:${Math.min(100,Math.round(((log.carbs||0)/250)*100))}%"></div></div></div>
+          <div class="macro-row"><div class="macro-label">Fat <span>${Math.round(log.fat||0)}g</span></div><div class="progress-bar"><div class="progress-fill red" style="width:${Math.min(100,Math.round(((log.fat||0)/65)*100))}%"></div></div></div>
+          <div style="margin-top:.65rem;padding:.45rem .7rem;background:var(--bg3);border-radius:8px;display:flex;justify-content:space-between;font-size:.78rem">
+            <span style="color:var(--text2)">Remaining</span>
+            <span style="font-weight:700;color:${(log.cal_goal||2000)-(log.cal_consumed||0)>=0?'var(--green)':'var(--red)'}">
+              ${Math.abs((log.cal_goal||2000)-(log.cal_consumed||0))} kcal ${(log.cal_goal||2000)-(log.cal_consumed||0)>=0?'left':'over'}
+            </span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.6rem" onclick="showCalGoalModal()">Change Cal Goal</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title">🤖 AI Calorie Estimator</div>
+      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">Describe your meal — AI estimates the nutrition</p>
+      <div class="fg" style="margin-bottom:.75rem"><label>Describe your meal</label><textarea id="food-desc" placeholder="e.g. 2 idlis with sambar and coconut chutney, one banana, black coffee" rows="3"></textarea></div>
+      <button class="btn btn-accent" style="width:100%" id="ai-est-btn" onclick="aiEstimateCalories()">🤖 Estimate with AI</button>
+      <div id="ai-cal-result" style="margin-top:.75rem"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Log Food Manually</div>
+    <div class="food-row">
+      <div class="fg"><label>Food Name</label><input id="fn-name" type="text" placeholder="Chapati, Dal, Rice…"/></div>
+      <div class="fg"><label>Cal</label><input id="fn-cal" type="number" placeholder="250" min="0"/></div>
+      <div class="fg"><label>Protein(g)</label><input id="fn-prot" type="number" placeholder="8" min="0"/></div>
+      <div class="fg"><label>Carbs(g)</label><input id="fn-carb" type="number" placeholder="40" min="0"/></div>
+      <div class="fg"><label>Fat(g)</label><input id="fn-fat" type="number" placeholder="5" min="0"/></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" onclick="logFood()">Add</button></div>
+    </div>
+    <div id="food-list">
+      ${food.length===0?'<p style="color:var(--text3);font-size:.8rem;text-align:center;padding:1rem">No food logged today</p>':
+        food.map(f=>`<div class="food-item">
+          <span style="font-size:1.1rem">🍽️</span>
+          <div class="fi-name">${f.name}</div>
+          <div class="fi-macros"><span>P:${f.protein||0}g</span><span>C:${f.carbs||0}g</span><span>F:${f.fat||0}g</span></div>
+          <div class="fi-cal">${f.cal} kcal</div>
+          <button class="fi-del" onclick="deleteFood(${f.id})">✕</button>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  window.showCalGoalModal=()=>showModal('Change Calorie Goal',`
+    <div class="fg" style="margin-bottom:1rem"><label>Daily Calorie Goal (kcal)</label><input id="m-calg" type="number" placeholder="2000" min="500"/></div>
+    <button class="btn btn-accent" style="width:100%" onclick="setCalGoal()">Set Goal</button>`);
+  window.setCalGoal=async()=>{
+    const v=parseInt(el('m-calg')?.value||0);
+    if(v<500){showNotif('Enter valid goal (min 500)','error');return;}
+    await api('/api/health/goal','POST',{cal_goal:v});
+    closeModal();showNotif('Calorie goal updated! 🎯','success');renderPage('calories');
+  };
+}
+
+async function aiEstimateCalories(){
+  const desc=el('food-desc')?.value.trim();
+  if(!desc){showNotif('Describe your meal first','error');return;}
+  const btn=el('ai-est-btn');if(btn)btn.disabled=true;
+  const res=el('ai-cal-result');
+  res.innerHTML=`<div style="text-align:center;padding:.875rem"><div style="display:flex;align-items:center;justify-content:center;gap:.5rem;color:var(--text2)"><div class="spin" style="width:18px;height:18px"></div>Analyzing with AI...</div></div>`;
+  const data=await api('/api/ai/calories','POST',{description:desc});
+  if(btn)btn.disabled=false;
+  if(data.error){res.innerHTML=`<p style="color:var(--red);font-size:.8rem">${data.error}</p>`;return;}
+  res.innerHTML=`
+  <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:.875rem">
+    <div style="font-weight:700;font-size:.875rem;margin-bottom:.5rem;color:var(--cyan)">📊 Nutritional Breakdown</div>
+    ${(data.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text2);margin-bottom:.25rem"><span>${i.name}</span><span style="color:var(--amber);font-weight:600">${i.calories} kcal</span></div>`).join('')}
+    <div style="border-top:1px solid var(--border2);margin-top:.45rem;padding-top:.45rem;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--amber)">${data.total_calories} kcal</span></div>
+    <div style="display:flex;gap:.65rem;margin-top:.4rem;font-size:.72rem;color:var(--text2)">
+      <span>P: <strong>${Math.round(data.total_protein||0)}g</strong></span>
+      <span>C: <strong>${Math.round(data.total_carbs||0)}g</strong></span>
+      <span>F: <strong>${Math.round(data.total_fat||0)}g</strong></span>
+    </div>
+    <button class="btn btn-accent btn-sm" style="width:100%;margin-top:.65rem" onclick="addAiFood(${JSON.stringify(data).replace(/"/g,'&quot;')})">+ Add to My Log</button>
+  </div>`;
+}
+
+async function addAiFood(data){
+  const desc=el('food-desc')?.value.trim()||'AI Meal';
+  await api('/api/health/food','POST',{name:`AI: ${desc.slice(0,40)}`,cal:data.total_calories||0,protein:data.total_protein||0,carbs:data.total_carbs||0,fat:data.total_fat||0});
+  showNotif(`Added ${data.total_calories} kcal! 🍽️`,'success');
+  renderPage('calories');
+}
+
+async function logFood(){
+  const name=el('fn-name')?.value.trim(),cal=parseInt(el('fn-cal')?.value||0);
+  if(!name||cal<1){showNotif('Enter food name and calories','error');return;}
+  await api('/api/health/food','POST',{name,cal,protein:parseFloat(el('fn-prot')?.value||0),carbs:parseFloat(el('fn-carb')?.value||0),fat:parseFloat(el('fn-fat')?.value||0)});
+  showNotif(`${name} logged! 🍽️`,'success');renderPage('calories');
+}
+
+async function deleteFood(id){
+  await api(`/api/health/food/${id}`,'DELETE');
+  showNotif('Removed','success');renderPage('calories');
+}
+
+// ═══════════════ EXERCISE ═══════════════
+function getExerciseList(age){
+  const ALL=[
+    {id:'walk',name:'Morning Walk',icon:'🚶',duration:'30 min',cal:120,benefit:'Cardio & metabolism',minAge:0,maxAge:150},
+    {id:'yoga',name:'Yoga',icon:'🧘',duration:'40 min',cal:150,benefit:'Flexibility & stress relief',minAge:0,maxAge:150},
+    {id:'breath',name:'Breathing Exercises',icon:'🌬️',duration:'15 min',cal:30,benefit:'Lung capacity',minAge:0,maxAge:150},
+    {id:'stretch',name:'Light Stretching',icon:'🤸',duration:'20 min',cal:50,benefit:'Flexibility',minAge:0,maxAge:150},
+    {id:'meditate',name:'Meditation',icon:'🌟',duration:'20 min',cal:20,benefit:'Mental wellness',minAge:0,maxAge:150},
+    {id:'swim',name:'Swimming',icon:'🏊',duration:'30 min',cal:300,benefit:'Full body, low impact',minAge:12,maxAge:65},
+    {id:'cycle',name:'Cycling',icon:'🚴',duration:'30 min',cal:280,benefit:'Leg strength & cardio',minAge:12,maxAge:60},
+    {id:'dance',name:'Dance / Zumba',icon:'💃',duration:'30 min',cal:220,benefit:'Fun cardio, mood boost',minAge:12,maxAge:55},
+    {id:'pushup',name:'Push-ups',icon:'💪',duration:'3×15 reps',cal:60,benefit:'Upper body & core',minAge:15,maxAge:55},
+    {id:'squat',name:'Squats',icon:'🏋️',duration:'3×20 reps',cal:80,benefit:'Lower body power',minAge:15,maxAge:55},
+    {id:'plank',name:'Plank',icon:'🪨',duration:'3×45 sec',cal:40,benefit:'Core strength',minAge:15,maxAge:55},
+    {id:'jog',name:'Jogging',icon:'🏃',duration:'25 min',cal:250,benefit:'Cardio & weight loss',minAge:15,maxAge:50},
+    {id:'hiit',name:'HIIT Training',icon:'⚡',duration:'20 min',cal:350,benefit:'Fat burn & endurance',minAge:18,maxAge:40},
+    {id:'weights',name:'Weight Training',icon:'🏋️',duration:'45 min',cal:320,benefit:'Muscle & bone density',minAge:18,maxAge:45},
+    {id:'chair',name:'Chair Exercises',icon:'🪑',duration:'20 min',cal:60,benefit:'Safe for seniors',minAge:55,maxAge:150},
+  ];
+  return ALL.filter(e=>age>=e.minAge&&age<=e.maxAge);
+}
+
+async function renderExercise(pc){
+  let log={exercises:[]};
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  const age=STATE.user.age||25;
+  const EXERCISES=getExerciseList(age);
+  const exDone=Array.isArray(log.exercises)?log.exercises:[];
+  const totalCal=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
+
+  let ageNote='';
+  if(age>=65) ageNote='⚠️ Exercises selected for age 65+. Focus on gentle movements. Consult your doctor before starting.';
+  else if(age>=55) ageNote='💡 Low-impact exercises prioritized for your age group.';
+  else if(age<15) ageNote='👶 Gentle exercises shown for your age. Focus on fun and flexibility!';
+
+  pc.innerHTML=`
+  <div class="page-head"><h1>Exercise Dashboard</h1><p>Personalized for age ${age} • ${EXERCISES.length} exercises available</p></div>
+  ${ageNote?`<div style="background:rgba(255,184,48,0.08);border:1px solid rgba(255,184,48,0.2);border-radius:10px;padding:.65rem .9rem;font-size:.78rem;color:var(--amber);margin-bottom:1.25rem">${ageNote}</div>`:''}
+  <div class="stats-grid">
+    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${exDone.length}</div><div class="stat-lbl">Completed</div></div>
+    <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div><div class="stat-val" style="color:var(--amber)">${totalCal}</div><div class="stat-lbl">Kcal Burned</div></div>
+    <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">🎯</div><div class="stat-val" style="color:var(--accent)">${EXERCISES.length-exDone.length}</div><div class="stat-lbl">Remaining</div></div>
+  </div>
+  <div class="sec-title">Your Workout Plan</div>
+  <div class="ex-grid">
+    ${EXERCISES.map(ex=>{
+      const done=exDone.includes(ex.id);
+      return `<div class="ex-card ${done?'done':''}" onclick="toggleEx('${ex.id}')">
+        <span class="ex-icon">${ex.icon}</span>
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-dur">${ex.duration}</div>
+        <div class="ex-cal">🔥 ${ex.cal} kcal</div>
+        <div style="font-size:.7rem;color:var(--text3);margin-top:.25rem">${ex.benefit}</div>
+        <span class="ex-badge ${done?'done':'todo'}">${done?'✓ Done':'Tap to complete'}</span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+async function toggleEx(exId){
+  await api('/api/health/exercise','POST',{exercise_id:exId});
+  showNotif('Exercise updated! 🔥','success');
+  renderPage('exercise');
+}
+
+// ═══════════════ HOSPITALS ═══════════════
+async function renderHospitals(pc){
+  if(STATE.hospitalDetail){ await renderHospitalDetail(pc,STATE.hospitalDetail); return; }
+  let hospitals=[];
+  try{ const r=await api('/api/hospitals'); if(Array.isArray(r)) hospitals=r; }catch(e){}
+
+  if(!hospitals.length){
+    pc.innerHTML=`<div class="page-head"><h1>Hospitals</h1></div>
+    <div class="empty-state"><span class="empty-icon">🏥</span><h3>No Hospitals Yet</h3><p>Run /api/init-data to load sample hospitals, or register a hospital account.</p></div>`;
+    return;
+  }
+  pc.innerHTML=`
+  <div class="page-head"><h1>Hospitals</h1><p>${hospitals.length} hospital${hospitals.length!==1?'s':''} available</p></div>
+  <div class="hospitals-grid">
+    ${hospitals.map((h,i)=>`
+    <div class="hosp-card" style="animation:fadeIn .3s ${i*0.06}s both" onclick="viewHospital(${h.id})">
+      <div class="hosp-head">
+        <div class="hosp-logo">🏥</div>
+        <div>
+          <div class="hosp-name">${h.name}</div>
+          <div class="hosp-addr">📍 ${h.address?h.address+', ':''}${h.city}</div>
+          ${h.phone?`<div style="font-size:.7rem;color:var(--text2);margin-top:.1rem">📞 ${h.phone}</div>`:''}
+        </div>
+      </div>
+      <div class="hosp-meta">
+        ${h.beds?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--cyan)">${h.beds}</div><div class="hosp-meta-lbl">Beds</div></div>`:''}
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--green)">${(h.doctors||[]).length}</div><div class="hosp-meta-lbl">Doctors</div></div>
+        ${h.established?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--amber)">${h.established}</div><div class="hosp-meta-lbl">Est.</div></div>`:''}
+        ${h.h_type?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--accent2);font-size:.8rem">${h.h_type}</div><div class="hosp-meta-lbl">Type</div></div>`:''}
+      </div>
+      ${h.services?.length?`<div class="hosp-services">${h.services.slice(0,4).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${h.services.length>4?`<span class="svc-tag">+${h.services.length-4}</span>`:''}</div>`:''}
+      <div class="hosp-cta">View Doctors & Book →</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function viewHospital(hid){ STATE.hospitalDetail=hid; renderPage('hospitals'); }
+
+async function renderHospitalDetail(pc, hid){
+  let h={name:'Hospital',doctors:[],services:[]};
+  try{ const r=await api(`/api/hospitals/${hid}`); if(r&&!r.error) h=r; }catch(e){}
+  const doctors=h.doctors||[];
+
+  pc.innerHTML=`
+  <div>
+    <div class="hosp-detail-header">
+      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back</button>
+      <div><h2 style="font-size:1.1rem;font-weight:700">${h.name}</h2><p style="font-size:.78rem;color:var(--text2)">${h.address?h.address+', ':''}${h.city}${h.phone?' • '+h.phone:''}</p></div>
+    </div>
+    ${h.services?.length?`<div class="card" style="margin-bottom:1.1rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
+    ${h.description?`<div class="card" style="margin-bottom:1.1rem"><p style="font-size:.83rem;color:var(--text2);line-height:1.7">${h.description}</p></div>`:''}
+    <div class="sec-title">Available Doctors</div>
+    ${doctors.length===0?`<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed</p></div>`:
+    `<div class="doctors-list">
+      ${doctors.map(d=>`
+      <div class="doc-card">
+        <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()[0]||'D'}</div>
+        <div class="doc-info">
+          <div class="doc-name">${d.name}</div>
+          <div class="doc-spec">${d.specialty||d.specialization||''}</div>
+          <div class="doc-meta">${d.experience?d.experience+' yrs exp':''}${d.fee?' • ₹'+d.fee+' consultation':''}</div>
+          <div class="slots-wrap">
+            ${(d.slots||[]).map(slot=>`<div class="slot" onclick="selectSlot(${h.id},'${d.name.replace(/'/g,"\\'")}','${(d.specialty||d.specialization||'').replace(/'/g,"\\'")}','${slot}',${d.fee||0})">${slot}</div>`).join('')}
+          </div>
+          <div id="book-${h.id}-${d.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'')}"></div>
+        </div>
+      </div>`).join('')}
+    </div>`}
+  </div>`;
+}
+
+let selSlot={};
+function selectSlot(hid, dname, dspec, slot, fee){
+  document.querySelectorAll('.slot.sel').forEach(s=>s.classList.remove('sel'));
+  if(event&&event.target) event.target.classList.add('sel');
+  selSlot={hid,dname,dspec,slot,fee};
+  const safeId=dname.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+  const bookEl=el(`book-${hid}-${safeId}`);
+  if(bookEl) bookEl.innerHTML=`
+  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.5rem">
+    <input type="date" id="book-date" style="padding:.35rem .65rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:.78rem" min="${new Date().toISOString().split('T')[0]}"/>
+    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">Book ${slot}</button>
+  </div>`;
+}
+
+async function bookAppointment(){
+  const dateVal=el('book-date')?.value;
+  if(!dateVal){showNotif('Please select a date','error');return;}
+  const {hid,dname,dspec,slot,fee}=selSlot;
+  if(!hid){showNotif('Select a slot first','error');return;}
+  const res=await api('/api/appointments','POST',{hospital_id:hid,doctor_name:dname,doctor_spec:dspec,slot_date:dateVal,slot_time:slot,fee:parseInt(fee||0)});
+  if(res.error){showNotif(res.error,'error');return;}
+  showNotif(`Appointment booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',6000);
+  selSlot={};STATE.hospitalDetail=null;goTo('appointments');
+}
+
+// ═══════════════ CHATBOT ═══════════════
+function renderChatbot(pc){
+  pc.innerHTML=`
+  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Always here for you</p></div>
+  <div class="chat-page card" style="padding:0;overflow:hidden">
+    <div class="chat-top">
+      <div class="bot-avatar">🤖</div>
+      <div>
+        <div class="bot-name">MedCare AI</div>
+        <div class="bot-status"><span class="status-dot"></span>Online — Ready to help</div>
+        <div style="font-size:.7rem;color:var(--text3)">Age-aware advice • Not a substitute for professional care</div>
+      </div>
+    </div>
+    <div class="quick-actions">
+      <button class="qa-btn" onclick="quickChat('I have a headache and fever')">🤒 Fever & Headache</button>
+      <button class="qa-btn" onclick="quickChat('I have back pain, what should I do?')">🦴 Back Pain</button>
+      <button class="qa-btn" onclick="quickChat('What exercises are safe for me?')">🏃 Safe Exercises</button>
+      <button class="qa-btn" onclick="quickChat('What foods help with weight loss?')">🥗 Diet Tips</button>
+      <button class="qa-btn" onclick="quickChat('I feel stressed and anxious')">😰 Stress</button>
+      <button class="qa-btn" onclick="quickChat('My blood sugar is high, diet advice?')">🩸 Blood Sugar</button>
+      <button class="qa-btn" onclick="quickChat('I have chest pain')">❤️ Chest Pain</button>
+      <button class="qa-btn" onclick="quickChat('Show me available doctors')">👨‍⚕️ Find Doctors</button>
+    </div>
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="msg bot">
+        <div class="msg-bot-av">🤖</div>
+        <div>
+          <div class="msg-bubble">👋 Hi! I'm MedCare AI — your personal health assistant!\n\nI know you're ${STATE.user.age||25} years old, so I'll give you age-appropriate advice.\n\n• Tell me your symptoms\n• Ask health questions\n• Request exercise or diet guidance\n• Book appointments by mentioning a doctor's name\n\nWhat can I help you with today?</div>
+          <div class="msg-time">Just now</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-bottom">
+      <textarea class="chat-inp" id="chat-inp" placeholder="Describe symptoms or ask a health question…" rows="1" onkeydown="chatKey(event)"></textarea>
+      <button class="chat-send" id="chat-send-btn" onclick="sendChat()">➤</button>
+    </div>
+  </div>`;
+}
+
+function quickChat(msg){ const inp=el('chat-inp'); if(inp)inp.value=msg; sendChat(); }
+function chatKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();} }
+
+async function sendChat(){
+  const inp=el('chat-inp'),btn=el('chat-send-btn'),msgs=el('chat-msgs');
+  if(!inp||!msgs) return;
+  const text=inp.value.trim(); if(!text) return;
+  inp.value=''; btn.disabled=true;
+  const t=nowTime();
+  msgs.innerHTML+=`<div class="msg user"><div class="msg-bubble">${text.replace(/</g,'&lt;')}</div><div class="msg-time">${t}</div></div>`;
+  const typId='typ-'+Date.now();
+  msgs.innerHTML+=`<div class="msg bot" id="${typId}"><div class="msg-bot-av">🤖</div><div class="typing-bubble"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  STATE.chatHistory.push({role:'user',content:text});
+  const res=await api('/api/ai/chat','POST',{messages:STATE.chatHistory});
+  const reply=res.reply||'I had trouble responding. Please try again.';
+  STATE.chatHistory.push({role:'assistant',content:reply});
+  el(typId)?.remove();
+  msgs.innerHTML+=`<div class="msg bot"><div class="msg-bot-av">🤖</div><div><div class="msg-bubble">${reply.replace(/</g,'&lt;').replace(/\n/g,'<br/>')}</div><div class="msg-time">${nowTime()}</div></div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  btn.disabled=false;
+}
+
+// ═══════════════ APPOINTMENTS ═══════════════
+async function renderAppointments(pc){
+  let appts=[];
+  try{ const r=await api('/api/appointments/user'); if(Array.isArray(r)) appts=r; }catch(e){}
+  pc.innerHTML=`
+  <div class="page-head"><h1>My Appointments</h1><p>Track and manage your bookings</p></div>
+  ${!appts.length?`<div class="empty-state"><span class="empty-icon">📋</span><h3>No Appointments Yet</h3><p>Book appointments from the Hospitals section</p><button class="btn btn-accent" style="margin-top:1rem" onclick="goTo('hospitals')">Browse Hospitals →</button></div>`:
+  appts.map((a,i)=>`
+  <div class="appt-card" style="animation:fadeIn .3s ${i*0.05}s both">
+    <div class="appt-top">
+      <div>
+        <div class="appt-doctor">${a.doctor_name}</div>
+        <div class="appt-spec">${a.doctor_spec||'—'}</div>
+        <div class="appt-hosp">🏥 ${a.hospital_name}</div>
+      </div>
+      <span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">
+        ${a.status==='pending'?'⏳ Pending':a.status==='accepted'?'✅ Confirmed':a.status==='rejected'?'❌ Rejected':'🚫 Cancelled'}
+      </span>
+    </div>
+    <div class="appt-grid">
+      <div><div class="appt-field">Date</div><div class="appt-val">${fmtDate(a.slot_date)}</div></div>
+      <div><div class="appt-field">Time</div><div class="appt-val">${a.slot_time}</div></div>
+      <div><div class="appt-field">Fee</div><div class="appt-val">₹${a.fee||0}</div></div>
+    </div>
+    <div class="appt-actions">
+      ${a.status==='pending'||a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="cancelAppt(${a.id})">Cancel</button>`:''}
+      <span style="font-size:.7rem;color:var(--text3)">Booked ${fmtDate(a.created_at)}</span>
+    </div>
+  </div>`).join('')}`;
+}
+
+async function cancelAppt(id){
+  if(!confirm('Cancel this appointment?')) return;
+  await api(`/api/appointments/${id}/status`,'PUT',{status:'cancelled'});
+  showNotif('Appointment cancelled','success');
+  renderPage('appointments');
+}
+
+// ═══════════════ REMINDERS ═══════════════
+async function renderReminders(pc){
+  let rems=[];
+  try{ const r=await api('/api/reminders'); if(Array.isArray(r)) rems=r; }catch(e){}
+  pc.innerHTML=`
+  <div class="page-head"><h1>Medication Reminders</h1><p>Alarm notifications at set times</p></div>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="sec-title">Add New Reminder</div>
+    <div class="form-row cols2" style="margin-bottom:.75rem">
+      <div class="fg"><label>Medication Name *</label><input id="rem-name" type="text" placeholder="e.g. Metformin 500mg"/></div>
+      <div class="fg"><label>Time *</label><input id="rem-time" type="time"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Frequency</label><select id="rem-freq"><option>Daily</option><option>Twice Daily</option><option>Three times Daily</option><option>Weekly</option><option>As Needed</option></select></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" style="width:100%" onclick="addReminder()">+ Set Alarm</button></div>
+    </div>
+  </div>
+  <div class="sec-title">Active Reminders</div>
+  ${!rems.length?`<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add medications above to get alarm notifications</p></div>`:
+  `<div class="reminder-list">
+    ${rems.map(r=>`
+    <div class="rem-card">
+      <div class="rem-icon">💊</div>
+      <div class="rem-info">
+        <div class="rem-name">${r.name}</div>
+        <div class="rem-time">⏰ ${r.time_str} • ${r.frequency}</div>
+      </div>
+      <span class="badge b-green">Active</span>
+      <button class="btn btn-danger btn-sm" onclick="deleteReminder(${r.id})">Remove</button>
+    </div>`).join('')}
+  </div>`}`;
+}
+
+async function addReminder(){
+  const name=el('rem-name')?.value.trim(),time=el('rem-time')?.value,freq=el('rem-freq')?.value;
+  if(!name||!time){showNotif('Enter medication name and time','error');return;}
+  await api('/api/reminders','POST',{name,time_str:time,frequency:freq||'Daily'});
+  showNotif(`Reminder set for ${name} at ${time}! ⏰`,'success');
+  renderPage('reminders');
+}
+
+async function deleteReminder(id){
+  await api(`/api/reminders/${id}`,'DELETE');
+  showNotif('Reminder removed','success');
+  renderPage('reminders');
+}
+
+// ═══════════════ HOSPITAL PORTAL ═══════════════
+const HOSP_PAGES=[{id:'hdash',icon:'📊',label:'Dashboard'},{id:'happts',icon:'📅',label:'Appointments'},{id:'hprofile',icon:'⚙️',label:'Profile'}];
+
+function renderHospitalPortal(){
+  document.title='MedCare Hospital';
+  const u=STATE.user,h=STATE.hospital;
+  const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'H';
+  if(!STATE.page||!HOSP_PAGES.find(p=>p.id===STATE.page)) STATE.page='hdash';
+  el('app').innerHTML=`
+  <div class="mob-header">
+    <div class="mob-logo-wrap">
+      <div class="mob-logo-icon">${LOGO_SVG}</div>
+      <span class="mob-logo">MEDCARE</span>
+    </div>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+  <div class="app-shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sb-logo"><div class="sb-logo-icon">${LOGO_SVG}</div><h2>HOSPITAL</h2></div>
+      <div class="nav-label">Portal</div>
+      ${HOSP_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="hGoTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
+      <div class="sb-footer">
+        <div class="user-chip">
+          <div class="uc-av" style="background:linear-gradient(135deg,var(--accent),var(--cyan))">${initials}</div>
+          <div class="uc-info"><div class="uc-name">${h?.name||u.name}</div><div class="uc-role">${h?.h_type||'Hospital'}</div></div>
+          <button class="logout-btn" onclick="logout()">⏏</button>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content"><div class="content-inner" id="page-content"></div></main>
+  </div>`;
+  hGoTo(STATE.page);
+}
+
+function hGoTo(page){
+  STATE.page=page;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(HOSP_PAGES.find(p=>p.id===page)?.label)));
+  closeSidebar(); hRenderPage(page);
+}
+
+async function hRenderPage(page){
+  const pc=el('page-content');
+  if(!pc) return;
+  pc.innerHTML=`<div class="loading"><div class="spin"></div> Loading…</div>`;
+  if(page==='hdash') await renderHDash(pc);
+  if(page==='happts') await renderHAppts(pc);
+  if(page==='hprofile') await renderHProfile(pc);
+}
+
+async function renderHDash(pc){
+  let appts=[];
+  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
+  const h=STATE.hospital;
+  const pending=appts.filter(a=>a.status==='pending').length;
+  const accepted=appts.filter(a=>a.status==='accepted').length;
+  const rejected=appts.filter(a=>a.status==='rejected'||a.status==='cancelled').length;
+  pc.innerHTML=`
+  <div class="page-head"><h1>Dashboard</h1><p>${h?.name} • ${h?.city}, ${h?.state||'Karnataka'}</p></div>
+  <div class="hosp-portal-stats">
+    <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">⏳</div><div class="stat-val" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending</div></div>
+    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${accepted}</div><div class="stat-lbl">Confirmed</div></div>
+    <div class="stat-card red"><div class="stat-icon-wrap" style="background:rgba(255,77,109,0.12)">❌</div><div class="stat-val" style="color:var(--red)">${rejected}</div><div class="stat-lbl">Cancelled</div></div>
+    <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">📋</div><div class="stat-val" style="color:var(--accent)">${appts.length}</div><div class="stat-lbl">Total</div></div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Recent Appointments</div>
+    ${appts.length===0?`<div class="empty-state" style="padding:2rem"><span class="empty-icon">📭</span><p>No appointments yet</p></div>`:
+    `<div style="overflow-x:auto"><table class="appts-table">
+      <thead><tr><th>Patient</th><th>Doctor</th><th>Date & Time</th><th>Fee</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        ${appts.slice(0,15).map(a=>`<tr>
+          <td style="font-weight:600">${a.user_name}</td>
+          <td><div style="font-weight:500">${a.doctor_name}</div><div style="font-size:.7rem;color:var(--text3)">${a.doctor_spec||''}</div></td>
+          <td><div>${fmtDate(a.slot_date)}</div><div style="font-size:.72rem;color:var(--text3)">${a.slot_time}</div></td>
+          <td>₹${a.fee||0}</td>
+          <td><span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span></td>
+          <td>
+            ${a.status==='pending'?`<div style="display:flex;gap:.3rem"><button class="btn btn-success btn-sm" onclick="hUpdateAppt(${a.id},'accepted')">✅</button><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">❌</button></div>`:
+            a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button>`:'—'}
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`}
+  </div>`;
+}
+
+async function renderHAppts(pc){
+  let appts=[];
+  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
+  pc.innerHTML=`
+  <div class="page-head"><h1>Manage Appointments</h1><p>Accept or reject patient bookings</p></div>
+  ${appts.length===0?`<div class="empty-state"><span class="empty-icon">📭</span><h3>No Appointments</h3><p>Patient bookings appear here</p></div>`:
+  appts.map((a,i)=>`
+  <div class="appt-card" style="animation:fadeIn .3s ${i*0.05}s both">
+    <div class="appt-top">
+      <div>
+        <div class="appt-doctor">${a.user_name}</div>
+        <div class="appt-spec">Dr: ${a.doctor_name}${a.doctor_spec?' — '+a.doctor_spec:''}</div>
+      </div>
+      <span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span>
+    </div>
+    <div class="appt-grid">
+      <div><div class="appt-field">Date</div><div class="appt-val">${fmtDate(a.slot_date)}</div></div>
+      <div><div class="appt-field">Time</div><div class="appt-val">${a.slot_time}</div></div>
+      <div><div class="appt-field">Fee</div><div class="appt-val">₹${a.fee||0}</div></div>
+    </div>
+    ${a.status==='pending'?`<div class="appt-actions">
+      <button class="btn btn-success" onclick="hUpdateAppt(${a.id},'accepted')">✅ Accept</button>
+      <button class="btn btn-danger" onclick="hUpdateAppt(${a.id},'rejected')">❌ Reject</button>
+    </div>`:a.status==='accepted'?`<div class="appt-actions"><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button></div>`:''}
+  </div>`).join('')}`;
+}
+
+async function hUpdateAppt(id, status){
+  await api(`/api/appointments/${id}/status`,'PUT',{status});
+  showNotif(`Appointment ${status}! ${status==='accepted'?'✅':'❌'}`,'success');
+  hRenderPage(STATE.page);
+}
+
+async function renderHProfile(pc){
+  const h=STATE.hospital||{};
+  const doctors=h.doctors||[];
+  pc.innerHTML=`
+  <div class="page-head"><h1>Hospital Profile</h1></div>
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="sec-title">Basic Info</div>
+    <div class="g2">
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Hospital Name</div><div style="font-weight:700">${h.name||'—'}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Reg. Number</div><div style="font-weight:700">${h.reg_number||'—'}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Address</div><div style="font-weight:700">${h.address?h.address+', ':''} ${h.city}, ${h.state||''} ${h.pincode||''}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Type / Beds</div><div style="font-weight:700">${h.h_type||'—'} • ${h.beds||'?'} beds</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Phone</div><div style="font-weight:700">${h.phone||'—'}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Established</div><div style="font-weight:700">${h.established||'—'}</div></div>
+    </div>
+    ${h.description?`<div style="margin-top:1rem;padding:.875rem;background:var(--bg3);border-radius:10px;font-size:.83rem;color:var(--text2);line-height:1.7">${h.description}</div>`:''}
+  </div>
+  ${h.services?.length?`<div class="card" style="margin-bottom:1.25rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
+  <div class="card">
+    <div class="sec-title">Doctors (${doctors.length})</div>
+    ${doctors.length===0?`<p style="color:var(--text3);font-size:.83rem">No doctors added yet.</p>`:
+    doctors.map(d=>`<div class="doc-card" style="margin-bottom:.65rem">
+      <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()[0]||'D'}</div>
+      <div class="doc-info">
+        <div class="doc-name">${d.name}</div>
+        <div class="doc-spec">${d.specialty||d.specialization||''}</div>
+        <div class="doc-meta">${d.experience||0} yrs • ₹${d.fee||0}</div>
+        <div class="slots-wrap">${(d.slots||[]).map(s=>`<span class="slot">${s}</span>`).join('')}</div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ═══════════════ MODAL ═══════════════
+function showModal(title, body){
+  const div=document.createElement('div');
+  div.className='modal-overlay';div.id='modal-overlay';
+  div.innerHTML=`<div class="modal-box"><div class="modal-head"><div class="modal-title">${title}</div><button class="modal-close" onclick="closeModal()">✕</button></div>${body}</div>`;
+  div.onclick=e=>{if(e.target===div)closeModal();};
+  document.body.appendChild(div);
+}
+function closeModal(){ el('modal-overlay')?.remove(); }
+
+// ═══════════════ INIT ═══════════════
+async function init(){
+  try{
+    const res=await api('/api/me');
+    if(res.user){ STATE.user=res.user; STATE.hospital=res.hospital||null; startAlarmCheck(); }
+  }catch(e){}
+  render();
+}
+init();
+</script>
+</body>
+</html>

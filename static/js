@@ -1,0 +1,33 @@
+let loading = true;
+let user = null;
+let health = null;
+let appointments = [];
+
+async function initDashboard() {
+  loading = true;
+  render(); // optional UI refresh
+
+  try {
+    const [meRes, healthRes, apptRes] = await Promise.all([
+      fetch("/api/me", { credentials: "include" }).then(r => r.json()).catch(() => null),
+      fetch("/api/health/log", { credentials: "include" }).then(r => r.json()).catch(() => null),
+      fetch("/api/appointments/user", { credentials: "include" }).then(r => r.json()).catch(() => [])
+    ]);
+
+    user = meRes?.user || null;
+    health = healthRes || { steps: 0, food_log: [], exercises: [] };
+    appointments = apptRes || [];
+
+  } catch (e) {
+    console.error("Dashboard init failed:", e);
+
+    user = null;
+    health = { steps: 0, food_log: [], exercises: [] };
+    appointments = [];
+
+  } finally {
+    // 🔥 THIS IS WHAT FIXES YOUR FREEZE
+    loading = false;
+    render(); // update UI again
+  }
+}

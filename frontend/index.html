@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <meta name="theme-color" content="#0a0f2e"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="MedCare"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="description" content="MedCare — Your Complete Health Companion, Tumkur"/>
-<link rel="manifest" href="/static/manifest.json"/>
-<link rel="apple-touch-icon" href="/static/icon-192.png"/>
 <title>MedCare — Your Health Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
@@ -40,12 +34,12 @@ input,select,textarea{font-family:inherit;outline:none}
 .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(79,142,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,142,247,0.04) 1px,transparent 1px);background-size:50px 50px}
 #app{position:relative;z-index:1;min-height:100vh}
 
-/* ── AUTH ── */
+/* AUTH */
 .auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
-.auth-card{background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:500px;backdrop-filter:blur(30px);box-shadow:var(--shadow);animation:cardIn .5s cubic-bezier(0.34,1.56,0.64,1)}
+.auth-card{background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:520px;backdrop-filter:blur(30px);box-shadow:var(--shadow);animation:cardIn .5s cubic-bezier(0.34,1.56,0.64,1)}
 @keyframes cardIn{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .auth-logo{text-align:center;margin-bottom:2rem}
-.logo-icon-wrap{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 40px var(--glow);animation:logoPulse 3s ease-in-out infinite;font-size:2.5rem}
+.logo-icon-wrap{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 40px var(--glow);font-size:2.5rem;animation:logoPulse 3s ease-in-out infinite}
 @keyframes logoPulse{0%,100%{box-shadow:0 0 30px var(--glow)}50%{box-shadow:0 0 60px var(--glow),0 0 100px rgba(79,142,247,0.2)}}
 .auth-logo h1{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px}
 .auth-logo p{color:var(--text2);font-size:.875rem;margin-top:.3rem}
@@ -77,9 +71,9 @@ input,select,textarea{font-family:inherit;outline:none}
 .alt-link{text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text2)}
 .alt-link span{color:var(--accent);cursor:pointer;font-weight:600}
 
-/* ── APP SHELL ── */
+/* APP SHELL */
 .app-shell{display:flex;min-height:100vh}
-.sidebar{width:250px;background:rgba(12,18,48,0.98);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem .875rem;position:fixed;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1)}
+.sidebar{width:252px;background:rgba(12,18,48,0.98);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem .875rem;position:fixed;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1)}
 .sb-logo{display:flex;align-items:center;gap:.75rem;padding:.5rem .5rem;margin-bottom:1.75rem}
 .sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 20px var(--glow)}
 .sb-logo h2{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -103,20 +97,19 @@ input,select,textarea{font-family:inherit;outline:none}
 .menu-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;color:var(--text2);font-size:1.1rem}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199}
 .sidebar-overlay.show{display:block}
-.main-content{margin-left:250px;flex:1;padding:1.75rem;min-height:100vh}
+.main-content{margin-left:252px;flex:1;padding:1.75rem;min-height:100vh}
 .content-inner{max-width:1080px;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .page-head{margin-bottom:1.75rem}
 .page-head h1{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
 .page-head p{color:var(--text2);font-size:.85rem}
 
-/* ── CARDS ── */
+/* CARDS */
 .card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;backdrop-filter:blur(10px);transition:all .3s}
 .card:hover{border-color:rgba(79,142,247,0.3)}
 
-/* ── STATS ── */
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
-.stats-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:rgba(20,26,53,0.9);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden;border:1px solid var(--border);transition:all .3s}
 .stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
@@ -136,18 +129,19 @@ input,select,textarea{font-family:inherit;outline:none}
 .progress-fill.green{background:linear-gradient(90deg,var(--green),#00ff88)}
 .progress-fill.amber{background:linear-gradient(90deg,var(--amber),#ffdd00)}
 .progress-fill.red{background:linear-gradient(90deg,var(--red),var(--pink))}
-
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.sec-title{font-size:.9rem;font-weight:700;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;color:var(--text)}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
-/* ── CALORIE RING ── */
+/* CALORIE RING */
 .cal-ring-section{display:flex;gap:1.75rem;align-items:center;flex-wrap:wrap}
 .cal-ring-info{flex:1;min-width:180px}
 .macro-row{margin-bottom:.8rem}
 .macro-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text2);margin-bottom:.3rem}
 .macro-label span{color:var(--text);font-weight:600}
 
-/* ── EXERCISE ── */
+/* EXERCISE */
 .ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .ex-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;cursor:pointer;transition:all .3s;position:relative}
 .ex-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 30px var(--glow)}
@@ -161,7 +155,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .ex-badge.done{background:rgba(0,229,160,0.15);color:var(--green)}
 .ex-badge.todo{background:rgba(79,142,247,0.12);color:var(--accent)}
 
-/* ── HOSPITALS ── */
+/* HOSPITALS */
 .hospitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 .hosp-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;cursor:pointer;transition:all .3s;animation:fadeIn .3s ease both}
 .hosp-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 15px 50px var(--glow)}
@@ -177,14 +171,12 @@ input,select,textarea{font-family:inherit;outline:none}
 .svc-tag{padding:.18rem .5rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:5px;font-size:.67rem;color:var(--accent)}
 .hosp-desc{font-size:.75rem;color:var(--text2);line-height:1.55;margin-top:.6rem}
 .hosp-cta{margin-top:.875rem;display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--accent);font-weight:700}
-
-/* Hospital Detail */
 .hosp-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
 .back-btn{display:flex;align-items:center;gap:.4rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:10px;padding:.45rem .9rem;color:var(--accent);font-size:.82rem;font-weight:600;transition:all .2s}
 .back-btn:hover{background:rgba(79,142,247,0.15)}
 .doctors-list{display:flex;flex-direction:column;gap:.875rem}
 .doc-card{background:rgba(27,34,66,0.9);border:1px solid var(--border2);border-radius:var(--r);padding:1rem;display:flex;gap:.875rem;align-items:flex-start;transition:all .2s}
-.doc-card:hover{border-color:var(--accent);background:rgba(20,26,53,0.95)}
+.doc-card:hover{border-color:var(--accent)}
 .doc-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;flex-shrink:0}
 .doc-info{flex:1}
 .doc-name{font-weight:700;font-size:.92rem;margin-bottom:.12rem}
@@ -194,7 +186,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .slot{padding:.22rem .55rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer;transition:all .15s;font-weight:500}
 .slot:hover,.slot.sel{background:rgba(0,212,255,0.25);border-color:var(--cyan);transform:scale(1.05)}
 
-/* ── CHAT ── */
+/* CHAT */
 .chat-page{display:flex;flex-direction:column;height:calc(100vh - 100px);max-height:780px}
 .chat-top{display:flex;align-items:center;gap:.875rem;padding:1.1rem 1.25rem;background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r2) var(--r2) 0 0;border-bottom:none}
 .bot-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.3rem;animation:botFloat 4s ease-in-out infinite;flex-shrink:0}
@@ -233,9 +225,8 @@ input,select,textarea{font-family:inherit;outline:none}
 .chat-send:hover{transform:scale(1.08);box-shadow:0 4px 20px var(--glow)}
 .chat-send:disabled{opacity:.5;transform:none}
 
-/* ── APPOINTMENTS ── */
+/* APPOINTMENTS */
 .appt-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1rem;transition:all .2s;margin-bottom:.875rem;animation:fadeIn .3s ease both}
-.appt-card:hover{border-color:rgba(79,142,247,0.3)}
 .appt-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
 .appt-doctor{font-weight:700;font-size:.92rem;margin-bottom:.12rem}
 .appt-spec{font-size:.75rem;color:var(--accent)}
@@ -245,7 +236,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .appt-val{color:var(--text);font-weight:600}
 .appt-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
 
-/* ── REMINDERS ── */
+/* REMINDERS */
 .reminder-list{display:flex;flex-direction:column;gap:.65rem}
 .rem-card{display:flex;align-items:center;gap:.875rem;padding:.875rem 1.1rem;background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);transition:all .2s}
 .rem-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:linear-gradient(135deg,rgba(79,142,247,0.2),rgba(124,95,252,0.2));border:1px solid var(--border)}
@@ -253,7 +244,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .rem-name{font-weight:600;font-size:.875rem}
 .rem-time{font-size:.75rem;color:var(--text2);margin-top:.12rem}
 
-/* ── BADGES & BUTTONS ── */
+/* BADGES & BUTTONS */
 .badge{display:inline-flex;align-items:center;gap:.25rem;padding:.18rem .5rem;border-radius:6px;font-size:.7rem;font-weight:700}
 .b-green{background:rgba(0,229,160,0.12);color:var(--green)}
 .b-red{background:rgba(255,77,109,0.12);color:var(--red)}
@@ -270,10 +261,8 @@ input,select,textarea{font-family:inherit;outline:none}
 .btn-danger:hover{background:rgba(255,77,109,0.2)}
 .btn-success{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--green)}
 .btn-success:hover{background:rgba(0,229,160,0.2)}
-.sec-title{font-size:.9rem;font-weight:700;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;color:var(--text)}
-.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
-/* ── FOOD LOG ── */
+/* FOOD LOG */
 .food-row{display:grid;grid-template-columns:1fr 80px 70px 70px 70px auto;gap:.5rem;align-items:flex-end;margin-bottom:.75rem}
 .food-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .9rem;background:rgba(27,34,66,0.8);border-radius:10px;border:1px solid var(--border2);margin-bottom:.4rem}
 .fi-name{flex:1;font-size:.85rem;font-weight:600}
@@ -282,7 +271,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .fi-del{background:none;border:none;color:var(--text3);font-size:.95rem;transition:color .2s;padding:.2rem;cursor:pointer}
 .fi-del:hover{color:var(--red)}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px)}
 .modal-box{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:cardIn .3s ease;box-shadow:var(--shadow)}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
@@ -290,7 +279,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .modal-close{background:none;border:none;color:var(--text2);font-size:1.1rem;transition:color .2s;padding:.25rem;cursor:pointer}
 .modal-close:hover{color:var(--red)}
 
-/* ── NOTIFICATIONS ── */
+/* NOTIFICATIONS */
 .notif-container{position:fixed;top:1rem;right:1rem;z-index:1000;display:flex;flex-direction:column;gap:.4rem;max-width:340px}
 .notif{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:12px;padding:.7rem 1.1rem;display:flex;align-items:center;gap:.65rem;box-shadow:var(--shadow);animation:notifIn .3s ease;backdrop-filter:blur(20px)}
 @keyframes notifIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
@@ -302,19 +291,14 @@ input,select,textarea{font-family:inherit;outline:none}
 .notif-icon{font-size:1.2rem;flex-shrink:0}
 .notif-text{font-size:.83rem;font-weight:500}
 
-/* ── HOSPITAL PORTAL ── */
+/* HOSPITAL PORTAL */
 .hosp-portal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
 .appts-table{width:100%;border-collapse:collapse}
 .appts-table th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:.55rem .9rem;border-bottom:1px solid var(--border2)}
 .appts-table td{padding:.8rem .9rem;border-bottom:1px solid var(--border2);font-size:.83rem;vertical-align:middle}
 .appts-table tr:hover td{background:rgba(79,142,247,0.04)}
 
-/* ── INSTALL BANNER ── */
-.install-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:16px;padding:.875rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);z-index:900;backdrop-filter:blur(20px);max-width:380px;width:calc(100% - 2rem);animation:notifIn .4s ease}
-.install-banner-text strong{color:var(--text);display:block;margin-bottom:.15rem;font-size:.9rem}
-.install-banner-text p{font-size:.8rem;color:var(--text2)}
-
-/* ── LOADING ── */
+/* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3)}
 .spin{width:26px;height:26px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-right:.65rem}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -323,9 +307,9 @@ input,select,textarea{font-family:inherit;outline:none}
 .empty-state h3{font-size:1rem;margin-bottom:.4rem}
 .empty-state p{font-size:.83rem;color:var(--text2);margin-bottom:1.25rem}
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media(max-width:768px){
-  .sidebar{transform:translateX(-250px)}
+  .sidebar{transform:translateX(-252px)}
   .sidebar.open{transform:translateX(0);box-shadow:var(--shadow)}
   .mob-header{display:flex}
   .main-content{margin-left:0;padding:.875rem}
@@ -353,101 +337,73 @@ input,select,textarea{font-family:inherit;outline:none}
 <div id="app"></div>
 
 <script>
-// ═══════════════ STATE ═══════════════
-let STATE = {user:null,hospital:null,page:'health',hospitalDetail:null,chatHistory:[],selectedSlot:{},reminderIntervals:{}};
+// ════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════
+let STATE = { user:null, hospital:null, page:'health', hospitalDetail:null, chatHistory:[], reminderIntervals:{} };
 let alarmInterval = null;
-let deferredInstallPrompt = null;
-
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  setTimeout(showInstallBanner, 4000);
-});
-window.addEventListener('appinstalled', () => {
-  el('install-banner')?.remove();
-  showNotif('MedCare installed on your home screen! 📱','success');
-});
 
 async function api(path, method='GET', body=null){
-  try{
-    const opts={method,credentials:'include',headers:{'Content-Type':'application/json'}};
-    if(body) opts.body=JSON.stringify(body);
-    const r=await fetch(path,opts);
-    const text=await r.text();
-    try{return JSON.parse(text);}catch(e){return {};}
-  }catch(err){console.error("API error:",err);return {};}
+  try {
+    const opts = { method, credentials:'include', headers:{'Content-Type':'application/json'} };
+    if(body) opts.body = JSON.stringify(body);
+    const r = await fetch(path, opts);
+    const text = await r.text();
+    try { return JSON.parse(text); } catch(e) { return {}; }
+  } catch(err) { console.error('API error:', err); return {}; }
 }
 
-function el(id){return document.getElementById(id);}
-function showNotif(msg,type='success',dur=4000){
-  const icons={success:'✅',error:'❌',alarm:'🔔',info:'ℹ️'};
-  const d=document.createElement('div');
-  d.className=`notif ${type}`;
-  d.innerHTML=`<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
+function el(id){ return document.getElementById(id); }
+function showNotif(msg, type='success', dur=4000){
+  const icons = {success:'✅', error:'❌', alarm:'🔔', info:'ℹ️'};
+  const d = document.createElement('div');
+  d.className = `notif ${type}`;
+  d.innerHTML = `<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
   el('notif-container').appendChild(d);
-  setTimeout(()=>{d.classList.add('out');setTimeout(()=>d.remove(),250);},dur);
+  setTimeout(()=>{ d.classList.add('out'); setTimeout(()=>d.remove(), 250); }, dur);
 }
-function fmtDate(d){return d?new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';}
-function nowTime(){return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
-
-function showInstallBanner(){
-  if(!deferredInstallPrompt||el('install-banner')) return;
-  const div=document.createElement('div');
-  div.className='install-banner';div.id='install-banner';
-  div.innerHTML=`
-    <div style="font-size:2rem">📱</div>
-    <div class="install-banner-text"><strong>Add MedCare to Home Screen</strong><p>Get quick access — works offline too!</p></div>
-    <div style="display:flex;flex-direction:column;gap:.4rem;flex-shrink:0">
-      <button class="btn btn-accent btn-sm" onclick="installApp()">Install</button>
-      <button class="btn btn-ghost btn-sm" onclick="el('install-banner').remove()">Later</button>
-    </div>`;
-  document.body.appendChild(div);
-}
-
-async function installApp(){
-  if(!deferredInstallPrompt) return;
-  deferredInstallPrompt.prompt();
-  await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt=null;
-  el('install-banner')?.remove();
-}
+function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function nowTime(){ return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
 
 function startAlarmCheck(){
   if(alarmInterval) clearInterval(alarmInterval);
-  alarmInterval=setInterval(async()=>{
+  alarmInterval = setInterval(async()=>{
     if(!STATE.user) return;
-    try{
-      const rems=await api('/api/reminders');
+    try {
+      const rems = await api('/api/reminders');
       if(!Array.isArray(rems)) return;
-      const now=new Date();
-      const nowH=now.getHours(),nowM=now.getMinutes();
+      const now = new Date();
       rems.forEach(r=>{
         if(!r.time_str) return;
-        const [h,m]=r.time_str.split(':').map(Number);
-        if(h===nowH&&Math.abs(m-nowM)<1){
-          const key=`alarm_${r.id}_${h}_${m}`;
+        const [h,m] = r.time_str.split(':').map(Number);
+        if(h===now.getHours() && Math.abs(m-now.getMinutes())<1){
+          const key = `alarm_${r.id}_${h}_${m}`;
           if(!STATE.reminderIntervals[key]){
-            STATE.reminderIntervals[key]=true;
-            showNotif(`⏰ Time to take ${r.name}!`,'alarm',10000);
+            STATE.reminderIntervals[key] = true;
+            showNotif(`⏰ Time to take ${r.name}!`, 'alarm', 10000);
             if('vibrate' in navigator) navigator.vibrate([400,200,400]);
           }
         }
       });
-    }catch(e){}
-  },30000);
+    } catch(e){}
+  }, 30000);
 }
 
-// ═══════════════ RENDER ═══════════════
+// ════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════
 function render(){
-  if(!STATE.user){renderAuth();return;}
-  if(STATE.user.role==='hospital'){renderHospitalPortal();return;}
+  if(!STATE.user){ renderAuth(); return; }
+  if(STATE.user.role==='hospital'){ renderHospitalPortal(); return; }
   renderUserApp();
 }
 
-// ═══════════════ AUTH ═══════════════
-function renderAuth(tab='user',mode='login'){
-  document.title='MedCare';
-  el('app').innerHTML=`
+// ════════════════════════════════════════════════════════
+// AUTH — username + password only, NO email
+// ════════════════════════════════════════════════════════
+function renderAuth(tab='user', mode='login'){
+  document.title = 'MedCare';
+  el('app').innerHTML = `
   <div class="auth-wrap">
     <div class="auth-card">
       <div class="auth-logo">
@@ -458,45 +414,68 @@ function renderAuth(tab='user',mode='login'){
       <div id="auth-inner"></div>
     </div>
   </div>`;
-  renderAuthInner(tab,mode);
+  renderAuthInner(tab, mode);
 }
 
-function renderAuthInner(tab,mode){
-  const inner=el('auth-inner');if(!inner)return;
-  const isHosp=tab==='hospital';
-  inner.innerHTML=`
+function renderAuthInner(tab, mode){
+  const inner = el('auth-inner'); if(!inner) return;
+  const isHosp = tab==='hospital';
+  inner.innerHTML = `
   <div class="role-tabs">
     <button class="role-tab ${!isHosp?'active':''}" onclick="renderAuthInner('user','${mode}')">👤 Patient</button>
     <button class="role-tab ${isHosp?'active':''}" onclick="renderAuthInner('hospital','${mode}')">🏥 Hospital</button>
   </div>
-  ${mode==='login'?loginForm(isHosp):isHosp?hospitalSignupForm():userSignupForm()}
-  <div class="alt-link">${mode==='login'?`No account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`:`Have account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}</div>`;
+  ${mode==='login' ? loginForm(isHosp) : isHosp ? hospitalSignupForm() : userSignupForm()}
+  <div class="alt-link">${mode==='login'
+    ? `No account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`
+    : `Have account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}
+  </div>`;
 }
 
-function loginForm(isHosp){return `
+function loginForm(isHosp){ return `
   <div id="auth-err" class="err-msg"></div>
-  <div class="form-row"><div class="fg"><label>Email</label><input id="l-email" type="email" placeholder="your@email.com"/></div></div>
-  <div class="form-row"><div class="fg"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"/></div></div>
-  <button class="submit-btn" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`;}
+  <div class="form-row"><div class="fg"><label>Username</label><input id="l-user" type="text" placeholder="your_username"/></div></div>
+  <div class="form-row"><div class="fg"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin('${isHosp?'hospital':'user'}')"/></div></div>
+  <button class="submit-btn" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`; }
 
-function userSignupForm(){return `
+function userSignupForm(){ return `
   <div id="auth-err" class="err-msg"></div>
-  <div class="form-row cols2"><div class="fg"><label>First Name</label><input id="s-fn" type="text" placeholder="Arun"/></div><div class="fg"><label>Last Name</label><input id="s-ln" type="text" placeholder="Kumar"/></div></div>
-  <div class="form-row"><div class="fg"><label>Email</label><input id="s-email" type="email" placeholder="arun@email.com"/></div></div>
-  <div class="form-row cols3"><div class="fg"><label>Age</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div><div class="fg"><label>Gender</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div><div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div></div>
-  <div class="form-row cols2"><div class="fg"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div><div class="fg"><label>Confirm</label><input id="s-cpass" type="password" placeholder="Repeat"/></div></div>
-  <button class="submit-btn" onclick="doUserSignup()">Create Account →</button>`;}
+  <div class="form-row cols2">
+    <div class="fg"><label>Full Name *</label><input id="s-name" type="text" placeholder="Arun Kumar"/></div>
+    <div class="fg"><label>Username *</label><input id="s-user" type="text" placeholder="arun_kumar"/></div>
+  </div>
+  <div class="form-row cols3">
+    <div class="fg"><label>Age *</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div>
+    <div class="fg"><label>Gender *</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+    <div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div>
+  </div>
+  <div class="form-row cols2">
+    <div class="fg"><label>Password *</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div>
+    <div class="fg"><label>Confirm *</label><input id="s-cpass" type="password" placeholder="Repeat"/></div>
+  </div>
+  <button class="submit-btn" onclick="doUserSignup()">Create Account →</button>`; }
 
-function hospitalSignupForm(){return `
+function hospitalSignupForm(){ return `
   <div id="auth-err" class="err-msg"></div>
   <div class="form-section"><div class="section-head">Hospital Details</div>
     <div class="form-row"><div class="fg"><label>Hospital Name *</label><input id="h-name" type="text" placeholder="City General Hospital"/></div></div>
-    <div class="form-row cols2"><div class="fg"><label>Reg. Number *</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div><div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div></div>
-    <div class="form-row cols3"><div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200"/></div><div class="fg"><label>Est. Year</label><input id="h-est" type="number" placeholder="1985"/></div><div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-XXXXXXX"/></div></div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Username *</label><input id="h-user" type="text" placeholder="city_general_hospital"/></div>
+      <div class="fg"><label>Reg. Number</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div>
+      <div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200"/></div>
+      <div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-XXXXXXX"/></div>
+    </div>
   </div>
   <div class="form-section"><div class="section-head">Address</div>
     <div class="form-row"><div class="fg"><label>Full Address *</label><input id="h-addr" type="text" placeholder="B.H. Road, Near Bus Stand"/></div></div>
-    <div class="form-row cols3"><div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div><div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div><div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div></div>
+    <div class="form-row cols3">
+      <div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div>
+      <div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div>
+      <div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div>
+    </div>
   </div>
   <div class="form-section"><div class="section-head">Services & Doctors</div>
     <div class="form-row"><div class="fg"><label>Services (comma separated)</label><input id="h-services" type="text" placeholder="Cardiology, Neurology, Pediatrics, ICU"/></div></div>
@@ -504,80 +483,104 @@ function hospitalSignupForm(){return `
     <button class="add-doctor-btn" onclick="addDoctorField()">+ Add Doctor</button>
   </div>
   <div class="form-section"><div class="section-head">Login Credentials</div>
-    <div class="form-row cols2"><div class="fg"><label>Email *</label><input id="h-email" type="email" placeholder="hospital@email.com"/></div><div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 chars"/></div></div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 chars"/></div>
+      <div class="fg"><label>Confirm *</label><input id="h-cpass" type="password" placeholder="Repeat"/></div>
+    </div>
   </div>
-  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`;}
+  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`; }
 
-let docCount=0;
+let docCount = 0;
 function addDoctorField(){
-  docCount++;const id=docCount;
-  const div=document.createElement('div');div.className='doctor-entry';div.id=`de-${id}`;
-  div.innerHTML=`<button class="rem-doc" onclick="el('de-${id}').remove()">✕</button>
-  <div class="form-row cols2" style="margin-bottom:.5rem"><div class="fg"><label>Doctor Name *</label><input id="dn-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div><div class="fg"><label>Specialization *</label><input id="ds-${id}" type="text" placeholder="Cardiologist"/></div></div>
-  <div class="form-row cols3"><div class="fg"><label>Experience (yrs)</label><input id="de-${id}" type="number" placeholder="10"/></div><div class="fg"><label>Fee (₹)</label><input id="df-${id}" type="number" placeholder="500"/></div><div class="fg"><label>Slots</label><input id="dsl-${id}" type="text" placeholder="09:00 AM, 02:00 PM"/></div></div>`;
+  docCount++; const id = docCount;
+  const div = document.createElement('div');
+  div.className = 'doctor-entry'; div.id = `de-${id}`;
+  div.innerHTML = `<button class="rem-doc" onclick="el('de-${id}').remove()">✕</button>
+  <div class="form-row cols2" style="margin-bottom:.5rem">
+    <div class="fg"><label>Doctor Name *</label><input id="dn-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div>
+    <div class="fg"><label>Specialization *</label><input id="ds-${id}" type="text" placeholder="Cardiologist"/></div>
+  </div>
+  <div class="form-row cols3">
+    <div class="fg"><label>Experience (yrs)</label><input id="de2-${id}" type="number" placeholder="10"/></div>
+    <div class="fg"><label>Fee (₹)</label><input id="df-${id}" type="number" placeholder="500"/></div>
+    <div class="fg"><label>Slots (comma separated)</label><input id="dsl-${id}" type="text" placeholder="09:00 AM, 02:00 PM"/></div>
+  </div>`;
   el('doctors-list').appendChild(div);
 }
 
-function gv(id){const e=el(id);return e?e.value.trim():'';}
-function setErr(msg){const e=el('auth-err');if(e){e.textContent=msg;e.classList.toggle('show',!!msg);}}
+function gv(id){ const e=el(id); return e?e.value.trim():''; }
+function setErr(msg){ const e=el('auth-err'); if(e){ e.textContent=msg; e.classList.toggle('show',!!msg); } }
 
 async function doLogin(role){
   setErr('');
-  const email=gv('l-email'),pass=gv('l-pass');
-  if(!email||!pass){setErr('Please enter email and password.');return;}
-  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
-  const res=await api('/api/login','POST',{email,password:pass});
-  if(btn)btn.disabled=false;
-  if(res.error){setErr(res.error);return;}
-  if(res.user?.role!==role){setErr(`This is a ${res.user?.role} account. Please select the correct tab.`);return;}
-  STATE.user=res.user;STATE.hospital=res.hospital||null;
-  startAlarmCheck();render();
+  const username = gv('l-user'), pass = gv('l-pass');
+  if(!username||!pass){ setErr('Please enter username and password.'); return; }
+  const btn = document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/login','POST',{username, password:pass});
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  if(res.user?.role!==role){ setErr(`This is a ${res.user?.role} account. Please select the correct tab.`); return; }
+  STATE.user=res.user; STATE.hospital=res.hospital||null;
+  startAlarmCheck(); render();
 }
 
 async function doUserSignup(){
   setErr('');
-  const fn=gv('s-fn'),ln=gv('s-ln'),email=gv('s-email'),age=gv('s-age'),gender=gv('s-gender'),phone=gv('s-phone'),pass=gv('s-pass'),cpass=gv('s-cpass');
-  if(!fn||!ln||!email||!age||!gender||!pass){setErr('Please fill all required fields.');return;}
-  if(pass!==cpass){setErr('Passwords do not match.');return;}
-  if(pass.length<6){setErr('Password must be at least 6 characters.');return;}
-  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
-  const res=await api('/api/signup/user','POST',{name:`${fn} ${ln}`,email,password:pass,age:parseInt(age),gender,phone});
-  if(btn)btn.disabled=false;
-  if(res.error){setErr(res.error);return;}
-  STATE.user=res.user;startAlarmCheck();
-  showNotif(`Welcome to MedCare, ${fn}! 🎉`,'success');render();
+  const name=gv('s-name'), username=gv('s-user'), age=gv('s-age'),
+        gender=gv('s-gender'), phone=gv('s-phone'), pass=gv('s-pass'), cpass=gv('s-cpass');
+  if(!name||!username||!age||!gender||!pass){ setErr('Please fill all required fields.'); return; }
+  if(pass!==cpass){ setErr('Passwords do not match.'); return; }
+  if(pass.length<6){ setErr('Password must be at least 6 characters.'); return; }
+  if(!/^[a-z0-9_]{3,}$/i.test(username)){ setErr('Username: letters, numbers, underscore only (min 3 chars).'); return; }
+  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/signup/user','POST',{name,username:username.toLowerCase(),password:pass,age:parseInt(age),gender,phone});
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user=res.user; startAlarmCheck();
+  showNotif(`Welcome to MedCare, ${name.split(' ')[0]}! 🎉`,'success'); render();
 }
 
 async function doHospitalSignup(){
   setErr('');
-  const name=gv('h-name'),reg=gv('h-reg'),phone=gv('h-phone'),addr=gv('h-addr'),email=gv('h-email'),pass=gv('h-pass');
-  if(!name||!reg||!phone||!addr||!email||!pass){setErr('Please fill all required fields.');return;}
+  const name=gv('h-name'), username=gv('h-user'), phone=gv('h-phone'), addr=gv('h-addr'),
+        pass=gv('h-pass'), cpass=gv('h-cpass');
+  if(!name||!username||!phone||!addr||!pass){ setErr('Please fill all required fields.'); return; }
+  if(pass!==cpass){ setErr('Passwords do not match.'); return; }
+  if(pass.length<6){ setErr('Password must be at least 6 characters.'); return; }
   const doctors=[];
   document.querySelectorAll('.doctor-entry').forEach(entry=>{
     const i=entry.id.split('-').pop();
-    const dname=gv(`dn-${i}`),spec=gv(`ds-${i}`);
+    const dname=gv(`dn-${i}`), spec=gv(`ds-${i}`);
     if(dname&&spec){
       const slots=gv(`dsl-${i}`).split(',').map(s=>s.trim()).filter(Boolean);
-      doctors.push({name:dname,specialty:spec,specialization:spec,experience:parseInt(gv(`de-${i}`)||0),fee:parseInt(gv(`df-${i}`)||0),slots:slots.length?slots:['10:00 AM','02:00 PM']});
+      doctors.push({name:dname,specialty:spec,specialization:spec,experience:parseInt(gv(`de2-${i}`)||0),fee:parseInt(gv(`df-${i}`)||0),slots:slots.length?slots:['10:00 AM','02:00 PM']});
     }
   });
-  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
-  const res=await api('/api/signup/hospital','POST',{name,reg_number:reg,phone,address:addr,city:gv('h-city')||'Tumkur',state:gv('h-state')||'Karnataka',pincode:gv('h-pin'),email,password:pass,h_type:gv('h-type')||'Private',beds:parseInt(gv('h-beds')||100),established:parseInt(gv('h-est')||2000),services:gv('h-services'),doctors});
-  if(btn)btn.disabled=false;
-  if(res.error){setErr(res.error);return;}
-  STATE.user=res.user;STATE.hospital=res.hospital;
-  startAlarmCheck();showNotif('Hospital registered! 🏥','success');render();
+  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
+  const res = await api('/api/signup/hospital','POST',{
+    name, username:username.toLowerCase(), phone, address:addr,
+    city:gv('h-city')||'Tumkur', state:gv('h-state')||'Karnataka',
+    pincode:gv('h-pin'), password:pass, h_type:gv('h-type')||'Private',
+    beds:parseInt(gv('h-beds')||100), reg_number:gv('h-reg'),
+    services:gv('h-services'), doctors
+  });
+  if(btn) btn.disabled=false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user=res.user; STATE.hospital=res.hospital;
+  startAlarmCheck(); showNotif('Hospital registered! 🏥','success'); render();
 }
 
 async function logout(){
   await api('/api/logout','POST');
   clearInterval(alarmInterval);
-  STATE={user:null,hospital:null,page:'health',hospitalDetail:null,chatHistory:[],selectedSlot:{},reminderIntervals:{}};
+  STATE={user:null,hospital:null,page:'health',hospitalDetail:null,chatHistory:[],reminderIntervals:{}};
   render();
 }
 
-// ═══════════════ USER APP SHELL ═══════════════
-const USER_PAGES=[
+// ════════════════════════════════════════════════════════
+// USER APP SHELL
+// ════════════════════════════════════════════════════════
+const USER_PAGES = [
   {id:'health',icon:'💚',label:'Health Dashboard'},
   {id:'calories',icon:'🔥',label:'Calories'},
   {id:'exercise',icon:'🏋️',label:'Exercise'},
@@ -588,10 +591,10 @@ const USER_PAGES=[
 ];
 
 function renderUserApp(){
-  document.title='MedCare';
-  const u=STATE.user;
-  const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'U';
-  el('app').innerHTML=`
+  document.title = 'MedCare';
+  const u = STATE.user;
+  const initials = u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'U';
+  el('app').innerHTML = `
   <div class="mob-header">
     <div class="mob-logo-wrap"><div class="mob-logo-icon">🩺</div><span class="mob-logo">MEDCARE</span></div>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
@@ -605,7 +608,7 @@ function renderUserApp(){
       <div class="sb-footer">
         <div class="user-chip">
           <div class="uc-av">${initials}</div>
-          <div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-role">Age ${u.age||'?'} • ${u.gender||''}</div></div>
+          <div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-role">@${u.username} • Age ${u.age||'?'}</div></div>
           <button class="logout-btn" onclick="logout()" title="Logout">⏏</button>
         </div>
       </div>
@@ -615,17 +618,17 @@ function renderUserApp(){
   goTo(STATE.page);
 }
 
-function toggleSidebar(){el('sidebar')?.classList.toggle('open');el('sb-overlay')?.classList.toggle('show');}
-function closeSidebar(){el('sidebar')?.classList.remove('open');el('sb-overlay')?.classList.remove('show');}
+function toggleSidebar(){ el('sidebar')?.classList.toggle('open'); el('sb-overlay')?.classList.toggle('show'); }
+function closeSidebar(){ el('sidebar')?.classList.remove('open'); el('sb-overlay')?.classList.remove('show'); }
 
 function goTo(page){
-  STATE.page=page;STATE.hospitalDetail=null;
+  STATE.page=page; STATE.hospitalDetail=null;
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')===`goTo('${page}')`));
-  closeSidebar();renderPage(page);
+  closeSidebar(); renderPage(page);
 }
 
 async function renderPage(page){
-  const pc=el('page-content');if(!pc)return;
+  const pc=el('page-content'); if(!pc) return;
   pc.innerHTML=`<div class="loading"><div class="spin"></div>Loading…</div>`;
   if(page==='health') await renderHealth(pc);
   else if(page==='calories') await renderCalories(pc);
@@ -636,13 +639,15 @@ async function renderPage(page){
   else if(page==='reminders') await renderReminders(pc);
 }
 
-// ═══════════════ HEALTH DASHBOARD (no steps) ═══════════════
+// ════════════════════════════════════════════════════════
+// HEALTH DASHBOARD (no steps)
+// ════════════════════════════════════════════════════════
 async function renderHealth(pc){
   let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[],exercises:[]};
-  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
   const EXERCISES=getExerciseList(STATE.user.age||25);
   const exDone=Array.isArray(log.exercises)?log.exercises:[];
-  const calBurned=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
+  const calBurned=exDone.reduce((a,id)=>{ const ex=EXERCISES.find(e=>e.id===id); return a+(ex?ex.cal:0); },0);
   const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
   const net=(log.cal_consumed||0)-calBurned;
 
@@ -666,20 +671,20 @@ async function renderHealth(pc){
       <div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">⚖️</div>
       <div class="stat-val" style="color:${net>300?'var(--red)':net<-200?'var(--green)':'var(--accent)'}">${net>0?'+':''}${net}</div>
       <div class="stat-lbl">Net Calories</div>
-      <div class="stat-sub">${net>300?'Calorie Surplus 📈':net<-200?'Calorie Deficit 📉':'Balanced ✓'}</div>
+      <div class="stat-sub">${net>300?'Surplus 📈':net<-200?'Deficit 📉':'Balanced ✓'}</div>
     </div>
   </div>
   <div class="g2">
     <div class="card">
-      <div class="sec-title">Today's Activity</div>
+      <div class="sec-title">Today's Exercise Activity</div>
       ${exDone.length===0?`
       <div class="empty-state" style="padding:1.5rem 1rem">
         <span class="empty-icon">🏃</span>
         <p style="color:var(--text2);margin-bottom:.75rem">No exercises logged yet today</p>
         <button class="btn btn-accent btn-sm" onclick="goTo('exercise')">Start Exercising →</button>
-      </div>`:
-      `<div style="display:flex;flex-direction:column;gap:.5rem">
-        ${exDone.map(id=>{const ex=EXERCISES.find(e=>e.id===id);return ex?`
+      </div>`:`
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        ${exDone.map(id=>{ const ex=EXERCISES.find(e=>e.id===id); return ex?`
         <div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px">
           <span style="font-size:1.2rem">${ex.icon}</span>
           <div style="flex:1"><div style="font-weight:600;font-size:.83rem">${ex.name}</div><div style="font-size:.7rem;color:var(--text2)">${ex.duration} • ${ex.cal} kcal</div></div>
@@ -695,7 +700,7 @@ async function renderHealth(pc){
       <div class="sec-title">Wellness Summary</div>
       <div style="display:flex;flex-direction:column;gap:.75rem">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">💧</span><div><div style="font-size:.83rem;font-weight:600">Water Intake</div><div style="font-size:.7rem;color:var(--text2)">Recommended daily</div></div></div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">💧</span><div><div style="font-size:.83rem;font-weight:600">Water Intake</div><div style="font-size:.7rem;color:var(--text2)">Daily recommendation</div></div></div>
           <div style="font-size:1.1rem;font-weight:700;color:var(--cyan)">2.5–3 L</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
@@ -703,7 +708,7 @@ async function renderHealth(pc){
           <div style="font-size:1.1rem;font-weight:700;color:var(--accent2)">${(STATE.user.age||25)>60?'8–9':'7–8'} hrs</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">🧘</span><div><div style="font-size:.83rem;font-weight:600">Today's Status</div><div style="font-size:.7rem;color:var(--text2)">Activity level</div></div></div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">🧘</span><div><div style="font-size:.83rem;font-weight:600">Today's Activity</div><div style="font-size:.7rem;color:var(--text2)">Status</div></div></div>
           <div style="font-size:1rem;font-weight:700;color:${exDone.length>0?'var(--green)':'var(--text2)'}">${exDone.length>2?'Very Active 💪':exDone.length>0?'Active 🏃':'Rest Day 😴'}</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
@@ -713,7 +718,7 @@ async function renderHealth(pc){
       </div>
     </div>
   </div>
-  <div class="card" style="margin-top:0">
+  <div class="card">
     <div class="sec-title">Quick Actions</div>
     <div style="display:flex;gap:.75rem;flex-wrap:wrap">
       <button class="btn btn-ghost" onclick="goTo('calories')">🔥 Log Calories</button>
@@ -724,10 +729,12 @@ async function renderHealth(pc){
   </div>`;
 }
 
-// ═══════════════ CALORIES ═══════════════
+// ════════════════════════════════════════════════════════
+// CALORIES
+// ════════════════════════════════════════════════════════
 async function renderCalories(pc){
   let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[]};
-  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
   const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
   const food=Array.isArray(log.food_log)?log.food_log:[];
 
@@ -765,7 +772,7 @@ async function renderCalories(pc){
     </div>
     <div class="card">
       <div class="sec-title">🤖 AI Calorie Estimator</div>
-      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">Describe your meal — AI estimates the nutrition instantly</p>
+      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">Describe your meal — AI estimates nutrition instantly</p>
       <div class="fg" style="margin-bottom:.75rem"><label>Describe your meal</label><textarea id="food-desc" placeholder="e.g. 2 idlis with sambar and coconut chutney, one banana, black coffee" rows="3"></textarea></div>
       <button class="btn btn-accent" style="width:100%" id="ai-est-btn" onclick="aiEstimateCalories()">🤖 Estimate with AI</button>
       <div id="ai-cal-result" style="margin-top:.75rem"></div>
@@ -793,26 +800,26 @@ async function renderCalories(pc){
     </div>
   </div>`;
 
-  window.showCalGoalModal=()=>showModal('Change Calorie Goal',`
+  window.showCalGoalModal = ()=>showModal('Change Calorie Goal',`
     <div class="fg" style="margin-bottom:1rem"><label>Daily Calorie Goal (kcal)</label><input id="m-calg" type="number" placeholder="2000" min="500"/></div>
     <button class="btn btn-accent" style="width:100%" onclick="setCalGoal()">Set Goal</button>`);
-  window.setCalGoal=async()=>{
+  window.setCalGoal = async()=>{
     const v=parseInt(el('m-calg')?.value||0);
-    if(v<500){showNotif('Enter valid goal (min 500)','error');return;}
+    if(v<500){ showNotif('Enter valid goal (min 500)','error'); return; }
     await api('/api/health/goal','POST',{cal_goal:v});
-    closeModal();showNotif('Calorie goal updated! 🎯','success');renderPage('calories');
+    closeModal(); showNotif('Calorie goal updated! 🎯','success'); renderPage('calories');
   };
 }
 
 async function aiEstimateCalories(){
   const desc=el('food-desc')?.value.trim();
-  if(!desc){showNotif('Describe your meal first','error');return;}
-  const btn=el('ai-est-btn');if(btn)btn.disabled=true;
+  if(!desc){ showNotif('Describe your meal first','error'); return; }
+  const btn=el('ai-est-btn'); if(btn) btn.disabled=true;
   const res=el('ai-cal-result');
   res.innerHTML=`<div style="text-align:center;padding:.875rem"><div style="display:flex;align-items:center;justify-content:center;gap:.5rem;color:var(--text2)"><div class="spin" style="width:18px;height:18px"></div>Analyzing with AI...</div></div>`;
   const data=await api('/api/ai/calories','POST',{description:desc});
-  if(btn)btn.disabled=false;
-  if(data.error){res.innerHTML=`<p style="color:var(--red);font-size:.8rem">${data.error}</p>`;return;}
+  if(btn) btn.disabled=false;
+  if(data.error){ res.innerHTML=`<p style="color:var(--red);font-size:.8rem">${data.error}</p>`; return; }
   res.innerHTML=`
   <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:.875rem">
     <div style="font-weight:700;font-size:.875rem;margin-bottom:.5rem;color:var(--cyan)">📊 Nutritional Breakdown</div>
@@ -830,22 +837,24 @@ async function aiEstimateCalories(){
 async function addAiFood(data){
   const desc=el('food-desc')?.value.trim()||'AI Meal';
   await api('/api/health/food','POST',{name:`AI: ${desc.slice(0,40)}`,cal:data.total_calories||0,protein:data.total_protein||0,carbs:data.total_carbs||0,fat:data.total_fat||0});
-  showNotif(`Added ${data.total_calories} kcal! 🍽️`,'success');renderPage('calories');
+  showNotif(`Added ${data.total_calories} kcal! 🍽️`,'success'); renderPage('calories');
 }
 
 async function logFood(){
-  const name=el('fn-name')?.value.trim(),cal=parseInt(el('fn-cal')?.value||0);
-  if(!name||cal<1){showNotif('Enter food name and calories','error');return;}
+  const name=el('fn-name')?.value.trim(), cal=parseInt(el('fn-cal')?.value||0);
+  if(!name||cal<1){ showNotif('Enter food name and calories','error'); return; }
   await api('/api/health/food','POST',{name,cal,protein:parseFloat(el('fn-prot')?.value||0),carbs:parseFloat(el('fn-carb')?.value||0),fat:parseFloat(el('fn-fat')?.value||0)});
-  showNotif(`${name} logged! 🍽️`,'success');renderPage('calories');
+  showNotif(`${name} logged! 🍽️`,'success'); renderPage('calories');
 }
 
 async function deleteFood(id){
   await api(`/api/health/food/${id}`,'DELETE');
-  showNotif('Removed','success');renderPage('calories');
+  showNotif('Removed','success'); renderPage('calories');
 }
 
-// ═══════════════ EXERCISE ═══════════════
+// ════════════════════════════════════════════════════════
+// EXERCISE
+// ════════════════════════════════════════════════════════
 function getExerciseList(age){
   const ALL=[
     {id:'walk',name:'Morning Walk',icon:'🚶',duration:'30 min',cal:120,benefit:'Cardio & metabolism',minAge:0,maxAge:150},
@@ -855,7 +864,7 @@ function getExerciseList(age){
     {id:'meditate',name:'Meditation',icon:'🌟',duration:'20 min',cal:20,benefit:'Mental wellness',minAge:0,maxAge:150},
     {id:'swim',name:'Swimming',icon:'🏊',duration:'30 min',cal:300,benefit:'Full body, low impact',minAge:12,maxAge:65},
     {id:'cycle',name:'Cycling',icon:'🚴',duration:'30 min',cal:280,benefit:'Leg strength & cardio',minAge:12,maxAge:60},
-    {id:'dance',name:'Dance / Zumba',icon:'💃',duration:'30 min',cal:220,benefit:'Fun cardio, mood boost',minAge:12,maxAge:55},
+    {id:'dance',name:'Dance / Zumba',icon:'💃',duration:'30 min',cal:220,benefit:'Fun cardio',minAge:12,maxAge:55},
     {id:'pushup',name:'Push-ups',icon:'💪',duration:'3×15 reps',cal:60,benefit:'Upper body & core',minAge:15,maxAge:55},
     {id:'squat',name:'Squats',icon:'🏋️',duration:'3×20 reps',cal:80,benefit:'Lower body power',minAge:15,maxAge:55},
     {id:'plank',name:'Plank',icon:'🪨',duration:'3×45 sec',cal:40,benefit:'Core strength',minAge:15,maxAge:55},
@@ -869,13 +878,13 @@ function getExerciseList(age){
 
 async function renderExercise(pc){
   let log={exercises:[]};
-  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
+  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
   const age=STATE.user.age||25;
   const EXERCISES=getExerciseList(age);
   const exDone=Array.isArray(log.exercises)?log.exercises:[];
-  const totalCal=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
+  const totalCal=exDone.reduce((a,id)=>{ const ex=EXERCISES.find(e=>e.id===id); return a+(ex?ex.cal:0); },0);
   let ageNote='';
-  if(age>=65) ageNote='⚠️ Exercises selected for age 65+. Focus on gentle movements. Consult your doctor before starting.';
+  if(age>=65) ageNote='⚠️ Exercises selected for age 65+. Focus on gentle movements. Consult your doctor.';
   else if(age>=55) ageNote='💡 Low-impact exercises prioritized for your age group.';
   else if(age<15) ageNote='👶 Gentle exercises shown. Focus on fun and flexibility!';
 
@@ -905,21 +914,25 @@ async function renderExercise(pc){
 
 async function toggleEx(exId){
   await api('/api/health/exercise','POST',{exercise_id:exId});
-  showNotif('Exercise updated! 🔥','success');renderPage('exercise');
+  showNotif('Exercise updated! 🔥','success'); renderPage('exercise');
 }
 
-// ═══════════════ HOSPITALS ═══════════════
+// ════════════════════════════════════════════════════════
+// HOSPITALS
+// ════════════════════════════════════════════════════════
 async function renderHospitals(pc){
-  if(STATE.hospitalDetail){await renderHospitalDetail(pc,STATE.hospitalDetail);return;}
+  if(STATE.hospitalDetail){ await renderHospitalDetail(pc,STATE.hospitalDetail); return; }
   let hospitals=[];
-  try{const r=await api('/api/hospitals');if(Array.isArray(r))hospitals=r;}catch(e){}
+  try{ const r=await api('/api/hospitals'); if(Array.isArray(r)) hospitals=r; }catch(e){}
   if(!hospitals.length){
     pc.innerHTML=`<div class="page-head"><h1>Hospitals</h1></div>
-    <div class="empty-state"><span class="empty-icon">🏥</span><h3>Loading Hospitals…</h3><p>Please refresh the page</p><button class="btn btn-accent" onclick="renderPage('hospitals')">Refresh</button></div>`;
+    <div class="empty-state"><span class="empty-icon">🏥</span><h3>No Hospitals Found</h3>
+    <p>Visit <code>/api/init-data</code> to seed hospitals, then refresh.</p>
+    <button class="btn btn-accent" onclick="renderPage('hospitals')">Refresh</button></div>`;
     return;
   }
   pc.innerHTML=`
-  <div class="page-head"><h1>Hospitals in Tumkur</h1><p>${hospitals.length} hospitals available for appointments • Karnataka</p></div>
+  <div class="page-head"><h1>Hospitals in Tumkur</h1><p>${hospitals.length} hospitals • Book appointments directly</p></div>
   <div class="hospitals-grid">
     ${hospitals.map((h,i)=>`
     <div class="hosp-card" style="animation-delay:${i*0.07}s" onclick="viewHospital(${h.id})">
@@ -939,48 +952,40 @@ async function renderHospitals(pc){
       </div>
       ${h.services?.length?`<div class="hosp-services">${h.services.slice(0,5).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${h.services.length>5?`<span class="svc-tag">+${h.services.length-5} more</span>`:''}</div>`:''}
       ${h.description?`<div class="hosp-desc">${h.description.slice(0,110)}${h.description.length>110?'…':''}</div>`:''}
-      <div class="hosp-cta">🗓️ View Doctors & Book Appointment →</div>
+      <div class="hosp-cta">🗓️ View Doctors & Book →</div>
     </div>`).join('')}
   </div>`;
 }
 
-function viewHospital(hid){STATE.hospitalDetail=hid;renderPage('hospitals');}
+function viewHospital(hid){ STATE.hospitalDetail=hid; renderPage('hospitals'); }
 
 async function renderHospitalDetail(pc, hid){
   let h={name:'Hospital',doctors:[],services:[]};
-  try{const r=await api(`/api/hospitals/${hid}`);if(r&&!r.error)h=r;}catch(e){}
+  try{ const r=await api(`/api/hospitals/${hid}`); if(r&&!r.error) h=r; }catch(e){}
   const doctors=h.doctors||[];
 
   pc.innerHTML=`
   <div>
     <div class="hosp-detail-header">
-      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back to Hospitals</button>
+      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back</button>
       <div>
         <h2 style="font-size:1.15rem;font-weight:700">${h.name}</h2>
         <p style="font-size:.78rem;color:var(--text2)">📍 ${h.address}${h.city?', '+h.city:''}${h.phone?' • 📞 '+h.phone:''}</p>
       </div>
     </div>
-    ${h.services?.length?`
-    <div class="card" style="margin-bottom:1.1rem">
-      <div class="sec-title">Services Offered</div>
-      <div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div>
-    </div>`:''}
-    ${h.description?`
-    <div class="card" style="margin-bottom:1.1rem">
-      <div class="sec-title">About</div>
-      <p style="font-size:.85rem;color:var(--text2);line-height:1.7">${h.description}</p>
-    </div>`:''}
+    ${h.services?.length?`<div class="card" style="margin-bottom:1.1rem"><div class="sec-title">Services Offered</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
+    ${h.description?`<div class="card" style="margin-bottom:1.1rem"><div class="sec-title">About</div><p style="font-size:.85rem;color:var(--text2);line-height:1.7">${h.description}</p></div>`:''}
     <div class="sec-title">Available Doctors (${doctors.length})</div>
-    ${doctors.length===0?`<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed yet</p></div>`:
-    `<div class="doctors-list">
+    ${doctors.length===0?`<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed</p></div>`:`
+    <div class="doctors-list">
       ${doctors.map(d=>`
       <div class="doc-card">
-        <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()?.[0]||'D'}</div>
+        <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).slice(-1)[0]?.[0]||'D'}</div>
         <div class="doc-info">
           <div class="doc-name">${d.name}</div>
           <div class="doc-spec">${d.specialty||d.specialization||''}</div>
-          <div class="doc-meta">${d.experience?d.experience+' yrs experience':''}${d.fee?' • ₹'+d.fee+' consultation fee':''}</div>
-          <div style="font-size:.72rem;color:var(--text3);margin-top:.2rem">Select a time slot below:</div>
+          <div class="doc-meta">${d.experience?d.experience+' yrs exp':''}${d.fee?' • ₹'+d.fee+' consultation':' • Free'}</div>
+          <div style="font-size:.72rem;color:var(--text3);margin-top:.4rem">Select a time slot:</div>
           <div class="slots-wrap">
             ${(d.slots||[]).map(slot=>`<div class="slot" onclick="selectSlot(${h.id},'${d.name.replace(/'/g,"\\'")}','${(d.specialty||d.specialization||'').replace(/'/g,"\\'")}','${slot}',${d.fee||0})">${slot}</div>`).join('')}
           </div>
@@ -992,7 +997,7 @@ async function renderHospitalDetail(pc, hid){
 }
 
 let selSlot={};
-function selectSlot(hid,dname,dspec,slot,fee){
+function selectSlot(hid, dname, dspec, slot, fee){
   document.querySelectorAll('.slot.sel').forEach(s=>s.classList.remove('sel'));
   if(event?.target) event.target.classList.add('sel');
   selSlot={hid,dname,dspec,slot,fee};
@@ -1002,31 +1007,33 @@ function selectSlot(hid,dname,dspec,slot,fee){
   <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.6rem;padding:.65rem;background:rgba(79,142,247,0.06);border-radius:10px;border:1px solid var(--border)">
     <span style="font-size:.8rem;color:var(--text2)">📅 Select date:</span>
     <input type="date" id="book-date" style="padding:.35rem .65rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:.78rem" min="${new Date().toISOString().split('T')[0]}"/>
-    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">🗓️ Confirm Booking — ${slot}</button>
+    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">✅ Confirm — ${slot}</button>
   </div>`;
 }
 
 async function bookAppointment(){
   const dateVal=el('book-date')?.value;
-  if(!dateVal){showNotif('Please select a date','error');return;}
+  if(!dateVal){ showNotif('Please select a date','error'); return; }
   const {hid,dname,dspec,slot,fee}=selSlot;
-  if(!hid){showNotif('Select a time slot first','error');return;}
+  if(!hid){ showNotif('Select a time slot first','error'); return; }
   const res=await api('/api/appointments','POST',{hospital_id:hid,doctor_name:dname,doctor_spec:dspec,slot_date:dateVal,slot_time:slot,fee:parseInt(fee||0)});
-  if(res.error){showNotif(res.error,'error');return;}
-  showNotif(`✅ Appointment booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',7000);
-  selSlot={};STATE.hospitalDetail=null;goTo('appointments');
+  if(res.error){ showNotif(res.error,'error'); return; }
+  showNotif(`✅ Booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',7000);
+  selSlot={}; STATE.hospitalDetail=null; goTo('appointments');
 }
 
-// ═══════════════ CHATBOT ═══════════════
+// ════════════════════════════════════════════════════════
+// CHATBOT
+// ════════════════════════════════════════════════════════
 function renderChatbot(pc){
   pc.innerHTML=`
-  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Book appointments, get health advice</p></div>
+  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Book appointments & get health advice</p></div>
   <div class="chat-page card" style="padding:0;overflow:hidden">
     <div class="chat-top">
       <div class="bot-avatar">🤖</div>
       <div>
         <div class="bot-name">MedCare AI</div>
-        <div class="bot-status"><span class="status-dot"></span>Online — Can book appointments!</div>
+        <div class="bot-status"><span class="status-dot"></span>Online</div>
         <div style="font-size:.7rem;color:var(--text3)">Age-aware advice • Tumkur hospital network • Not a substitute for professional care</div>
       </div>
     </div>
@@ -1035,36 +1042,35 @@ function renderChatbot(pc){
       <button class="qa-btn" onclick="quickChat('I have a fever and headache')">🤒 Fever</button>
       <button class="qa-btn" onclick="quickChat('I need to book a cardiologist')">❤️ Cardiologist</button>
       <button class="qa-btn" onclick="quickChat('I have back pain')">🦴 Back Pain</button>
-      <button class="qa-btn" onclick="quickChat('I need a pediatrician for my child')">👶 Pediatrics</button>
-      <button class="qa-btn" onclick="quickChat('Book Dr. Ravi Kumar')">🗓️ Book Dr. Ravi</button>
+      <button class="qa-btn" onclick="quickChat('I need a pediatrician')">👶 Pediatrics</button>
       <button class="qa-btn" onclick="quickChat('I have high blood sugar')">🩸 Blood Sugar</button>
-      <button class="qa-btn" onclick="quickChat('I need a skin doctor')">🧴 Dermatology</button>
       <button class="qa-btn" onclick="quickChat('I have chest pain')">🚨 Chest Pain</button>
+      <button class="qa-btn" onclick="quickChat('I need a skin doctor')">🧴 Skin Doctor</button>
     </div>
     <div class="chat-msgs" id="chat-msgs">
       <div class="msg bot">
         <div class="msg-bot-av">🤖</div>
         <div>
-          <div class="msg-bubble">👋 Hi! I'm MedCare AI — your personal health assistant for Tumkur!\n\nI'm ${STATE.user.age||25} years old-aware, so I give personalized advice.\n\n🏥 I can:\n• Book doctor appointments instantly\n• Give health advice & home remedies\n• Help you find the right specialist\n\n💬 Try saying:\n"Book Dr. Ravi Kumar" or "I need a cardiologist"\n\nWhat can I help you with today?</div>
+          <div class="msg-bubble">👋 Hi! I'm MedCare AI!\n\nI can:\n• Book doctor appointments instantly\n• Give health advice for age ${STATE.user.age||25}\n• Help find the right specialist\n\nTry: "Book Dr. Ravi Kumar" or "I have a headache"</div>
           <div class="msg-time">Just now</div>
         </div>
       </div>
     </div>
     <div class="chat-bottom">
-      <textarea class="chat-inp" id="chat-inp" placeholder="Ask a health question or say 'Book Dr. [name]'…" rows="1" onkeydown="chatKey(event)"></textarea>
+      <textarea class="chat-inp" id="chat-inp" placeholder="Ask a health question…" rows="1" onkeydown="chatKey(event)"></textarea>
       <button class="chat-send" id="chat-send-btn" onclick="sendChat()">➤</button>
     </div>
   </div>`;
 }
 
-function quickChat(msg){const inp=el('chat-inp');if(inp)inp.value=msg;sendChat();}
-function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
+function quickChat(msg){ const inp=el('chat-inp'); if(inp) inp.value=msg; sendChat(); }
+function chatKey(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendChat(); } }
 
 async function sendChat(){
   const inp=el('chat-inp'),btn=el('chat-send-btn'),msgs=el('chat-msgs');
   if(!inp||!msgs) return;
-  const text=inp.value.trim();if(!text) return;
-  inp.value='';btn.disabled=true;
+  const text=inp.value.trim(); if(!text) return;
+  inp.value=''; btn.disabled=true;
   const t=nowTime();
   msgs.innerHTML+=`<div class="msg user"><div class="msg-bubble">${text.replace(/</g,'&lt;')}</div><div class="msg-time">${t}</div></div>`;
   const typId='typ-'+Date.now();
@@ -1078,16 +1084,14 @@ async function sendChat(){
   msgs.innerHTML+=`<div class="msg bot"><div class="msg-bot-av">🤖</div><div><div class="msg-bubble">${reply.replace(/</g,'&lt;').replace(/\n/g,'<br/>')}</div><div class="msg-time">${nowTime()}</div></div></div>`;
   msgs.scrollTop=msgs.scrollHeight;
   btn.disabled=false;
-  // If appointment was booked, refresh appointments badge
-  if(reply.includes('Appointment requested successfully')) {
-    setTimeout(()=>showNotif('Appointment booked! Check Appointments tab 📅','info',5000),500);
-  }
 }
 
-// ═══════════════ APPOINTMENTS ═══════════════
+// ════════════════════════════════════════════════════════
+// APPOINTMENTS
+// ════════════════════════════════════════════════════════
 async function renderAppointments(pc){
   let appts=[];
-  try{const r=await api('/api/appointments/user');if(Array.isArray(r))appts=r;}catch(e){}
+  try{ const r=await api('/api/appointments/user'); if(Array.isArray(r)) appts=r; }catch(e){}
   pc.innerHTML=`
   <div class="page-head"><h1>My Appointments</h1><p>Track and manage all your bookings</p></div>
   ${!appts.length?`
@@ -1127,13 +1131,15 @@ async function renderAppointments(pc){
 async function cancelAppt(id){
   if(!confirm('Cancel this appointment?')) return;
   await api(`/api/appointments/${id}/status`,'PUT',{status:'cancelled'});
-  showNotif('Appointment cancelled','success');renderPage('appointments');
+  showNotif('Appointment cancelled','success'); renderPage('appointments');
 }
 
-// ═══════════════ REMINDERS ═══════════════
+// ════════════════════════════════════════════════════════
+// REMINDERS
+// ════════════════════════════════════════════════════════
 async function renderReminders(pc){
   let rems=[];
-  try{const r=await api('/api/reminders');if(Array.isArray(r))rems=r;}catch(e){}
+  try{ const r=await api('/api/reminders'); if(Array.isArray(r)) rems=r; }catch(e){}
   pc.innerHTML=`
   <div class="page-head"><h1>Medication Reminders</h1><p>Alarm notifications at your set times</p></div>
   <div class="card" style="margin-bottom:1.5rem">
@@ -1148,8 +1154,8 @@ async function renderReminders(pc){
     </div>
   </div>
   <div class="sec-title">Active Reminders</div>
-  ${!rems.length?`<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add your medications above — you'll get browser alarm notifications at the set time</p></div>`:
-  `<div class="reminder-list">
+  ${!rems.length?`<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add medications above to get alarm notifications</p></div>`:`
+  <div class="reminder-list">
     ${rems.map(r=>`
     <div class="rem-card">
       <div class="rem-icon">💊</div>
@@ -1161,23 +1167,29 @@ async function renderReminders(pc){
 }
 
 async function addReminder(){
-  const name=el('rem-name')?.value.trim(),time=el('rem-time')?.value,freq=el('rem-freq')?.value;
-  if(!name||!time){showNotif('Enter medication name and time','error');return;}
+  const name=el('rem-name')?.value.trim(), time=el('rem-time')?.value, freq=el('rem-freq')?.value;
+  if(!name||!time){ showNotif('Enter medication name and time','error'); return; }
   await api('/api/reminders','POST',{name,time_str:time,frequency:freq||'Daily'});
-  showNotif(`Reminder set for ${name} at ${time}! ⏰`,'success');renderPage('reminders');
+  showNotif(`Reminder set for ${name} at ${time}! ⏰`,'success'); renderPage('reminders');
 }
 
 async function deleteReminder(id){
   await api(`/api/reminders/${id}`,'DELETE');
-  showNotif('Reminder removed','success');renderPage('reminders');
+  showNotif('Reminder removed','success'); renderPage('reminders');
 }
 
-// ═══════════════ HOSPITAL PORTAL ═══════════════
-const HOSP_PAGES=[{id:'hdash',icon:'📊',label:'Dashboard'},{id:'happts',icon:'📅',label:'Appointments'},{id:'hprofile',icon:'⚙️',label:'Profile'}];
+// ════════════════════════════════════════════════════════
+// HOSPITAL PORTAL
+// ════════════════════════════════════════════════════════
+const HOSP_PAGES=[
+  {id:'hdash',icon:'📊',label:'Dashboard'},
+  {id:'happts',icon:'📅',label:'Appointments'},
+  {id:'hprofile',icon:'⚙️',label:'Profile'}
+];
 
 function renderHospitalPortal(){
   document.title='MedCare Hospital Portal';
-  const u=STATE.user,h=STATE.hospital;
+  const u=STATE.user, h=STATE.hospital;
   const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'H';
   if(!STATE.page||!HOSP_PAGES.find(p=>p.id===STATE.page)) STATE.page='hdash';
   el('app').innerHTML=`
@@ -1207,11 +1219,11 @@ function renderHospitalPortal(){
 function hGoTo(page){
   STATE.page=page;
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')===`hGoTo('${page}')`));
-  closeSidebar();hRenderPage(page);
+  closeSidebar(); hRenderPage(page);
 }
 
 async function hRenderPage(page){
-  const pc=el('page-content');if(!pc)return;
+  const pc=el('page-content'); if(!pc) return;
   pc.innerHTML=`<div class="loading"><div class="spin"></div>Loading…</div>`;
   if(page==='hdash') await renderHDash(pc);
   if(page==='happts') await renderHAppts(pc);
@@ -1220,23 +1232,50 @@ async function hRenderPage(page){
 
 async function renderHDash(pc){
   let appts=[];
-  try{const r=await api('/api/appointments/hospital');if(Array.isArray(r))appts=r;}catch(e){}
+  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
   const h=STATE.hospital;
   const pending=appts.filter(a=>a.status==='pending').length;
   const accepted=appts.filter(a=>a.status==='accepted').length;
   const rejected=appts.filter(a=>['rejected','cancelled'].includes(a.status)).length;
+
+  // Also fetch all hospitals to display on dashboard
+  let allHospitals=[];
+  try{ const r=await api('/api/hospitals'); if(Array.isArray(r)) allHospitals=r; }catch(e){}
+
   pc.innerHTML=`
-  <div class="page-head"><h1>Hospital Dashboard</h1><p>${h?.name} • ${h?.city}, Karnataka</p></div>
+  <div class="page-head"><h1>Hospital Dashboard</h1><p>${h?.name} • ${h?.city||'Tumkur'}, Karnataka</p></div>
   <div class="hosp-portal-stats">
     <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">⏳</div><div class="stat-val" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending</div></div>
     <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${accepted}</div><div class="stat-lbl">Confirmed</div></div>
     <div class="stat-card red"><div class="stat-icon-wrap" style="background:rgba(255,77,109,0.12)">❌</div><div class="stat-val" style="color:var(--red)">${rejected}</div><div class="stat-lbl">Cancelled</div></div>
     <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">📋</div><div class="stat-val" style="color:var(--accent)">${appts.length}</div><div class="stat-lbl">Total</div></div>
   </div>
+
+  <!-- ALL HOSPITALS IN NETWORK -->
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="sec-title">🏥 Hospitals in Tumkur Network (${allHospitals.length})</div>
+    <div style="display:flex;flex-direction:column;gap:.65rem">
+      ${allHospitals.map(hh=>`
+      <div style="display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;background:${hh.id===h?.id?'rgba(79,142,247,0.08)':'var(--bg3)'};border:1px solid ${hh.id===h?.id?'var(--accent)':'var(--border2)'};border-radius:12px">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🏥</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:.875rem">${hh.name}${hh.id===h?.id?' <span style="font-size:.7rem;color:var(--accent);background:rgba(79,142,247,0.12);padding:.1rem .4rem;border-radius:4px;margin-left:.4rem">YOUR HOSPITAL</span>':''}</div>
+          <div style="font-size:.72rem;color:var(--text2)">📍 ${hh.address}, ${hh.city} • ${hh.h_type} • ${hh.beds} beds</div>
+          ${hh.services?.length?`<div style="display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.35rem">${hh.services.slice(0,4).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${hh.services.length>4?`<span class="svc-tag">+${hh.services.length-4}</span>`:''}</div>`:''}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:1rem;font-weight:700;color:var(--green)">${(hh.doctors||[]).length}</div>
+          <div style="font-size:.65rem;color:var(--text3)">doctors</div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- RECENT APPOINTMENTS -->
   <div class="card">
     <div class="sec-title">Recent Appointments</div>
-    ${appts.length===0?`<div class="empty-state" style="padding:2rem"><span class="empty-icon">📭</span><p>No appointments yet</p></div>`:
-    `<div style="overflow-x:auto"><table class="appts-table">
+    ${appts.length===0?`<div class="empty-state" style="padding:2rem"><span class="empty-icon">📭</span><p>No appointments yet</p></div>`:`
+    <div style="overflow-x:auto"><table class="appts-table">
       <thead><tr><th>Patient</th><th>Doctor</th><th>Date & Time</th><th>Fee</th><th>Status</th><th>Action</th></tr></thead>
       <tbody>
         ${appts.slice(0,15).map(a=>`<tr>
@@ -1255,7 +1294,7 @@ async function renderHDash(pc){
 
 async function renderHAppts(pc){
   let appts=[];
-  try{const r=await api('/api/appointments/hospital');if(Array.isArray(r))appts=r;}catch(e){}
+  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
   pc.innerHTML=`
   <div class="page-head"><h1>Manage Appointments</h1><p>Accept or reject patient bookings</p></div>
   ${appts.length===0?`<div class="empty-state"><span class="empty-icon">📭</span><h3>No Appointments Yet</h3><p>Patient bookings will appear here</p></div>`:
@@ -1277,7 +1316,7 @@ async function renderHAppts(pc){
   </div>`).join('')}`;
 }
 
-async function hUpdateAppt(id,status){
+async function hUpdateAppt(id, status){
   await api(`/api/appointments/${id}/status`,'PUT',{status});
   showNotif(`Appointment ${status}! ${status==='accepted'?'✅':'❌'}`,'success');
   hRenderPage(STATE.page);
@@ -1293,7 +1332,7 @@ async function renderHProfile(pc){
     <div class="g2">
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Hospital Name</div><div style="font-weight:700">${h.name||'—'}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Reg. Number</div><div style="font-weight:700">${h.reg_number||'—'}</div></div>
-      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Address</div><div style="font-weight:700">${h.address?h.address+', ':''} ${h.city||''}, ${h.state||''} ${h.pincode||''}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Address</div><div style="font-weight:700">${h.address?h.address+', ':''} ${h.city||''} ${h.pincode||''}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Type / Beds</div><div style="font-weight:700">${h.h_type||'—'} • ${h.beds||'?'} beds</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Phone</div><div style="font-weight:700">${h.phone||'—'}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Established</div><div style="font-weight:700">${h.established||'—'}</div></div>
@@ -1303,9 +1342,9 @@ async function renderHProfile(pc){
   ${h.services?.length?`<div class="card" style="margin-bottom:1.25rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
   <div class="card">
     <div class="sec-title">Doctors (${doctors.length})</div>
-    ${doctors.length===0?`<p style="color:var(--text3);font-size:.83rem">No doctors added yet.</p>`:
+    ${doctors.length===0?`<p style="color:var(--text3);font-size:.83rem">No doctors added.</p>`:
     doctors.map(d=>`<div class="doc-card" style="margin-bottom:.65rem">
-      <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()?.[0]||'D'}</div>
+      <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).slice(-1)[0]?.[0]||'D'}</div>
       <div class="doc-info">
         <div class="doc-name">${d.name}</div>
         <div class="doc-spec">${d.specialty||d.specialization||''}</div>
@@ -1316,30 +1355,28 @@ async function renderHProfile(pc){
   </div>`;
 }
 
-// ═══════════════ MODAL ═══════════════
-function showModal(title,body){
+// ════════════════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════════════════
+function showModal(title, body){
   const div=document.createElement('div');
-  div.className='modal-overlay';div.id='modal-overlay';
+  div.className='modal-overlay'; div.id='modal-overlay';
   div.innerHTML=`<div class="modal-box"><div class="modal-head"><div class="modal-title">${title}</div><button class="modal-close" onclick="closeModal()">✕</button></div>${body}</div>`;
-  div.onclick=e=>{if(e.target===div)closeModal();};
+  div.onclick=e=>{ if(e.target===div) closeModal(); };
   document.body.appendChild(div);
 }
-function closeModal(){el('modal-overlay')?.remove();}
+function closeModal(){ el('modal-overlay')?.remove(); }
 
-// ═══════════════ INIT ═══════════════
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
 async function init(){
   try{
     const res=await api('/api/me');
-    if(res.user){STATE.user=res.user;STATE.hospital=res.hospital||null;startAlarmCheck();}
+    if(res.user){ STATE.user=res.user; STATE.hospital=res.hospital||null; startAlarmCheck(); }
   }catch(e){}
   render();
 }
-
-// Register service worker for PWA
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/static/sw.js').catch(()=>{});
-}
-
 init();
 </script>
 </body>

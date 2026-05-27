@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="MedCare"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-<meta name="description" content="MedCare — Your Complete Health Companion"/>
+<meta name="description" content="MedCare — Your Complete Health Companion, Tumkur"/>
 <link rel="manifest" href="/static/manifest.json"/>
 <link rel="apple-touch-icon" href="/static/icon-192.png"/>
 <title>MedCare — Your Health Companion</title>
@@ -19,7 +19,7 @@
 :root{
   --bg:#060b1f;--bg2:#0c1230;--bg3:#111830;--card:#141a35;--card2:#1b2242;
   --accent:#4f8ef7;--accent2:#7c5ffc;--green:#00e5a0;--red:#ff4d6d;
-  --amber:#ffb830;--cyan:#00d4ff;--pink:#ff6eb4;--white:#f0f4ff;
+  --amber:#ffb830;--cyan:#00d4ff;--pink:#ff6eb4;
   --text:#e8eeff;--text2:#8892b0;--text3:#4a5568;
   --border:rgba(79,142,247,0.18);--border2:rgba(255,255,255,0.07);
   --glow:rgba(79,142,247,0.25);--shadow:0 20px 60px rgba(0,0,0,0.5);
@@ -38,7 +38,6 @@ input,select,textarea{font-family:inherit;outline:none}
 .glow-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,#00d4ff,transparent);top:40%;left:30%;animation-delay:-8s;opacity:0.08}
 @keyframes orbFloat{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-60px)}66%{transform:translate(-30px,40px)}}
 .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(79,142,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,142,247,0.04) 1px,transparent 1px);background-size:50px 50px}
-
 #app{position:relative;z-index:1;min-height:100vh}
 
 /* ── AUTH ── */
@@ -46,8 +45,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .auth-card{background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:500px;backdrop-filter:blur(30px);box-shadow:var(--shadow);animation:cardIn .5s cubic-bezier(0.34,1.56,0.64,1)}
 @keyframes cardIn{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .auth-logo{text-align:center;margin-bottom:2rem}
-.logo-icon-wrap{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 40px var(--glow);animation:logoPulse 3s ease-in-out infinite;position:relative}
-.logo-icon-wrap svg{width:48px;height:48px}
+.logo-icon-wrap{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 40px var(--glow);animation:logoPulse 3s ease-in-out infinite;font-size:2.5rem}
 @keyframes logoPulse{0%,100%{box-shadow:0 0 30px var(--glow)}50%{box-shadow:0 0 60px var(--glow),0 0 100px rgba(79,142,247,0.2)}}
 .auth-logo h1{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px}
 .auth-logo p{color:var(--text2);font-size:.875rem;margin-top:.3rem}
@@ -83,11 +81,10 @@ input,select,textarea{font-family:inherit;outline:none}
 .app-shell{display:flex;min-height:100vh}
 .sidebar{width:250px;background:rgba(12,18,48,0.98);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem .875rem;position:fixed;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1)}
 .sb-logo{display:flex;align-items:center;gap:.75rem;padding:.5rem .5rem;margin-bottom:1.75rem}
-.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--glow);flex-shrink:0}
-.sb-logo-icon svg{width:22px;height:22px}
-.sb-logo h2{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px}
+.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 20px var(--glow)}
+.sb-logo h2{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:.3rem .6rem;margin-bottom:.2rem}
-.nav-btn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.6rem .75rem;border-radius:10px;background:none;border:none;color:var(--text2);font-size:.875rem;font-weight:500;transition:all .2s;text-align:left;margin-bottom:.15rem;position:relative}
+.nav-btn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.6rem .75rem;border-radius:10px;background:none;border:none;color:var(--text2);font-size:.875rem;font-weight:500;transition:all .2s;text-align:left;margin-bottom:.15rem}
 .nav-btn .ni{font-size:1.1rem;flex-shrink:0}
 .nav-btn:hover{color:var(--text);background:rgba(79,142,247,0.08)}
 .nav-btn.active{color:#fff;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 4px 15px var(--glow)}
@@ -99,16 +96,13 @@ input,select,textarea{font-family:inherit;outline:none}
 .uc-role{font-size:.68rem;color:var(--text3)}
 .logout-btn{background:none;border:none;color:var(--text3);font-size:1.1rem;transition:color .2s;padding:.25rem}
 .logout-btn:hover{color:var(--red)}
-
 .mob-header{display:none;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;background:rgba(12,18,48,0.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:150;backdrop-filter:blur(20px)}
 .mob-logo-wrap{display:flex;align-items:center;gap:.6rem}
-.mob-logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center}
-.mob-logo-icon svg{width:18px;height:18px}
+.mob-logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
 .mob-logo{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .menu-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;color:var(--text2);font-size:1.1rem}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199}
 .sidebar-overlay.show{display:block}
-
 .main-content{margin-left:250px;flex:1;padding:1.75rem;min-height:100vh}
 .content-inner{max-width:1080px;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -122,6 +116,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* ── STATS ── */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.stats-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:rgba(20,26,53,0.9);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden;border:1px solid var(--border);transition:all .3s}
 .stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
@@ -168,34 +163,36 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* ── HOSPITALS ── */
 .hospitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-.hosp-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;cursor:pointer;transition:all .3s}
-.hosp-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 15px 50px var(--glow)}
+.hosp-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;cursor:pointer;transition:all .3s;animation:fadeIn .3s ease both}
+.hosp-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 15px 50px var(--glow)}
 .hosp-head{display:flex;gap:.875rem;margin-bottom:.875rem;align-items:flex-start}
-.hosp-logo{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-.hosp-name{font-size:.95rem;font-weight:700;margin-bottom:.2rem;line-height:1.3}
-.hosp-addr{font-size:.72rem;color:var(--text2)}
-.hosp-meta{display:flex;gap:1rem;flex-wrap:wrap;margin:.65rem 0}
-.hosp-meta-item{text-align:center}
-.hosp-meta-val{font-size:.95rem;font-weight:700}
-.hosp-meta-lbl{font-size:.62rem;color:var(--text3)}
+.hosp-logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 20px var(--glow)}
+.hosp-name{font-size:1rem;font-weight:700;margin-bottom:.25rem;line-height:1.3}
+.hosp-addr{font-size:.75rem;color:var(--text2);line-height:1.4}
+.hosp-meta{display:flex;gap:1rem;flex-wrap:wrap;margin:.65rem 0;padding:.65rem 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.hosp-meta-item{text-align:center;flex:1}
+.hosp-meta-val{font-size:1rem;font-weight:700}
+.hosp-meta-lbl{font-size:.62rem;color:var(--text3);margin-top:.1rem}
 .hosp-services{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.65rem}
-.svc-tag{padding:.15rem .45rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:5px;font-size:.65rem;color:var(--accent)}
-.hosp-cta{margin-top:.75rem;font-size:.78rem;color:var(--accent);font-weight:600}
+.svc-tag{padding:.18rem .5rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:5px;font-size:.67rem;color:var(--accent)}
+.hosp-desc{font-size:.75rem;color:var(--text2);line-height:1.55;margin-top:.6rem}
+.hosp-cta{margin-top:.875rem;display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--accent);font-weight:700}
 
+/* Hospital Detail */
 .hosp-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
 .back-btn{display:flex;align-items:center;gap:.4rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:10px;padding:.45rem .9rem;color:var(--accent);font-size:.82rem;font-weight:600;transition:all .2s}
 .back-btn:hover{background:rgba(79,142,247,0.15)}
 .doctors-list{display:flex;flex-direction:column;gap:.875rem}
 .doc-card{background:rgba(27,34,66,0.9);border:1px solid var(--border2);border-radius:var(--r);padding:1rem;display:flex;gap:.875rem;align-items:flex-start;transition:all .2s}
-.doc-card:hover{border-color:var(--accent)}
-.doc-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;flex-shrink:0}
+.doc-card:hover{border-color:var(--accent);background:rgba(20,26,53,0.95)}
+.doc-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;flex-shrink:0}
 .doc-info{flex:1}
-.doc-name{font-weight:700;font-size:.9rem;margin-bottom:.12rem}
+.doc-name{font-weight:700;font-size:.92rem;margin-bottom:.12rem}
 .doc-spec{font-size:.75rem;color:var(--accent);margin-bottom:.2rem}
 .doc-meta{font-size:.72rem;color:var(--text2)}
 .slots-wrap{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
-.slot{padding:.22rem .5rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer;transition:all .15s;font-weight:500}
-.slot:hover,.slot.sel{background:rgba(0,212,255,0.2);border-color:var(--cyan)}
+.slot{padding:.22rem .55rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer;transition:all .15s;font-weight:500}
+.slot:hover,.slot.sel{background:rgba(0,212,255,0.25);border-color:var(--cyan);transform:scale(1.05)}
 
 /* ── CHAT ── */
 .chat-page{display:flex;flex-direction:column;height:calc(100vh - 100px);max-height:780px}
@@ -206,15 +203,15 @@ input,select,textarea{font-family:inherit;outline:none}
 .bot-status{font-size:.72rem;color:var(--green);display:flex;align-items:center;gap:.35rem}
 .status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:statusPulse 1.5s infinite}
 @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.4}}
-.chat-msgs{flex:1;overflow-y:auto;padding:1.1rem;background:rgba(6,11,31,0.8);display:flex;flex-direction:column;gap:.8rem}
+.chat-msgs{flex:1;overflow-y:auto;padding:1.1rem;background:rgba(6,11,31,0.85);display:flex;flex-direction:column;gap:.8rem}
 .chat-msgs::-webkit-scrollbar{width:3px}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.msg{max-width:80%;animation:msgSlide .25s ease}
+.msg{max-width:82%;animation:msgSlide .25s ease}
 @keyframes msgSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .msg.user{align-self:flex-end}
 .msg.bot{align-self:flex-start;display:flex;gap:.5rem}
 .msg-bot-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;margin-top:.2rem}
-.msg-bubble{padding:.7rem .95rem;border-radius:16px;font-size:.85rem;line-height:1.6}
+.msg-bubble{padding:.7rem .95rem;border-radius:16px;font-size:.85rem;line-height:1.65}
 .msg.user .msg-bubble{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-bottom-right-radius:4px}
 .msg.bot .msg-bubble{background:rgba(27,34,66,0.95);border:1px solid var(--border2);color:var(--text);border-bottom-left-radius:4px;white-space:pre-wrap}
 .msg-time{font-size:.62rem;color:var(--text3);margin-top:.25rem}
@@ -237,7 +234,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .chat-send:disabled{opacity:.5;transform:none}
 
 /* ── APPOINTMENTS ── */
-.appt-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1rem;transition:all .2s;margin-bottom:.875rem}
+.appt-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1rem;transition:all .2s;margin-bottom:.875rem;animation:fadeIn .3s ease both}
 .appt-card:hover{border-color:rgba(79,142,247,0.3)}
 .appt-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
 .appt-doctor{font-weight:700;font-size:.92rem;margin-bottom:.12rem}
@@ -246,7 +243,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .appt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;font-size:.78rem;margin-bottom:.65rem}
 .appt-field{color:var(--text2);margin-bottom:.12rem;font-size:.7rem}
 .appt-val{color:var(--text);font-weight:600}
-.appt-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.appt-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
 
 /* ── REMINDERS ── */
 .reminder-list{display:flex;flex-direction:column;gap:.65rem}
@@ -256,7 +253,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .rem-name{font-weight:600;font-size:.875rem}
 .rem-time{font-size:.75rem;color:var(--text2);margin-top:.12rem}
 
-/* ── BADGE / BUTTON ── */
+/* ── BADGES & BUTTONS ── */
 .badge{display:inline-flex;align-items:center;gap:.25rem;padding:.18rem .5rem;border-radius:6px;font-size:.7rem;font-weight:700}
 .b-green{background:rgba(0,229,160,0.12);color:var(--green)}
 .b-red{background:rgba(255,77,109,0.12);color:var(--red)}
@@ -293,16 +290,16 @@ input,select,textarea{font-family:inherit;outline:none}
 .modal-close{background:none;border:none;color:var(--text2);font-size:1.1rem;transition:color .2s;padding:.25rem;cursor:pointer}
 .modal-close:hover{color:var(--red)}
 
-/* ── NOTIF ── */
-.notif-container{position:fixed;top:1rem;right:1rem;z-index:1000;display:flex;flex-direction:column;gap:.4rem}
-.notif{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:12px;padding:.7rem 1.1rem;display:flex;align-items:center;gap:.65rem;box-shadow:var(--shadow);animation:notifIn .3s ease;max-width:320px;backdrop-filter:blur(20px)}
+/* ── NOTIFICATIONS ── */
+.notif-container{position:fixed;top:1rem;right:1rem;z-index:1000;display:flex;flex-direction:column;gap:.4rem;max-width:340px}
+.notif{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:12px;padding:.7rem 1.1rem;display:flex;align-items:center;gap:.65rem;box-shadow:var(--shadow);animation:notifIn .3s ease;backdrop-filter:blur(20px)}
 @keyframes notifIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
 .notif.out{animation:notifOut .25s ease forwards}
 @keyframes notifOut{to{opacity:0;transform:translateX(110%)}}
 .notif.success{border-color:rgba(0,229,160,0.4)}
 .notif.error{border-color:rgba(255,77,109,0.4)}
 .notif.alarm{border-color:rgba(255,184,48,0.4)}
-.notif-icon{font-size:1.2rem}
+.notif-icon{font-size:1.2rem;flex-shrink:0}
 .notif-text{font-size:.83rem;font-weight:500}
 
 /* ── HOSPITAL PORTAL ── */
@@ -313,11 +310,11 @@ input,select,textarea{font-family:inherit;outline:none}
 .appts-table tr:hover td{background:rgba(79,142,247,0.04)}
 
 /* ── INSTALL BANNER ── */
-.install-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:16px;padding:.875rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);z-index:900;backdrop-filter:blur(20px);max-width:360px;width:calc(100% - 2rem);animation:notifIn .4s ease}
-.install-banner p{font-size:.82rem;color:var(--text2);flex:1}
-.install-banner strong{color:var(--text);display:block;margin-bottom:.15rem}
+.install-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:16px;padding:.875rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);z-index:900;backdrop-filter:blur(20px);max-width:380px;width:calc(100% - 2rem);animation:notifIn .4s ease}
+.install-banner-text strong{color:var(--text);display:block;margin-bottom:.15rem;font-size:.9rem}
+.install-banner-text p{font-size:.8rem;color:var(--text2)}
 
-/* ── LOADING / EMPTY ── */
+/* ── LOADING ── */
 .loading{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3)}
 .spin{width:26px;height:26px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-right:.65rem}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -356,56 +353,51 @@ input,select,textarea{font-family:inherit;outline:none}
 <div id="app"></div>
 
 <script>
-// ═══════════════ SVG LOGO ═══════════════
-const LOGO_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.15)"/>
-  <path d="M11 7h2v4h4v2h-4v4h-2v-4H7v-2h4V7z" fill="white"/>
-  <path d="M12 4a8 8 0 100 16A8 8 0 0012 4z" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
-</svg>`;
-
-// ═══════════════ STATE & UTILS ═══════════════
-let STATE = { user:null, hospital:null, page:'health', hospitalDetail:null, chatHistory:[], selectedSlot:{}, reminderIntervals:{} };
+// ═══════════════ STATE ═══════════════
+let STATE = {user:null,hospital:null,page:'health',hospitalDetail:null,chatHistory:[],selectedSlot:{},reminderIntervals:{}};
 let alarmInterval = null;
 let deferredInstallPrompt = null;
 
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredInstallPrompt = e;
-  setTimeout(showInstallBanner, 3000);
+  setTimeout(showInstallBanner, 4000);
+});
+window.addEventListener('appinstalled', () => {
+  el('install-banner')?.remove();
+  showNotif('MedCare installed on your home screen! 📱','success');
 });
 
 async function api(path, method='GET', body=null){
-  try {
-    const opts = { method, credentials:'include', headers:{'Content-Type':'application/json'} };
-    if(body) opts.body = JSON.stringify(body);
-    const r = await fetch(path, opts);
-    const text = await r.text();
-    try { return JSON.parse(text); } catch(e) { return {}; }
-  } catch(err) { console.error("API error:", err); return {}; }
+  try{
+    const opts={method,credentials:'include',headers:{'Content-Type':'application/json'}};
+    if(body) opts.body=JSON.stringify(body);
+    const r=await fetch(path,opts);
+    const text=await r.text();
+    try{return JSON.parse(text);}catch(e){return {};}
+  }catch(err){console.error("API error:",err);return {};}
 }
 
-function el(id){ return document.getElementById(id); }
-function showNotif(msg, type='success', dur=4000){
+function el(id){return document.getElementById(id);}
+function showNotif(msg,type='success',dur=4000){
   const icons={success:'✅',error:'❌',alarm:'🔔',info:'ℹ️'};
-  const d = document.createElement('div');
-  d.className = `notif ${type}`;
-  d.innerHTML = `<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
+  const d=document.createElement('div');
+  d.className=`notif ${type}`;
+  d.innerHTML=`<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
   el('notif-container').appendChild(d);
-  setTimeout(()=>{ d.classList.add('out'); setTimeout(()=>d.remove(), 250); }, dur);
+  setTimeout(()=>{d.classList.add('out');setTimeout(()=>d.remove(),250);},dur);
 }
-function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
-function nowTime(){ return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+function fmtDate(d){return d?new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';}
+function nowTime(){return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
 
 function showInstallBanner(){
-  if(!deferredInstallPrompt) return;
-  if(el('install-banner')) return;
-  const div = document.createElement('div');
-  div.className = 'install-banner';
-  div.id = 'install-banner';
-  div.innerHTML = `
-    <div style="font-size:1.8rem">📱</div>
-    <p><strong>Install MedCare App</strong>Add to your home screen for quick access</p>
-    <div style="display:flex;flex-direction:column;gap:.4rem">
+  if(!deferredInstallPrompt||el('install-banner')) return;
+  const div=document.createElement('div');
+  div.className='install-banner';div.id='install-banner';
+  div.innerHTML=`
+    <div style="font-size:2rem">📱</div>
+    <div class="install-banner-text"><strong>Add MedCare to Home Screen</strong><p>Get quick access — works offline too!</p></div>
+    <div style="display:flex;flex-direction:column;gap:.4rem;flex-shrink:0">
       <button class="btn btn-accent btn-sm" onclick="installApp()">Install</button>
       <button class="btn btn-ghost btn-sm" onclick="el('install-banner').remove()">Later</button>
     </div>`;
@@ -415,196 +407,151 @@ function showInstallBanner(){
 async function installApp(){
   if(!deferredInstallPrompt) return;
   deferredInstallPrompt.prompt();
-  const result = await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt = null;
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
   el('install-banner')?.remove();
 }
 
 function startAlarmCheck(){
   if(alarmInterval) clearInterval(alarmInterval);
-  alarmInterval = setInterval(async ()=>{
+  alarmInterval=setInterval(async()=>{
     if(!STATE.user) return;
-    try {
-      const rems = await api('/api/reminders');
+    try{
+      const rems=await api('/api/reminders');
       if(!Array.isArray(rems)) return;
-      const now = new Date();
-      const nowH = now.getHours(), nowM = now.getMinutes();
+      const now=new Date();
+      const nowH=now.getHours(),nowM=now.getMinutes();
       rems.forEach(r=>{
         if(!r.time_str) return;
-        const [h,m] = r.time_str.split(':').map(Number);
-        if(h===nowH && Math.abs(m-nowM)<1){
+        const [h,m]=r.time_str.split(':').map(Number);
+        if(h===nowH&&Math.abs(m-nowM)<1){
           const key=`alarm_${r.id}_${h}_${m}`;
           if(!STATE.reminderIntervals[key]){
             STATE.reminderIntervals[key]=true;
-            showNotif(`Time to take ${r.name}!`,'alarm',10000);
+            showNotif(`⏰ Time to take ${r.name}!`,'alarm',10000);
             if('vibrate' in navigator) navigator.vibrate([400,200,400]);
           }
         }
       });
-    } catch(e){}
-  }, 30000);
+    }catch(e){}
+  },30000);
 }
 
 // ═══════════════ RENDER ═══════════════
 function render(){
-  if(!STATE.user){ renderAuth(); return; }
-  if(STATE.user.role==='hospital'){ renderHospitalPortal(); return; }
+  if(!STATE.user){renderAuth();return;}
+  if(STATE.user.role==='hospital'){renderHospitalPortal();return;}
   renderUserApp();
 }
 
 // ═══════════════ AUTH ═══════════════
-function renderAuth(tab='user', mode='login'){
-  document.title = 'MedCare';
-  el('app').innerHTML = `
+function renderAuth(tab='user',mode='login'){
+  document.title='MedCare';
+  el('app').innerHTML=`
   <div class="auth-wrap">
     <div class="auth-card">
       <div class="auth-logo">
-        <div class="logo-icon-wrap">${LOGO_SVG}</div>
+        <div class="logo-icon-wrap">🩺</div>
         <h1>MEDCARE</h1>
-        <p>Your Complete Health Companion</p>
+        <p>Your Health Companion — Tumkur, Karnataka</p>
       </div>
       <div id="auth-inner"></div>
     </div>
   </div>`;
-  renderAuthInner(tab, mode);
+  renderAuthInner(tab,mode);
 }
 
-function renderAuthInner(tab, mode){
-  const inner = el('auth-inner');
-  if(!inner) return;
-  const isHosp = tab==='hospital';
-  inner.innerHTML = `
+function renderAuthInner(tab,mode){
+  const inner=el('auth-inner');if(!inner)return;
+  const isHosp=tab==='hospital';
+  inner.innerHTML=`
   <div class="role-tabs">
     <button class="role-tab ${!isHosp?'active':''}" onclick="renderAuthInner('user','${mode}')">👤 Patient</button>
     <button class="role-tab ${isHosp?'active':''}" onclick="renderAuthInner('hospital','${mode}')">🏥 Hospital</button>
   </div>
-  ${mode==='login' ? loginForm(isHosp) : isHosp ? hospitalSignupForm() : userSignupForm()}
-  <div class="alt-link">
-    ${mode==='login'
-      ? `No account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`
-      : `Have account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}
-  </div>`;
+  ${mode==='login'?loginForm(isHosp):isHosp?hospitalSignupForm():userSignupForm()}
+  <div class="alt-link">${mode==='login'?`No account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`:`Have account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}</div>`;
 }
 
-function loginForm(isHosp){ return `
+function loginForm(isHosp){return `
   <div id="auth-err" class="err-msg"></div>
   <div class="form-row"><div class="fg"><label>Email</label><input id="l-email" type="email" placeholder="your@email.com"/></div></div>
   <div class="form-row"><div class="fg"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"/></div></div>
-  <button class="submit-btn" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`; }
+  <button class="submit-btn" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`;}
 
-function userSignupForm(){ return `
+function userSignupForm(){return `
   <div id="auth-err" class="err-msg"></div>
-  <div class="form-row cols2">
-    <div class="fg"><label>First Name</label><input id="s-fn" type="text" placeholder="Arun"/></div>
-    <div class="fg"><label>Last Name</label><input id="s-ln" type="text" placeholder="Kumar"/></div>
-  </div>
+  <div class="form-row cols2"><div class="fg"><label>First Name</label><input id="s-fn" type="text" placeholder="Arun"/></div><div class="fg"><label>Last Name</label><input id="s-ln" type="text" placeholder="Kumar"/></div></div>
   <div class="form-row"><div class="fg"><label>Email</label><input id="s-email" type="email" placeholder="arun@email.com"/></div></div>
-  <div class="form-row cols3">
-    <div class="fg"><label>Age</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div>
-    <div class="fg"><label>Gender</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
-    <div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div>
-  </div>
-  <div class="form-row cols2">
-    <div class="fg"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div>
-    <div class="fg"><label>Confirm</label><input id="s-cpass" type="password" placeholder="Repeat"/></div>
-  </div>
-  <button class="submit-btn" onclick="doUserSignup()">Create Account →</button>`; }
+  <div class="form-row cols3"><div class="fg"><label>Age</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div><div class="fg"><label>Gender</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div><div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div></div>
+  <div class="form-row cols2"><div class="fg"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div><div class="fg"><label>Confirm</label><input id="s-cpass" type="password" placeholder="Repeat"/></div></div>
+  <button class="submit-btn" onclick="doUserSignup()">Create Account →</button>`;}
 
-function hospitalSignupForm(){ return `
+function hospitalSignupForm(){return `
   <div id="auth-err" class="err-msg"></div>
-  <div class="form-section">
-    <div class="section-head">Hospital Details</div>
+  <div class="form-section"><div class="section-head">Hospital Details</div>
     <div class="form-row"><div class="fg"><label>Hospital Name *</label><input id="h-name" type="text" placeholder="City General Hospital"/></div></div>
-    <div class="form-row cols2">
-      <div class="fg"><label>Reg. Number *</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div>
-      <div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div>
-    </div>
-    <div class="form-row cols3">
-      <div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200"/></div>
-      <div class="fg"><label>Est. Year</label><input id="h-est" type="number" placeholder="1985"/></div>
-      <div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-2271234"/></div>
-    </div>
+    <div class="form-row cols2"><div class="fg"><label>Reg. Number *</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div><div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div></div>
+    <div class="form-row cols3"><div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200"/></div><div class="fg"><label>Est. Year</label><input id="h-est" type="number" placeholder="1985"/></div><div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-XXXXXXX"/></div></div>
   </div>
-  <div class="form-section">
-    <div class="section-head">Address</div>
+  <div class="form-section"><div class="section-head">Address</div>
     <div class="form-row"><div class="fg"><label>Full Address *</label><input id="h-addr" type="text" placeholder="B.H. Road, Near Bus Stand"/></div></div>
-    <div class="form-row cols3">
-      <div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div>
-      <div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div>
-      <div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div>
-    </div>
+    <div class="form-row cols3"><div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div><div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div><div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div></div>
   </div>
-  <div class="form-section">
-    <div class="section-head">Services & Doctors</div>
+  <div class="form-section"><div class="section-head">Services & Doctors</div>
     <div class="form-row"><div class="fg"><label>Services (comma separated)</label><input id="h-services" type="text" placeholder="Cardiology, Neurology, Pediatrics, ICU"/></div></div>
     <div id="doctors-list"></div>
     <button class="add-doctor-btn" onclick="addDoctorField()">+ Add Doctor</button>
   </div>
-  <div class="form-section">
-    <div class="section-head">Login Credentials</div>
-    <div class="form-row cols2">
-      <div class="fg"><label>Email *</label><input id="h-email" type="email" placeholder="hospital@email.com"/></div>
-      <div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 chars"/></div>
-    </div>
+  <div class="form-section"><div class="section-head">Login Credentials</div>
+    <div class="form-row cols2"><div class="fg"><label>Email *</label><input id="h-email" type="email" placeholder="hospital@email.com"/></div><div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 chars"/></div></div>
   </div>
-  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`; }
+  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`;}
 
-let docCount = 0;
+let docCount=0;
 function addDoctorField(){
-  docCount++;
-  const id = docCount;
-  const div = document.createElement('div');
-  div.className = 'doctor-entry';
-  div.id = `de-${id}`;
-  div.innerHTML = `
-  <button class="rem-doc" onclick="el('de-${id}').remove()">✕</button>
-  <div class="form-row cols2" style="margin-bottom:.5rem">
-    <div class="fg"><label>Doctor Name *</label><input id="dn-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div>
-    <div class="fg"><label>Specialization *</label><input id="ds-${id}" type="text" placeholder="Cardiologist"/></div>
-  </div>
-  <div class="form-row cols3">
-    <div class="fg"><label>Experience (yrs)</label><input id="de-${id}" type="number" placeholder="10"/></div>
-    <div class="fg"><label>Fee (₹)</label><input id="df-${id}" type="number" placeholder="500"/></div>
-    <div class="fg"><label>Slots</label><input id="dsl-${id}" type="text" placeholder="09:00 AM, 02:00 PM"/></div>
-  </div>`;
+  docCount++;const id=docCount;
+  const div=document.createElement('div');div.className='doctor-entry';div.id=`de-${id}`;
+  div.innerHTML=`<button class="rem-doc" onclick="el('de-${id}').remove()">✕</button>
+  <div class="form-row cols2" style="margin-bottom:.5rem"><div class="fg"><label>Doctor Name *</label><input id="dn-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div><div class="fg"><label>Specialization *</label><input id="ds-${id}" type="text" placeholder="Cardiologist"/></div></div>
+  <div class="form-row cols3"><div class="fg"><label>Experience (yrs)</label><input id="de-${id}" type="number" placeholder="10"/></div><div class="fg"><label>Fee (₹)</label><input id="df-${id}" type="number" placeholder="500"/></div><div class="fg"><label>Slots</label><input id="dsl-${id}" type="text" placeholder="09:00 AM, 02:00 PM"/></div></div>`;
   el('doctors-list').appendChild(div);
 }
 
-function gv(id){ const e=el(id); return e?e.value.trim():''; }
-function setErr(msg){ const e=el('auth-err'); if(e){e.textContent=msg;e.classList.toggle('show',!!msg);} }
+function gv(id){const e=el(id);return e?e.value.trim():'';}
+function setErr(msg){const e=el('auth-err');if(e){e.textContent=msg;e.classList.toggle('show',!!msg);}}
 
 async function doLogin(role){
   setErr('');
-  const email=gv('l-email'), pass=gv('l-pass');
-  if(!email||!pass){ setErr('Please enter email and password.'); return; }
-  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
-  const res = await api('/api/login','POST',{email,password:pass});
-  if(btn) btn.disabled=false;
-  if(res.error){ setErr(res.error); return; }
-  if(res.user?.role !== role){ setErr(`This is a ${res.user?.role} account. Please select the correct tab.`); return; }
-  STATE.user=res.user; STATE.hospital=res.hospital||null;
-  startAlarmCheck(); render();
+  const email=gv('l-email'),pass=gv('l-pass');
+  if(!email||!pass){setErr('Please enter email and password.');return;}
+  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
+  const res=await api('/api/login','POST',{email,password:pass});
+  if(btn)btn.disabled=false;
+  if(res.error){setErr(res.error);return;}
+  if(res.user?.role!==role){setErr(`This is a ${res.user?.role} account. Please select the correct tab.`);return;}
+  STATE.user=res.user;STATE.hospital=res.hospital||null;
+  startAlarmCheck();render();
 }
 
 async function doUserSignup(){
   setErr('');
   const fn=gv('s-fn'),ln=gv('s-ln'),email=gv('s-email'),age=gv('s-age'),gender=gv('s-gender'),phone=gv('s-phone'),pass=gv('s-pass'),cpass=gv('s-cpass');
-  if(!fn||!ln||!email||!age||!gender||!pass){ setErr('Please fill all required fields.'); return; }
-  if(pass!==cpass){ setErr('Passwords do not match.'); return; }
-  if(pass.length<6){ setErr('Password must be at least 6 characters.'); return; }
-  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
-  const res = await api('/api/signup/user','POST',{name:`${fn} ${ln}`,email,password:pass,age:parseInt(age),gender,phone});
-  if(btn) btn.disabled=false;
-  if(res.error){ setErr(res.error); return; }
-  STATE.user=res.user; startAlarmCheck();
-  showNotif(`Welcome to MedCare, ${fn}! 🎉`,'success');
-  render();
+  if(!fn||!ln||!email||!age||!gender||!pass){setErr('Please fill all required fields.');return;}
+  if(pass!==cpass){setErr('Passwords do not match.');return;}
+  if(pass.length<6){setErr('Password must be at least 6 characters.');return;}
+  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
+  const res=await api('/api/signup/user','POST',{name:`${fn} ${ln}`,email,password:pass,age:parseInt(age),gender,phone});
+  if(btn)btn.disabled=false;
+  if(res.error){setErr(res.error);return;}
+  STATE.user=res.user;startAlarmCheck();
+  showNotif(`Welcome to MedCare, ${fn}! 🎉`,'success');render();
 }
 
 async function doHospitalSignup(){
   setErr('');
   const name=gv('h-name'),reg=gv('h-reg'),phone=gv('h-phone'),addr=gv('h-addr'),email=gv('h-email'),pass=gv('h-pass');
-  if(!name||!reg||!phone||!addr||!email||!pass){ setErr('Please fill all required fields.'); return; }
+  if(!name||!reg||!phone||!addr||!email||!pass){setErr('Please fill all required fields.');return;}
   const doctors=[];
   document.querySelectorAll('.doctor-entry').forEach(entry=>{
     const i=entry.id.split('-').pop();
@@ -614,17 +561,12 @@ async function doHospitalSignup(){
       doctors.push({name:dname,specialty:spec,specialization:spec,experience:parseInt(gv(`de-${i}`)||0),fee:parseInt(gv(`df-${i}`)||0),slots:slots.length?slots:['10:00 AM','02:00 PM']});
     }
   });
-  const btn=document.querySelector('.submit-btn'); if(btn) btn.disabled=true;
-  const res = await api('/api/signup/hospital','POST',{
-    name,reg_number:reg,phone,address:addr,city:gv('h-city')||'Tumkur',
-    state:gv('h-state')||'Karnataka',pincode:gv('h-pin'),email,password:pass,
-    h_type:gv('h-type')||'Private',beds:parseInt(gv('h-beds')||100),
-    established:parseInt(gv('h-est')||2000),services:gv('h-services'),doctors
-  });
-  if(btn) btn.disabled=false;
-  if(res.error){ setErr(res.error); return; }
-  STATE.user=res.user; STATE.hospital=res.hospital;
-  startAlarmCheck(); showNotif('Hospital registered! 🏥','success'); render();
+  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
+  const res=await api('/api/signup/hospital','POST',{name,reg_number:reg,phone,address:addr,city:gv('h-city')||'Tumkur',state:gv('h-state')||'Karnataka',pincode:gv('h-pin'),email,password:pass,h_type:gv('h-type')||'Private',beds:parseInt(gv('h-beds')||100),established:parseInt(gv('h-est')||2000),services:gv('h-services'),doctors});
+  if(btn)btn.disabled=false;
+  if(res.error){setErr(res.error);return;}
+  STATE.user=res.user;STATE.hospital=res.hospital;
+  startAlarmCheck();showNotif('Hospital registered! 🏥','success');render();
 }
 
 async function logout(){
@@ -651,19 +593,13 @@ function renderUserApp(){
   const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'U';
   el('app').innerHTML=`
   <div class="mob-header">
-    <div class="mob-logo-wrap">
-      <div class="mob-logo-icon">${LOGO_SVG}</div>
-      <span class="mob-logo">MEDCARE</span>
-    </div>
+    <div class="mob-logo-wrap"><div class="mob-logo-icon">🩺</div><span class="mob-logo">MEDCARE</span></div>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
   <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
   <div class="app-shell">
     <nav class="sidebar" id="sidebar">
-      <div class="sb-logo">
-        <div class="sb-logo-icon">${LOGO_SVG}</div>
-        <h2>MEDCARE</h2>
-      </div>
+      <div class="sb-logo"><div class="sb-logo-icon">🩺</div><h2>MEDCARE</h2></div>
       <div class="nav-label">Navigation</div>
       ${USER_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="goTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
       <div class="sb-footer">
@@ -679,22 +615,18 @@ function renderUserApp(){
   goTo(STATE.page);
 }
 
-function toggleSidebar(){
-  el('sidebar')?.classList.toggle('open');
-  el('sb-overlay')?.classList.toggle('show');
-}
-function closeSidebar(){ el('sidebar')?.classList.remove('open'); el('sb-overlay')?.classList.remove('show'); }
+function toggleSidebar(){el('sidebar')?.classList.toggle('open');el('sb-overlay')?.classList.toggle('show');}
+function closeSidebar(){el('sidebar')?.classList.remove('open');el('sb-overlay')?.classList.remove('show');}
 
 function goTo(page){
-  STATE.page=page; STATE.hospitalDetail=null;
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(USER_PAGES.find(p=>p.id===page)?.label)));
-  closeSidebar(); renderPage(page);
+  STATE.page=page;STATE.hospitalDetail=null;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')===`goTo('${page}')`));
+  closeSidebar();renderPage(page);
 }
 
 async function renderPage(page){
-  const pc=el('page-content');
-  if(!pc) return;
-  pc.innerHTML=`<div class="loading"><div class="spin"></div> Loading…</div>`;
+  const pc=el('page-content');if(!pc)return;
+  pc.innerHTML=`<div class="loading"><div class="spin"></div>Loading…</div>`;
   if(page==='health') await renderHealth(pc);
   else if(page==='calories') await renderCalories(pc);
   else if(page==='exercise') await renderExercise(pc);
@@ -704,67 +636,90 @@ async function renderPage(page){
   else if(page==='reminders') await renderReminders(pc);
 }
 
-// ═══════════════ HEALTH DASHBOARD ═══════════════
+// ═══════════════ HEALTH DASHBOARD (no steps) ═══════════════
 async function renderHealth(pc){
   let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[],exercises:[]};
-  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
   const EXERCISES=getExerciseList(STATE.user.age||25);
   const exDone=Array.isArray(log.exercises)?log.exercises:[];
   const calBurned=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
   const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
+  const net=(log.cal_consumed||0)-calBurned;
 
   pc.innerHTML=`
-  <div class="page-head"><h1>Health Dashboard</h1><p>${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}</p></div>
+  <div class="page-head"><h1>Health Dashboard</h1><p>${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>
   <div class="stats-grid">
     <div class="stat-card amber">
       <div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div>
       <div class="stat-val" style="color:var(--amber)">${calBurned}</div>
       <div class="stat-lbl">Calories Burned</div>
-      <div class="stat-sub">From ${exDone.length} exercise${exDone.length!==1?'s':''}</div>
+      <div class="stat-sub">From ${exDone.length} exercise${exDone.length!==1?'s':''} today</div>
     </div>
     <div class="stat-card green">
       <div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">🍽️</div>
       <div class="stat-val" style="color:var(--green)">${log.cal_consumed||0}</div>
-      <div class="stat-lbl">Calories In</div>
+      <div class="stat-lbl">Calories Consumed</div>
       <div class="stat-sub">Goal: ${log.cal_goal||2000} kcal</div>
       <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill green" style="width:${calP}%"></div></div></div>
     </div>
-    <div class="stat-card ${(log.cal_consumed-calBurned)>300?'red':'blue'}">
+    <div class="stat-card ${net>300?'red':net<-200?'green':'blue'}">
       <div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">⚖️</div>
-      <div class="stat-val" style="color:var(--accent)">${(log.cal_consumed||0)-calBurned>0?'+':''}${(log.cal_consumed||0)-calBurned}</div>
+      <div class="stat-val" style="color:${net>300?'var(--red)':net<-200?'var(--green)':'var(--accent)'}">${net>0?'+':''}${net}</div>
       <div class="stat-lbl">Net Calories</div>
-      <div class="stat-sub">${(log.cal_consumed||0)-calBurned>300?'Surplus':'Balanced'}</div>
+      <div class="stat-sub">${net>300?'Calorie Surplus 📈':net<-200?'Calorie Deficit 📉':'Balanced ✓'}</div>
     </div>
   </div>
   <div class="g2">
     <div class="card">
       <div class="sec-title">Today's Activity</div>
-      ${exDone.length===0?`<div class="empty-state" style="padding:1.5rem 1rem"><span class="empty-icon">🏃</span><p style="color:var(--text2)">No exercises yet. Go to Exercise page!</p><button class="btn btn-accent btn-sm" style="margin-top:.75rem" onclick="goTo('exercise')">Start Exercising →</button></div>`:
+      ${exDone.length===0?`
+      <div class="empty-state" style="padding:1.5rem 1rem">
+        <span class="empty-icon">🏃</span>
+        <p style="color:var(--text2);margin-bottom:.75rem">No exercises logged yet today</p>
+        <button class="btn btn-accent btn-sm" onclick="goTo('exercise')">Start Exercising →</button>
+      </div>`:
       `<div style="display:flex;flex-direction:column;gap:.5rem">
-        ${exDone.map(id=>{const ex=EXERCISES.find(e=>e.id===id);return ex?`<div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px"><span style="font-size:1.2rem">${ex.icon}</span><div style="flex:1"><div style="font-weight:600;font-size:.83rem">${ex.name}</div><div style="font-size:.7rem;color:var(--text2)">${ex.duration} • ${ex.cal} cal</div></div><span class="badge b-green">✓</span></div>`:''}).join('')}
-        <div style="padding:.55rem .8rem;background:var(--bg3);border-radius:10px;display:flex;justify-content:space-between;margin-top:.2rem"><span style="font-size:.78rem;color:var(--text2)">Total Burned</span><span style="font-weight:700;color:var(--green)">${calBurned} kcal</span></div>
+        ${exDone.map(id=>{const ex=EXERCISES.find(e=>e.id===id);return ex?`
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px">
+          <span style="font-size:1.2rem">${ex.icon}</span>
+          <div style="flex:1"><div style="font-weight:600;font-size:.83rem">${ex.name}</div><div style="font-size:.7rem;color:var(--text2)">${ex.duration} • ${ex.cal} kcal</div></div>
+          <span class="badge b-green">✓</span>
+        </div>`:''}).join('')}
+        <div style="padding:.55rem .8rem;background:var(--bg3);border-radius:10px;display:flex;justify-content:space-between;margin-top:.2rem">
+          <span style="font-size:.78rem;color:var(--text2)">Total Burned</span>
+          <span style="font-weight:700;color:var(--green)">${calBurned} kcal</span>
+        </div>
       </div>`}
     </div>
     <div class="card">
       <div class="sec-title">Wellness Summary</div>
       <div style="display:flex;flex-direction:column;gap:.75rem">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">💧</span><div><div style="font-size:.83rem;font-weight:600">Water Intake</div><div style="font-size:.7rem;color:var(--text2)">Recommended daily</div></div></div>
-          <div style="font-size:1.1rem;font-weight:700;color:var(--cyan)">2.5 L</div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">💧</span><div><div style="font-size:.83rem;font-weight:600">Water Intake</div><div style="font-size:.7rem;color:var(--text2)">Recommended daily</div></div></div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--cyan)">2.5–3 L</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🌙</span><div><div style="font-size:.83rem;font-weight:600">Sleep Target</div><div style="font-size:.7rem;color:var(--text2)">For age ${STATE.user.age||25}</div></div></div>
-          <div style="font-size:1.1rem;font-weight:700;color:var(--accent2)">${(STATE.user.age||25)>60?'8-9':'7-8'} hrs</div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">🌙</span><div><div style="font-size:.83rem;font-weight:600">Sleep Target</div><div style="font-size:.7rem;color:var(--text2)">For age ${STATE.user.age||25}</div></div></div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--accent2)">${(STATE.user.age||25)>60?'8–9':'7–8'} hrs</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🧘</span><div><div style="font-size:.83rem;font-weight:600">Today's Status</div><div style="font-size:.7rem;color:var(--text2)">Activity level</div></div></div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">🧘</span><div><div style="font-size:.83rem;font-weight:600">Today's Status</div><div style="font-size:.7rem;color:var(--text2)">Activity level</div></div></div>
           <div style="font-size:1rem;font-weight:700;color:${exDone.length>0?'var(--green)':'var(--text2)'}">${exDone.length>2?'Very Active 💪':exDone.length>0?'Active 🏃':'Rest Day 😴'}</div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
-          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.5rem">🍽️</span><div><div style="font-size:.83rem;font-weight:600">Meals Logged</div><div style="font-size:.7rem;color:var(--text2)">Today</div></div></div>
+          <div style="display:flex;align-items:center;gap:.65rem"><span style="font-size:1.4rem">🍽️</span><div><div style="font-size:.83rem;font-weight:600">Meals Logged</div><div style="font-size:.7rem;color:var(--text2)">Today</div></div></div>
           <div style="font-size:1.1rem;font-weight:700;color:var(--amber)">${Array.isArray(log.food_log)?log.food_log.length:0} items</div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:0">
+    <div class="sec-title">Quick Actions</div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn btn-ghost" onclick="goTo('calories')">🔥 Log Calories</button>
+      <button class="btn btn-ghost" onclick="goTo('exercise')">🏋️ Log Exercise</button>
+      <button class="btn btn-ghost" onclick="goTo('hospitals')">🏥 Find Doctors</button>
+      <button class="btn btn-accent" onclick="goTo('chatbot')">🤖 Ask AI Doctor</button>
     </div>
   </div>`;
 }
@@ -772,7 +727,7 @@ async function renderHealth(pc){
 // ═══════════════ CALORIES ═══════════════
 async function renderCalories(pc){
   let log={cal_consumed:0,cal_goal:2000,protein:0,carbs:0,fat:0,food_log:[]};
-  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
   const calP=Math.min(100,Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
   const food=Array.isArray(log.food_log)?log.food_log:[];
 
@@ -804,13 +759,13 @@ async function renderCalories(pc){
               ${Math.abs((log.cal_goal||2000)-(log.cal_consumed||0))} kcal ${(log.cal_goal||2000)-(log.cal_consumed||0)>=0?'left':'over'}
             </span>
           </div>
-          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.6rem" onclick="showCalGoalModal()">Change Cal Goal</button>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.6rem" onclick="showCalGoalModal()">⚙️ Change Goal</button>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="sec-title">🤖 AI Calorie Estimator</div>
-      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">Describe your meal — AI estimates the nutrition</p>
+      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">Describe your meal — AI estimates the nutrition instantly</p>
       <div class="fg" style="margin-bottom:.75rem"><label>Describe your meal</label><textarea id="food-desc" placeholder="e.g. 2 idlis with sambar and coconut chutney, one banana, black coffee" rows="3"></textarea></div>
       <button class="btn btn-accent" style="width:100%" id="ai-est-btn" onclick="aiEstimateCalories()">🤖 Estimate with AI</button>
       <div id="ai-cal-result" style="margin-top:.75rem"></div>
@@ -864,9 +819,9 @@ async function aiEstimateCalories(){
     ${(data.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text2);margin-bottom:.25rem"><span>${i.name}</span><span style="color:var(--amber);font-weight:600">${i.calories} kcal</span></div>`).join('')}
     <div style="border-top:1px solid var(--border2);margin-top:.45rem;padding-top:.45rem;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--amber)">${data.total_calories} kcal</span></div>
     <div style="display:flex;gap:.65rem;margin-top:.4rem;font-size:.72rem;color:var(--text2)">
-      <span>P: <strong>${Math.round(data.total_protein||0)}g</strong></span>
-      <span>C: <strong>${Math.round(data.total_carbs||0)}g</strong></span>
-      <span>F: <strong>${Math.round(data.total_fat||0)}g</strong></span>
+      <span>Protein: <strong>${Math.round(data.total_protein||0)}g</strong></span>
+      <span>Carbs: <strong>${Math.round(data.total_carbs||0)}g</strong></span>
+      <span>Fat: <strong>${Math.round(data.total_fat||0)}g</strong></span>
     </div>
     <button class="btn btn-accent btn-sm" style="width:100%;margin-top:.65rem" onclick="addAiFood(${JSON.stringify(data).replace(/"/g,'&quot;')})">+ Add to My Log</button>
   </div>`;
@@ -875,8 +830,7 @@ async function aiEstimateCalories(){
 async function addAiFood(data){
   const desc=el('food-desc')?.value.trim()||'AI Meal';
   await api('/api/health/food','POST',{name:`AI: ${desc.slice(0,40)}`,cal:data.total_calories||0,protein:data.total_protein||0,carbs:data.total_carbs||0,fat:data.total_fat||0});
-  showNotif(`Added ${data.total_calories} kcal! 🍽️`,'success');
-  renderPage('calories');
+  showNotif(`Added ${data.total_calories} kcal! 🍽️`,'success');renderPage('calories');
 }
 
 async function logFood(){
@@ -897,7 +851,7 @@ function getExerciseList(age){
     {id:'walk',name:'Morning Walk',icon:'🚶',duration:'30 min',cal:120,benefit:'Cardio & metabolism',minAge:0,maxAge:150},
     {id:'yoga',name:'Yoga',icon:'🧘',duration:'40 min',cal:150,benefit:'Flexibility & stress relief',minAge:0,maxAge:150},
     {id:'breath',name:'Breathing Exercises',icon:'🌬️',duration:'15 min',cal:30,benefit:'Lung capacity',minAge:0,maxAge:150},
-    {id:'stretch',name:'Light Stretching',icon:'🤸',duration:'20 min',cal:50,benefit:'Flexibility',minAge:0,maxAge:150},
+    {id:'stretch',name:'Light Stretching',icon:'🤸',duration:'20 min',cal:50,benefit:'Flexibility & joints',minAge:0,maxAge:150},
     {id:'meditate',name:'Meditation',icon:'🌟',duration:'20 min',cal:20,benefit:'Mental wellness',minAge:0,maxAge:150},
     {id:'swim',name:'Swimming',icon:'🏊',duration:'30 min',cal:300,benefit:'Full body, low impact',minAge:12,maxAge:65},
     {id:'cycle',name:'Cycling',icon:'🚴',duration:'30 min',cal:280,benefit:'Leg strength & cardio',minAge:12,maxAge:60},
@@ -915,22 +869,21 @@ function getExerciseList(age){
 
 async function renderExercise(pc){
   let log={exercises:[]};
-  try{ const r=await api('/api/health/log'); if(r&&!r.error) log=r; }catch(e){}
+  try{const r=await api('/api/health/log');if(r&&!r.error)log=r;}catch(e){}
   const age=STATE.user.age||25;
   const EXERCISES=getExerciseList(age);
   const exDone=Array.isArray(log.exercises)?log.exercises:[];
   const totalCal=exDone.reduce((a,id)=>{const ex=EXERCISES.find(e=>e.id===id);return a+(ex?ex.cal:0);},0);
-
   let ageNote='';
   if(age>=65) ageNote='⚠️ Exercises selected for age 65+. Focus on gentle movements. Consult your doctor before starting.';
   else if(age>=55) ageNote='💡 Low-impact exercises prioritized for your age group.';
-  else if(age<15) ageNote='👶 Gentle exercises shown for your age. Focus on fun and flexibility!';
+  else if(age<15) ageNote='👶 Gentle exercises shown. Focus on fun and flexibility!';
 
   pc.innerHTML=`
   <div class="page-head"><h1>Exercise Dashboard</h1><p>Personalized for age ${age} • ${EXERCISES.length} exercises available</p></div>
   ${ageNote?`<div style="background:rgba(255,184,48,0.08);border:1px solid rgba(255,184,48,0.2);border-radius:10px;padding:.65rem .9rem;font-size:.78rem;color:var(--amber);margin-bottom:1.25rem">${ageNote}</div>`:''}
   <div class="stats-grid">
-    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${exDone.length}</div><div class="stat-lbl">Completed</div></div>
+    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${exDone.length}</div><div class="stat-lbl">Completed Today</div></div>
     <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div><div class="stat-val" style="color:var(--amber)">${totalCal}</div><div class="stat-lbl">Kcal Burned</div></div>
     <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">🎯</div><div class="stat-val" style="color:var(--accent)">${EXERCISES.length-exDone.length}</div><div class="stat-lbl">Remaining</div></div>
   </div>
@@ -952,75 +905,86 @@ async function renderExercise(pc){
 
 async function toggleEx(exId){
   await api('/api/health/exercise','POST',{exercise_id:exId});
-  showNotif('Exercise updated! 🔥','success');
-  renderPage('exercise');
+  showNotif('Exercise updated! 🔥','success');renderPage('exercise');
 }
 
 // ═══════════════ HOSPITALS ═══════════════
 async function renderHospitals(pc){
-  if(STATE.hospitalDetail){ await renderHospitalDetail(pc,STATE.hospitalDetail); return; }
+  if(STATE.hospitalDetail){await renderHospitalDetail(pc,STATE.hospitalDetail);return;}
   let hospitals=[];
-  try{ const r=await api('/api/hospitals'); if(Array.isArray(r)) hospitals=r; }catch(e){}
-
+  try{const r=await api('/api/hospitals');if(Array.isArray(r))hospitals=r;}catch(e){}
   if(!hospitals.length){
     pc.innerHTML=`<div class="page-head"><h1>Hospitals</h1></div>
-    <div class="empty-state"><span class="empty-icon">🏥</span><h3>No Hospitals Yet</h3><p>Run /api/init-data to load sample hospitals, or register a hospital account.</p></div>`;
+    <div class="empty-state"><span class="empty-icon">🏥</span><h3>Loading Hospitals…</h3><p>Please refresh the page</p><button class="btn btn-accent" onclick="renderPage('hospitals')">Refresh</button></div>`;
     return;
   }
   pc.innerHTML=`
-  <div class="page-head"><h1>Hospitals</h1><p>${hospitals.length} hospital${hospitals.length!==1?'s':''} available</p></div>
+  <div class="page-head"><h1>Hospitals in Tumkur</h1><p>${hospitals.length} hospitals available for appointments • Karnataka</p></div>
   <div class="hospitals-grid">
     ${hospitals.map((h,i)=>`
-    <div class="hosp-card" style="animation:fadeIn .3s ${i*0.06}s both" onclick="viewHospital(${h.id})">
+    <div class="hosp-card" style="animation-delay:${i*0.07}s" onclick="viewHospital(${h.id})">
       <div class="hosp-head">
         <div class="hosp-logo">🏥</div>
-        <div>
+        <div style="flex:1;min-width:0">
           <div class="hosp-name">${h.name}</div>
-          <div class="hosp-addr">📍 ${h.address?h.address+', ':''}${h.city}</div>
-          ${h.phone?`<div style="font-size:.7rem;color:var(--text2);margin-top:.1rem">📞 ${h.phone}</div>`:''}
+          <div class="hosp-addr">📍 ${h.address}${h.city?', '+h.city:''}</div>
+          ${h.phone?`<div style="font-size:.72rem;color:var(--accent);margin-top:.2rem">📞 ${h.phone}</div>`:''}
         </div>
       </div>
       <div class="hosp-meta">
         ${h.beds?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--cyan)">${h.beds}</div><div class="hosp-meta-lbl">Beds</div></div>`:''}
         <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--green)">${(h.doctors||[]).length}</div><div class="hosp-meta-lbl">Doctors</div></div>
         ${h.established?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--amber)">${h.established}</div><div class="hosp-meta-lbl">Est.</div></div>`:''}
-        ${h.h_type?`<div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--accent2);font-size:.8rem">${h.h_type}</div><div class="hosp-meta-lbl">Type</div></div>`:''}
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--accent2);font-size:.85rem">${h.h_type||'—'}</div><div class="hosp-meta-lbl">Type</div></div>
       </div>
-      ${h.services?.length?`<div class="hosp-services">${h.services.slice(0,4).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${h.services.length>4?`<span class="svc-tag">+${h.services.length-4}</span>`:''}</div>`:''}
-      <div class="hosp-cta">View Doctors & Book →</div>
+      ${h.services?.length?`<div class="hosp-services">${h.services.slice(0,5).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${h.services.length>5?`<span class="svc-tag">+${h.services.length-5} more</span>`:''}</div>`:''}
+      ${h.description?`<div class="hosp-desc">${h.description.slice(0,110)}${h.description.length>110?'…':''}</div>`:''}
+      <div class="hosp-cta">🗓️ View Doctors & Book Appointment →</div>
     </div>`).join('')}
   </div>`;
 }
 
-function viewHospital(hid){ STATE.hospitalDetail=hid; renderPage('hospitals'); }
+function viewHospital(hid){STATE.hospitalDetail=hid;renderPage('hospitals');}
 
 async function renderHospitalDetail(pc, hid){
   let h={name:'Hospital',doctors:[],services:[]};
-  try{ const r=await api(`/api/hospitals/${hid}`); if(r&&!r.error) h=r; }catch(e){}
+  try{const r=await api(`/api/hospitals/${hid}`);if(r&&!r.error)h=r;}catch(e){}
   const doctors=h.doctors||[];
 
   pc.innerHTML=`
   <div>
     <div class="hosp-detail-header">
-      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back</button>
-      <div><h2 style="font-size:1.1rem;font-weight:700">${h.name}</h2><p style="font-size:.78rem;color:var(--text2)">${h.address?h.address+', ':''}${h.city}${h.phone?' • '+h.phone:''}</p></div>
+      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back to Hospitals</button>
+      <div>
+        <h2 style="font-size:1.15rem;font-weight:700">${h.name}</h2>
+        <p style="font-size:.78rem;color:var(--text2)">📍 ${h.address}${h.city?', '+h.city:''}${h.phone?' • 📞 '+h.phone:''}</p>
+      </div>
     </div>
-    ${h.services?.length?`<div class="card" style="margin-bottom:1.1rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
-    ${h.description?`<div class="card" style="margin-bottom:1.1rem"><p style="font-size:.83rem;color:var(--text2);line-height:1.7">${h.description}</p></div>`:''}
-    <div class="sec-title">Available Doctors</div>
-    ${doctors.length===0?`<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed</p></div>`:
+    ${h.services?.length?`
+    <div class="card" style="margin-bottom:1.1rem">
+      <div class="sec-title">Services Offered</div>
+      <div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div>
+    </div>`:''}
+    ${h.description?`
+    <div class="card" style="margin-bottom:1.1rem">
+      <div class="sec-title">About</div>
+      <p style="font-size:.85rem;color:var(--text2);line-height:1.7">${h.description}</p>
+    </div>`:''}
+    <div class="sec-title">Available Doctors (${doctors.length})</div>
+    ${doctors.length===0?`<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed yet</p></div>`:
     `<div class="doctors-list">
       ${doctors.map(d=>`
       <div class="doc-card">
-        <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()[0]||'D'}</div>
+        <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()?.[0]||'D'}</div>
         <div class="doc-info">
           <div class="doc-name">${d.name}</div>
           <div class="doc-spec">${d.specialty||d.specialization||''}</div>
-          <div class="doc-meta">${d.experience?d.experience+' yrs exp':''}${d.fee?' • ₹'+d.fee+' consultation':''}</div>
+          <div class="doc-meta">${d.experience?d.experience+' yrs experience':''}${d.fee?' • ₹'+d.fee+' consultation fee':''}</div>
+          <div style="font-size:.72rem;color:var(--text3);margin-top:.2rem">Select a time slot below:</div>
           <div class="slots-wrap">
             ${(d.slots||[]).map(slot=>`<div class="slot" onclick="selectSlot(${h.id},'${d.name.replace(/'/g,"\\'")}','${(d.specialty||d.specialization||'').replace(/'/g,"\\'")}','${slot}',${d.fee||0})">${slot}</div>`).join('')}
           </div>
-          <div id="book-${h.id}-${d.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'')}"></div>
+          <div id="book-${h.id}-${d.name.replace(/\W+/g,'_')}"></div>
         </div>
       </div>`).join('')}
     </div>`}
@@ -1028,16 +992,17 @@ async function renderHospitalDetail(pc, hid){
 }
 
 let selSlot={};
-function selectSlot(hid, dname, dspec, slot, fee){
+function selectSlot(hid,dname,dspec,slot,fee){
   document.querySelectorAll('.slot.sel').forEach(s=>s.classList.remove('sel'));
-  if(event&&event.target) event.target.classList.add('sel');
+  if(event?.target) event.target.classList.add('sel');
   selSlot={hid,dname,dspec,slot,fee};
-  const safeId=dname.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+  const safeId=dname.replace(/\W+/g,'_');
   const bookEl=el(`book-${hid}-${safeId}`);
   if(bookEl) bookEl.innerHTML=`
-  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.5rem">
+  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.6rem;padding:.65rem;background:rgba(79,142,247,0.06);border-radius:10px;border:1px solid var(--border)">
+    <span style="font-size:.8rem;color:var(--text2)">📅 Select date:</span>
     <input type="date" id="book-date" style="padding:.35rem .65rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:.78rem" min="${new Date().toISOString().split('T')[0]}"/>
-    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">Book ${slot}</button>
+    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">🗓️ Confirm Booking — ${slot}</button>
   </div>`;
 }
 
@@ -1045,60 +1010,61 @@ async function bookAppointment(){
   const dateVal=el('book-date')?.value;
   if(!dateVal){showNotif('Please select a date','error');return;}
   const {hid,dname,dspec,slot,fee}=selSlot;
-  if(!hid){showNotif('Select a slot first','error');return;}
+  if(!hid){showNotif('Select a time slot first','error');return;}
   const res=await api('/api/appointments','POST',{hospital_id:hid,doctor_name:dname,doctor_spec:dspec,slot_date:dateVal,slot_time:slot,fee:parseInt(fee||0)});
   if(res.error){showNotif(res.error,'error');return;}
-  showNotif(`Appointment booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',6000);
+  showNotif(`✅ Appointment booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',7000);
   selSlot={};STATE.hospitalDetail=null;goTo('appointments');
 }
 
 // ═══════════════ CHATBOT ═══════════════
 function renderChatbot(pc){
   pc.innerHTML=`
-  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Always here for you</p></div>
+  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Book appointments, get health advice</p></div>
   <div class="chat-page card" style="padding:0;overflow:hidden">
     <div class="chat-top">
       <div class="bot-avatar">🤖</div>
       <div>
         <div class="bot-name">MedCare AI</div>
-        <div class="bot-status"><span class="status-dot"></span>Online — Ready to help</div>
-        <div style="font-size:.7rem;color:var(--text3)">Age-aware advice • Not a substitute for professional care</div>
+        <div class="bot-status"><span class="status-dot"></span>Online — Can book appointments!</div>
+        <div style="font-size:.7rem;color:var(--text3)">Age-aware advice • Tumkur hospital network • Not a substitute for professional care</div>
       </div>
     </div>
     <div class="quick-actions">
-      <button class="qa-btn" onclick="quickChat('I have a headache and fever')">🤒 Fever & Headache</button>
-      <button class="qa-btn" onclick="quickChat('I have back pain, what should I do?')">🦴 Back Pain</button>
-      <button class="qa-btn" onclick="quickChat('What exercises are safe for me?')">🏃 Safe Exercises</button>
-      <button class="qa-btn" onclick="quickChat('What foods help with weight loss?')">🥗 Diet Tips</button>
-      <button class="qa-btn" onclick="quickChat('I feel stressed and anxious')">😰 Stress</button>
-      <button class="qa-btn" onclick="quickChat('My blood sugar is high, diet advice?')">🩸 Blood Sugar</button>
-      <button class="qa-btn" onclick="quickChat('I have chest pain')">❤️ Chest Pain</button>
-      <button class="qa-btn" onclick="quickChat('Show me available doctors')">👨‍⚕️ Find Doctors</button>
+      <button class="qa-btn" onclick="quickChat('Show me all available doctors')">👨‍⚕️ All Doctors</button>
+      <button class="qa-btn" onclick="quickChat('I have a fever and headache')">🤒 Fever</button>
+      <button class="qa-btn" onclick="quickChat('I need to book a cardiologist')">❤️ Cardiologist</button>
+      <button class="qa-btn" onclick="quickChat('I have back pain')">🦴 Back Pain</button>
+      <button class="qa-btn" onclick="quickChat('I need a pediatrician for my child')">👶 Pediatrics</button>
+      <button class="qa-btn" onclick="quickChat('Book Dr. Ravi Kumar')">🗓️ Book Dr. Ravi</button>
+      <button class="qa-btn" onclick="quickChat('I have high blood sugar')">🩸 Blood Sugar</button>
+      <button class="qa-btn" onclick="quickChat('I need a skin doctor')">🧴 Dermatology</button>
+      <button class="qa-btn" onclick="quickChat('I have chest pain')">🚨 Chest Pain</button>
     </div>
     <div class="chat-msgs" id="chat-msgs">
       <div class="msg bot">
         <div class="msg-bot-av">🤖</div>
         <div>
-          <div class="msg-bubble">👋 Hi! I'm MedCare AI — your personal health assistant!\n\nI know you're ${STATE.user.age||25} years old, so I'll give you age-appropriate advice.\n\n• Tell me your symptoms\n• Ask health questions\n• Request exercise or diet guidance\n• Book appointments by mentioning a doctor's name\n\nWhat can I help you with today?</div>
+          <div class="msg-bubble">👋 Hi! I'm MedCare AI — your personal health assistant for Tumkur!\n\nI'm ${STATE.user.age||25} years old-aware, so I give personalized advice.\n\n🏥 I can:\n• Book doctor appointments instantly\n• Give health advice & home remedies\n• Help you find the right specialist\n\n💬 Try saying:\n"Book Dr. Ravi Kumar" or "I need a cardiologist"\n\nWhat can I help you with today?</div>
           <div class="msg-time">Just now</div>
         </div>
       </div>
     </div>
     <div class="chat-bottom">
-      <textarea class="chat-inp" id="chat-inp" placeholder="Describe symptoms or ask a health question…" rows="1" onkeydown="chatKey(event)"></textarea>
+      <textarea class="chat-inp" id="chat-inp" placeholder="Ask a health question or say 'Book Dr. [name]'…" rows="1" onkeydown="chatKey(event)"></textarea>
       <button class="chat-send" id="chat-send-btn" onclick="sendChat()">➤</button>
     </div>
   </div>`;
 }
 
-function quickChat(msg){ const inp=el('chat-inp'); if(inp)inp.value=msg; sendChat(); }
-function chatKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();} }
+function quickChat(msg){const inp=el('chat-inp');if(inp)inp.value=msg;sendChat();}
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 
 async function sendChat(){
   const inp=el('chat-inp'),btn=el('chat-send-btn'),msgs=el('chat-msgs');
   if(!inp||!msgs) return;
-  const text=inp.value.trim(); if(!text) return;
-  inp.value=''; btn.disabled=true;
+  const text=inp.value.trim();if(!text) return;
+  inp.value='';btn.disabled=true;
   const t=nowTime();
   msgs.innerHTML+=`<div class="msg user"><div class="msg-bubble">${text.replace(/</g,'&lt;')}</div><div class="msg-time">${t}</div></div>`;
   const typId='typ-'+Date.now();
@@ -1112,17 +1078,30 @@ async function sendChat(){
   msgs.innerHTML+=`<div class="msg bot"><div class="msg-bot-av">🤖</div><div><div class="msg-bubble">${reply.replace(/</g,'&lt;').replace(/\n/g,'<br/>')}</div><div class="msg-time">${nowTime()}</div></div></div>`;
   msgs.scrollTop=msgs.scrollHeight;
   btn.disabled=false;
+  // If appointment was booked, refresh appointments badge
+  if(reply.includes('Appointment requested successfully')) {
+    setTimeout(()=>showNotif('Appointment booked! Check Appointments tab 📅','info',5000),500);
+  }
 }
 
 // ═══════════════ APPOINTMENTS ═══════════════
 async function renderAppointments(pc){
   let appts=[];
-  try{ const r=await api('/api/appointments/user'); if(Array.isArray(r)) appts=r; }catch(e){}
+  try{const r=await api('/api/appointments/user');if(Array.isArray(r))appts=r;}catch(e){}
   pc.innerHTML=`
-  <div class="page-head"><h1>My Appointments</h1><p>Track and manage your bookings</p></div>
-  ${!appts.length?`<div class="empty-state"><span class="empty-icon">📋</span><h3>No Appointments Yet</h3><p>Book appointments from the Hospitals section</p><button class="btn btn-accent" style="margin-top:1rem" onclick="goTo('hospitals')">Browse Hospitals →</button></div>`:
+  <div class="page-head"><h1>My Appointments</h1><p>Track and manage all your bookings</p></div>
+  ${!appts.length?`
+  <div class="empty-state">
+    <span class="empty-icon">📋</span>
+    <h3>No Appointments Yet</h3>
+    <p>Book appointments from the Hospitals section or ask the AI Doctor</p>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+      <button class="btn btn-accent" onclick="goTo('hospitals')">🏥 Browse Hospitals</button>
+      <button class="btn btn-ghost" onclick="goTo('chatbot')">🤖 Ask AI Doctor</button>
+    </div>
+  </div>`:
   appts.map((a,i)=>`
-  <div class="appt-card" style="animation:fadeIn .3s ${i*0.05}s both">
+  <div class="appt-card" style="animation-delay:${i*0.05}s">
     <div class="appt-top">
       <div>
         <div class="appt-doctor">${a.doctor_name}</div>
@@ -1148,16 +1127,15 @@ async function renderAppointments(pc){
 async function cancelAppt(id){
   if(!confirm('Cancel this appointment?')) return;
   await api(`/api/appointments/${id}/status`,'PUT',{status:'cancelled'});
-  showNotif('Appointment cancelled','success');
-  renderPage('appointments');
+  showNotif('Appointment cancelled','success');renderPage('appointments');
 }
 
 // ═══════════════ REMINDERS ═══════════════
 async function renderReminders(pc){
   let rems=[];
-  try{ const r=await api('/api/reminders'); if(Array.isArray(r)) rems=r; }catch(e){}
+  try{const r=await api('/api/reminders');if(Array.isArray(r))rems=r;}catch(e){}
   pc.innerHTML=`
-  <div class="page-head"><h1>Medication Reminders</h1><p>Alarm notifications at set times</p></div>
+  <div class="page-head"><h1>Medication Reminders</h1><p>Alarm notifications at your set times</p></div>
   <div class="card" style="margin-bottom:1.5rem">
     <div class="sec-title">Add New Reminder</div>
     <div class="form-row cols2" style="margin-bottom:.75rem">
@@ -1166,20 +1144,17 @@ async function renderReminders(pc){
     </div>
     <div class="form-row cols2">
       <div class="fg"><label>Frequency</label><select id="rem-freq"><option>Daily</option><option>Twice Daily</option><option>Three times Daily</option><option>Weekly</option><option>As Needed</option></select></div>
-      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" style="width:100%" onclick="addReminder()">+ Set Alarm</button></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" style="width:100%" onclick="addReminder()">⏰ Set Alarm</button></div>
     </div>
   </div>
   <div class="sec-title">Active Reminders</div>
-  ${!rems.length?`<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add medications above to get alarm notifications</p></div>`:
+  ${!rems.length?`<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add your medications above — you'll get browser alarm notifications at the set time</p></div>`:
   `<div class="reminder-list">
     ${rems.map(r=>`
     <div class="rem-card">
       <div class="rem-icon">💊</div>
-      <div class="rem-info">
-        <div class="rem-name">${r.name}</div>
-        <div class="rem-time">⏰ ${r.time_str} • ${r.frequency}</div>
-      </div>
-      <span class="badge b-green">Active</span>
+      <div class="rem-info"><div class="rem-name">${r.name}</div><div class="rem-time">⏰ ${r.time_str} • ${r.frequency}</div></div>
+      <span class="badge b-green" style="margin-right:.5rem">Active</span>
       <button class="btn btn-danger btn-sm" onclick="deleteReminder(${r.id})">Remove</button>
     </div>`).join('')}
   </div>`}`;
@@ -1189,42 +1164,37 @@ async function addReminder(){
   const name=el('rem-name')?.value.trim(),time=el('rem-time')?.value,freq=el('rem-freq')?.value;
   if(!name||!time){showNotif('Enter medication name and time','error');return;}
   await api('/api/reminders','POST',{name,time_str:time,frequency:freq||'Daily'});
-  showNotif(`Reminder set for ${name} at ${time}! ⏰`,'success');
-  renderPage('reminders');
+  showNotif(`Reminder set for ${name} at ${time}! ⏰`,'success');renderPage('reminders');
 }
 
 async function deleteReminder(id){
   await api(`/api/reminders/${id}`,'DELETE');
-  showNotif('Reminder removed','success');
-  renderPage('reminders');
+  showNotif('Reminder removed','success');renderPage('reminders');
 }
 
 // ═══════════════ HOSPITAL PORTAL ═══════════════
 const HOSP_PAGES=[{id:'hdash',icon:'📊',label:'Dashboard'},{id:'happts',icon:'📅',label:'Appointments'},{id:'hprofile',icon:'⚙️',label:'Profile'}];
 
 function renderHospitalPortal(){
-  document.title='MedCare Hospital';
+  document.title='MedCare Hospital Portal';
   const u=STATE.user,h=STATE.hospital;
   const initials=u.name?u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2):'H';
   if(!STATE.page||!HOSP_PAGES.find(p=>p.id===STATE.page)) STATE.page='hdash';
   el('app').innerHTML=`
   <div class="mob-header">
-    <div class="mob-logo-wrap">
-      <div class="mob-logo-icon">${LOGO_SVG}</div>
-      <span class="mob-logo">MEDCARE</span>
-    </div>
+    <div class="mob-logo-wrap"><div class="mob-logo-icon">🏥</div><span class="mob-logo">MEDCARE</span></div>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
   <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
   <div class="app-shell">
     <nav class="sidebar" id="sidebar">
-      <div class="sb-logo"><div class="sb-logo-icon">${LOGO_SVG}</div><h2>HOSPITAL</h2></div>
+      <div class="sb-logo"><div class="sb-logo-icon">🏥</div><h2>HOSPITAL</h2></div>
       <div class="nav-label">Portal</div>
       ${HOSP_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="hGoTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
       <div class="sb-footer">
         <div class="user-chip">
           <div class="uc-av" style="background:linear-gradient(135deg,var(--accent),var(--cyan))">${initials}</div>
-          <div class="uc-info"><div class="uc-name">${h?.name||u.name}</div><div class="uc-role">${h?.h_type||'Hospital'}</div></div>
+          <div class="uc-info"><div class="uc-name">${h?.name||u.name}</div><div class="uc-role">${h?.h_type||'Hospital'} • ${h?.city||'Tumkur'}</div></div>
           <button class="logout-btn" onclick="logout()">⏏</button>
         </div>
       </div>
@@ -1236,14 +1206,13 @@ function renderHospitalPortal(){
 
 function hGoTo(page){
   STATE.page=page;
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(HOSP_PAGES.find(p=>p.id===page)?.label)));
-  closeSidebar(); hRenderPage(page);
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')===`hGoTo('${page}')`));
+  closeSidebar();hRenderPage(page);
 }
 
 async function hRenderPage(page){
-  const pc=el('page-content');
-  if(!pc) return;
-  pc.innerHTML=`<div class="loading"><div class="spin"></div> Loading…</div>`;
+  const pc=el('page-content');if(!pc)return;
+  pc.innerHTML=`<div class="loading"><div class="spin"></div>Loading…</div>`;
   if(page==='hdash') await renderHDash(pc);
   if(page==='happts') await renderHAppts(pc);
   if(page==='hprofile') await renderHProfile(pc);
@@ -1251,13 +1220,13 @@ async function hRenderPage(page){
 
 async function renderHDash(pc){
   let appts=[];
-  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
+  try{const r=await api('/api/appointments/hospital');if(Array.isArray(r))appts=r;}catch(e){}
   const h=STATE.hospital;
   const pending=appts.filter(a=>a.status==='pending').length;
   const accepted=appts.filter(a=>a.status==='accepted').length;
-  const rejected=appts.filter(a=>a.status==='rejected'||a.status==='cancelled').length;
+  const rejected=appts.filter(a=>['rejected','cancelled'].includes(a.status)).length;
   pc.innerHTML=`
-  <div class="page-head"><h1>Dashboard</h1><p>${h?.name} • ${h?.city}, ${h?.state||'Karnataka'}</p></div>
+  <div class="page-head"><h1>Hospital Dashboard</h1><p>${h?.name} • ${h?.city}, Karnataka</p></div>
   <div class="hosp-portal-stats">
     <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">⏳</div><div class="stat-val" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending</div></div>
     <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${accepted}</div><div class="stat-lbl">Confirmed</div></div>
@@ -1276,10 +1245,8 @@ async function renderHDash(pc){
           <td><div>${fmtDate(a.slot_date)}</div><div style="font-size:.72rem;color:var(--text3)">${a.slot_time}</div></td>
           <td>₹${a.fee||0}</td>
           <td><span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span></td>
-          <td>
-            ${a.status==='pending'?`<div style="display:flex;gap:.3rem"><button class="btn btn-success btn-sm" onclick="hUpdateAppt(${a.id},'accepted')">✅</button><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">❌</button></div>`:
-            a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button>`:'—'}
-          </td>
+          <td>${a.status==='pending'?`<div style="display:flex;gap:.3rem"><button class="btn btn-success btn-sm" onclick="hUpdateAppt(${a.id},'accepted')">✅</button><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">❌</button></div>`:
+          a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button>`:'—'}</td>
         </tr>`).join('')}
       </tbody>
     </table></div>`}
@@ -1288,17 +1255,14 @@ async function renderHDash(pc){
 
 async function renderHAppts(pc){
   let appts=[];
-  try{ const r=await api('/api/appointments/hospital'); if(Array.isArray(r)) appts=r; }catch(e){}
+  try{const r=await api('/api/appointments/hospital');if(Array.isArray(r))appts=r;}catch(e){}
   pc.innerHTML=`
   <div class="page-head"><h1>Manage Appointments</h1><p>Accept or reject patient bookings</p></div>
-  ${appts.length===0?`<div class="empty-state"><span class="empty-icon">📭</span><h3>No Appointments</h3><p>Patient bookings appear here</p></div>`:
+  ${appts.length===0?`<div class="empty-state"><span class="empty-icon">📭</span><h3>No Appointments Yet</h3><p>Patient bookings will appear here</p></div>`:
   appts.map((a,i)=>`
-  <div class="appt-card" style="animation:fadeIn .3s ${i*0.05}s both">
+  <div class="appt-card" style="animation-delay:${i*0.05}s">
     <div class="appt-top">
-      <div>
-        <div class="appt-doctor">${a.user_name}</div>
-        <div class="appt-spec">Dr: ${a.doctor_name}${a.doctor_spec?' — '+a.doctor_spec:''}</div>
-      </div>
+      <div><div class="appt-doctor">${a.user_name}</div><div class="appt-spec">Dr: ${a.doctor_name}${a.doctor_spec?' — '+a.doctor_spec:''}</div></div>
       <span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span>
     </div>
     <div class="appt-grid">
@@ -1313,7 +1277,7 @@ async function renderHAppts(pc){
   </div>`).join('')}`;
 }
 
-async function hUpdateAppt(id, status){
+async function hUpdateAppt(id,status){
   await api(`/api/appointments/${id}/status`,'PUT',{status});
   showNotif(`Appointment ${status}! ${status==='accepted'?'✅':'❌'}`,'success');
   hRenderPage(STATE.page);
@@ -1329,7 +1293,7 @@ async function renderHProfile(pc){
     <div class="g2">
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Hospital Name</div><div style="font-weight:700">${h.name||'—'}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Reg. Number</div><div style="font-weight:700">${h.reg_number||'—'}</div></div>
-      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Address</div><div style="font-weight:700">${h.address?h.address+', ':''} ${h.city}, ${h.state||''} ${h.pincode||''}</div></div>
+      <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Address</div><div style="font-weight:700">${h.address?h.address+', ':''} ${h.city||''}, ${h.state||''} ${h.pincode||''}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Type / Beds</div><div style="font-weight:700">${h.h_type||'—'} • ${h.beds||'?'} beds</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Phone</div><div style="font-weight:700">${h.phone||'—'}</div></div>
       <div><div style="font-size:.7rem;color:var(--text2);margin-bottom:.2rem">Established</div><div style="font-weight:700">${h.established||'—'}</div></div>
@@ -1341,7 +1305,7 @@ async function renderHProfile(pc){
     <div class="sec-title">Doctors (${doctors.length})</div>
     ${doctors.length===0?`<p style="color:var(--text3);font-size:.83rem">No doctors added yet.</p>`:
     doctors.map(d=>`<div class="doc-card" style="margin-bottom:.65rem">
-      <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()[0]||'D'}</div>
+      <div class="doc-av">${(d.name||'D').split(' ').filter(Boolean).pop()?.[0]||'D'}</div>
       <div class="doc-info">
         <div class="doc-name">${d.name}</div>
         <div class="doc-spec">${d.specialty||d.specialization||''}</div>
@@ -1353,23 +1317,29 @@ async function renderHProfile(pc){
 }
 
 // ═══════════════ MODAL ═══════════════
-function showModal(title, body){
+function showModal(title,body){
   const div=document.createElement('div');
   div.className='modal-overlay';div.id='modal-overlay';
   div.innerHTML=`<div class="modal-box"><div class="modal-head"><div class="modal-title">${title}</div><button class="modal-close" onclick="closeModal()">✕</button></div>${body}</div>`;
   div.onclick=e=>{if(e.target===div)closeModal();};
   document.body.appendChild(div);
 }
-function closeModal(){ el('modal-overlay')?.remove(); }
+function closeModal(){el('modal-overlay')?.remove();}
 
 // ═══════════════ INIT ═══════════════
 async function init(){
   try{
     const res=await api('/api/me');
-    if(res.user){ STATE.user=res.user; STATE.hospital=res.hospital||null; startAlarmCheck(); }
+    if(res.user){STATE.user=res.user;STATE.hospital=res.hospital||null;startAlarmCheck();}
   }catch(e){}
   render();
 }
+
+// Register service worker for PWA
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/static/sw.js').catch(()=>{});
+}
+
 init();
 </script>
 </body>

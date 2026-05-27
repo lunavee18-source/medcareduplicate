@@ -548,12 +548,189 @@ def init_data():
     if Hospital.query.first():
         return jsonify({"msg": "Already initialized"})
     seed = [
-        {"name":"District Hospital Tumakuru","address":"B.H. Road","city":"Tumkur","phone":"0816-2271234","h_type":"Government","beds":300,"established":1960,"reg_number":"GOV-TK-001","services":["General Medicine","Pediatrics","Emergency","Surgery","Maternity"],"doctors":[{"name":"Ravi Kumar","specialty":"General Medicine","specialization":"General Medicine","experience":15,"fee":200,"slots":["09:00 AM","11:00 AM","03:00 PM"]},{"name":"Anita S","specialty":"Pediatrics","specialization":"Pediatrics","experience":10,"fee":250,"slots":["10:00 AM","02:00 PM"]}]},
-        {"name":"Siddaganga Hospital","address":"Siddaganga Road","city":"Tumkur","phone":"0816-2277890","h_type":"Trust","beds":200,"established":1980,"reg_number":"TRS-TK-002","services":["Cardiology","Neurology","Orthopedics","ICU"],"doctors":[{"name":"Mohan R","specialty":"Cardiology","specialization":"Cardiology","experience":20,"fee":500,"slots":["09:30 AM","01:00 PM","04:00 PM"]},{"name":"Priya K","specialty":"Neurology","specialization":"Neurology","experience":12,"fee":450,"slots":["10:30 AM","03:30 PM"]}]},
-        {"name":"Shridevi Hospital","address":"Shridevi Nagar","city":"Tumkur","phone":"0816-2265432","h_type":"Private","beds":150,"established":1995,"reg_number":"PVT-TK-003","services":["Orthopedics","ENT","Dermatology","Physiotherapy"],"doctors":[{"name":"Shankar B","specialty":"Orthopedics","specialization":"Orthopedics","experience":18,"fee":400,"slots":["09:00 AM","12:00 PM","05:00 PM"]},{"name":"Neha P","specialty":"ENT","specialization":"ENT","experience":8,"fee":300,"slots":["11:00 AM","04:00 PM"]}]},
-        {"name":"Adarsha Nursing Home","address":"Gandhi Nagar","city":"Tumkur","phone":"0816-2289876","h_type":"Private","beds":50,"established":2005,"reg_number":"PVT-TK-004","services":["Dermatology","Gynecology","General Medicine"],"doctors":[{"name":"Suresh M","specialty":"Dermatology","specialization":"Dermatology","experience":12,"fee":350,"slots":["10:00 AM","02:00 PM","06:00 PM"]}]},
-        {"name":"Vinayaka Hospital","address":"Vinayaka Circle","city":"Tumkur","phone":"0816-2254321","h_type":"Private","beds":80,"established":2010,"reg_number":"PVT-TK-005","services":["General Physician","Diabetes Care","Cardiology"],"doctors":[{"name":"Arjun V","specialty":"General Physician","specialization":"General Physician","experience":10,"fee":300,"slots":["09:00 AM","11:30 AM","03:00 PM","05:30 PM"]}]}
-    ]
+    {
+        "name": "District Hospital Tumakuru",
+        "address": "B.H. Road, Near Bus Stand",
+        "city": "Tumkur",
+        "phone": "0816-2271234",
+        "h_type": "Government",
+        "beds": 300,
+        "established": 1960,
+        "reg_number": "GOV-TK-001",
+        "services": [
+            "General Medicine", "Pediatrics", "Emergency",
+            "Surgery", "Maternity", "Orthopedics"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Ravi Kumar",
+                "specialty": "General Medicine",
+                "experience": 15,
+                "fee": 200,
+                "slots": ["09:00 AM", "11:00 AM", "03:00 PM"]
+            },
+            {
+                "name": "Dr. Anita S",
+                "specialty": "Pediatrics",
+                "experience": 10,
+                "fee": 250,
+                "slots": ["10:00 AM", "02:00 PM"]
+            },
+            {
+                "name": "Dr. Basavaraju M",
+                "specialty": "Surgery",
+                "experience": 18,
+                "fee": 300,
+                "slots": ["09:30 AM", "01:00 PM"]
+            }
+        ]
+    },
+
+    {
+        "name": "Siddaganga Hospital",
+        "address": "Siddaganga Road",
+        "city": "Tumkur",
+        "phone": "0816-2277890",
+        "h_type": "Trust",
+        "beds": 200,
+        "established": 1980,
+        "reg_number": "TRS-TK-002",
+        "services": [
+            "Cardiology", "Neurology", "Orthopedics", "ICU",
+            "General Medicine", "Diagnostics"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Mohan R",
+                "specialty": "Cardiology",
+                "experience": 20,
+                "fee": 500,
+                "slots": ["09:30 AM", "01:00 PM", "04:00 PM"]
+            },
+            {
+                "name": "Dr. Priya K",
+                "specialty": "Neurology",
+                "experience": 12,
+                "fee": 450,
+                "slots": ["10:30 AM", "03:30 PM"]
+            },
+            {
+                "name": "Dr. Shankar B",
+                "specialty": "Orthopedics",
+                "experience": 16,
+                "fee": 400,
+                "slots": ["09:00 AM", "12:00 PM"]
+            }
+        ]
+    },
+
+    {
+        "name": "Shridevi Hospital",
+        "address": "Shridevi Nagar",
+        "city": "Tumkur",
+        "phone": "0816-2265432",
+        "h_type": "Private",
+        "beds": 150,
+        "established": 1995,
+        "reg_number": "PVT-TK-003",
+        "services": [
+            "Orthopedics", "ENT", "Dermatology",
+            "Physiotherapy", "General Medicine"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Shankar B",
+                "specialty": "Orthopedics",
+                "experience": 18,
+                "fee": 400,
+                "slots": ["09:00 AM", "12:00 PM", "05:00 PM"]
+            },
+            {
+                "name": "Dr. Neha P",
+                "specialty": "ENT",
+                "experience": 8,
+                "fee": 300,
+                "slots": ["11:00 AM", "04:00 PM"]
+            },
+            {
+                "name": "Dr. Suresh M",
+                "specialty": "Dermatology",
+                "experience": 12,
+                "fee": 350,
+                "slots": ["10:00 AM", "02:00 PM"]
+            }
+        ]
+    },
+
+    {
+        "name": "Adarsha Nursing Home",
+        "address": "Gandhi Nagar",
+        "city": "Tumkur",
+        "phone": "0816-2289876",
+        "h_type": "Private",
+        "beds": 50,
+        "established": 2005,
+        "reg_number": "PVT-TK-004",
+        "services": [
+            "Dermatology", "Gynecology", "General Medicine",
+            "Minor Surgery", "Outpatient Care"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Suresh M",
+                "specialty": "Dermatology",
+                "experience": 12,
+                "fee": 350,
+                "slots": ["10:00 AM", "02:00 PM", "06:00 PM"]
+            },
+            {
+                "name": "Dr. Lakshmi R",
+                "specialty": "Gynecology",
+                "experience": 14,
+                "fee": 300,
+                "slots": ["09:30 AM", "01:30 PM"]
+            }
+        ]
+    },
+
+    {
+        "name": "Vinayaka Hospital",
+        "address": "Vinayaka Circle",
+        "city": "Tumkur",
+        "phone": "0816-2254321",
+        "h_type": "Private",
+        "beds": 80,
+        "established": 2010,
+        "reg_number": "PVT-TK-005",
+        "services": [
+            "General Medicine", "Cardiology",
+            "Diabetes Care", "Neurology", "Diagnostics"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Arjun V",
+                "specialty": "General Physician",
+                "experience": 10,
+                "fee": 300,
+                "slots": ["09:00 AM", "11:30 AM", "03:00 PM"]
+            },
+            {
+                "name": "Dr. Mohan R",
+                "specialty": "Cardiology",
+                "experience": 20,
+                "fee": 500,
+                "slots": ["10:00 AM", "01:00 PM", "05:00 PM"]
+            },
+            {
+                "name": "Dr. Priya K",
+                "specialty": "Diabetology",
+                "experience": 10,
+                "fee": 350,
+                "slots": ["10:30 AM", "04:00 PM"]
+            }
+        ]
+    }
+]
     admin = User(name="Admin User", email="admin@medcare.com",
                  password=generate_password_hash("admin123"), role="user", age=30, gender="Male")
     db.session.add(admin)

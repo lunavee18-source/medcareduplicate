@@ -30,6 +30,10 @@ if GROQ_API_KEY:
 else:
     print("GROQ KEY MISSING — fallback mode")
 
+    @app.route("/")
+    def home():
+        return "MedCare Backend is Live 🚀"
+
     @app.before_request
     def make_session_permanent():
         session.permanent = True

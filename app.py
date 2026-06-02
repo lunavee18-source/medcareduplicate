@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, session, render_template, send_from_d
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from dotenv import load_dotenv
 from groq import Groq
 import os, json, secrets
@@ -12,8 +12,9 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///medcare.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
 CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
 
@@ -23,6 +24,10 @@ if GROQ_API_KEY:
     print("GROQ READY")
 else:
     print("GROQ KEY MISSING — fallback mode")
+
+    @app.before_request
+    def make_session_permanent():
+        session.permanent = True
 
 # ─────────────── MODELS ───────────────
 
@@ -198,6 +203,8 @@ def login():
     u = User.query.filter_by(email=d['email'].lower().strip()).first()
     if not u or not check_password_hash(u.password, d['password']):
         return jsonify({'error': 'Invalid email or password'}), 401
+    session.clear()
+    session.permanent = True
     session['user_id'] = u.id
     session['role'] = u.role
     result = {'success': True, 'user': user_dict(u)}
@@ -545,215 +552,206 @@ def ai_calories():
 
 @app.route('/api/init-data')
 def init_data():
+
     if Hospital.query.first():
         return jsonify({"msg": "Already initialized"})
+
     seed = [
-    {
-        "name": "District Hospital Tumakuru",
-        "address": "B.H. Road, Near Bus Stand",
-        "city": "Tumkur",
-        "phone": "0816-2271234",
-        "h_type": "Government",
-        "beds": 300,
-        "established": 1960,
-        "reg_number": "GOV-TK-001",
-        "services": [
-            "General Medicine", "Pediatrics", "Emergency",
-            "Surgery", "Maternity", "Orthopedics"
-        ],
-        "doctors": [
-            {
-                "name": "Dr. Ravi Kumar",
-                "specialty": "General Medicine",
-                "experience": 15,
-                "fee": 200,
-                "slots": ["09:00 AM", "11:00 AM", "03:00 PM"]
-            },
-            {
-                "name": "Dr. Anita S",
-                "specialty": "Pediatrics",
-                "experience": 10,
-                "fee": 250,
-                "slots": ["10:00 AM", "02:00 PM"]
-            },
-            {
-                "name": "Dr. Basavaraju M",
-                "specialty": "Surgery",
-                "experience": 18,
-                "fee": 300,
-                "slots": ["09:30 AM", "01:00 PM"]
-            }
-        ]
-    },
 
-    {
-        "name": "Siddaganga Hospital",
-        "address": "Siddaganga Road",
-        "city": "Tumkur",
-        "phone": "0816-2277890",
-        "h_type": "Trust",
-        "beds": 200,
-        "established": 1980,
-        "reg_number": "TRS-TK-002",
-        "services": [
-            "Cardiology", "Neurology", "Orthopedics", "ICU",
-            "General Medicine", "Diagnostics"
-        ],
-        "doctors": [
-            {
-                "name": "Dr. Mohan R",
-                "specialty": "Cardiology",
-                "experience": 20,
-                "fee": 500,
-                "slots": ["09:30 AM", "01:00 PM", "04:00 PM"]
-            },
-            {
-                "name": "Dr. Priya K",
-                "specialty": "Neurology",
-                "experience": 12,
-                "fee": 450,
-                "slots": ["10:30 AM", "03:30 PM"]
-            },
-            {
-                "name": "Dr. Shankar B",
-                "specialty": "Orthopedics",
-                "experience": 16,
-                "fee": 400,
-                "slots": ["09:00 AM", "12:00 PM"]
-            }
-        ]
-    },
+        {
+            "name": "District Hospital Tumakuru",
+            "address": "B.H. Road, Near Bus Stand",
+            "city": "Tumkur",
+            "phone": "0816-2271234",
+            "h_type": "Government",
+            "beds": 300,
+            "established": 1960,
+            "reg_number": "GOV-TK-001",
+            "services": [
+                "General Medicine",
+                "Pediatrics",
+                "Emergency",
+                "Surgery",
+                "Maternity",
+                "Orthopedics"
+            ],
+            "doctors": [
+                {
+                    "name": "Dr. Ravi Kumar",
+                    "specialty": "General Medicine",
+                    "experience": 15,
+                    "fee": 200,
+                    "slots": ["09:00 AM", "11:00 AM", "03:00 PM"]
+                },
+                {
+                    "name": "Dr. Anita S",
+                    "specialty": "Pediatrics",
+                    "experience": 10,
+                    "fee": 250,
+                    "slots": ["10:00 AM", "02:00 PM"]
+                }
+            ]
+        },
 
-    {
-        "name": "Shridevi Hospital",
-        "address": "Shridevi Nagar",
-        "city": "Tumkur",
-        "phone": "0816-2265432",
-        "h_type": "Private",
-        "beds": 150,
-        "established": 1995,
-        "reg_number": "PVT-TK-003",
-        "services": [
-            "Orthopedics", "ENT", "Dermatology",
-            "Physiotherapy", "General Medicine"
-        ],
-        "doctors": [
-            {
-                "name": "Dr. Shankar B",
-                "specialty": "Orthopedics",
-                "experience": 18,
-                "fee": 400,
-                "slots": ["09:00 AM", "12:00 PM", "05:00 PM"]
-            },
-            {
-                "name": "Dr. Neha P",
-                "specialty": "ENT",
-                "experience": 8,
-                "fee": 300,
-                "slots": ["11:00 AM", "04:00 PM"]
-            },
-            {
-                "name": "Dr. Suresh M",
-                "specialty": "Dermatology",
-                "experience": 12,
-                "fee": 350,
-                "slots": ["10:00 AM", "02:00 PM"]
-            }
-        ]
-    },
+        {
+            "name": "Siddaganga Hospital",
+            "address": "Siddaganga Road",
+            "city": "Tumkur",
+            "phone": "0816-2277890",
+            "h_type": "Trust",
+            "beds": 200,
+            "established": 1980,
+            "reg_number": "TRS-TK-002",
+            "services": [
+                "Cardiology",
+                "Neurology",
+                "Orthopedics",
+                "ICU"
+            ],
+            "doctors": [
+                {
+                    "name": "Dr. Mohan R",
+                    "specialty": "Cardiology",
+                    "experience": 20,
+                    "fee": 500,
+                    "slots": ["09:30 AM", "01:00 PM", "04:00 PM"]
+                },
+                {
+                    "name": "Dr. Priya K",
+                    "specialty": "Neurology",
+                    "experience": 12,
+                    "fee": 450,
+                    "slots": ["10:30 AM", "03:30 PM"]
+                }
+            ]
+        },
 
-    {
-        "name": "Adarsha Nursing Home",
-        "address": "Gandhi Nagar",
-        "city": "Tumkur",
-        "phone": "0816-2289876",
-        "h_type": "Private",
-        "beds": 50,
-        "established": 2005,
-        "reg_number": "PVT-TK-004",
-        "services": [
-            "Dermatology", "Gynecology", "General Medicine",
-            "Minor Surgery", "Outpatient Care"
-        ],
-        "doctors": [
-            {
-                "name": "Dr. Suresh M",
-                "specialty": "Dermatology",
-                "experience": 12,
-                "fee": 350,
-                "slots": ["10:00 AM", "02:00 PM", "06:00 PM"]
-            },
-            {
-                "name": "Dr. Lakshmi R",
-                "specialty": "Gynecology",
-                "experience": 14,
-                "fee": 300,
-                "slots": ["09:30 AM", "01:30 PM"]
-            }
-        ]
-    },
+        {
+            "name": "Shridevi Hospital",
+            "address": "Shridevi Nagar",
+            "city": "Tumkur",
+            "phone": "0816-2265432",
+            "h_type": "Private",
+            "beds": 150,
+            "established": 1995,
+            "reg_number": "PVT-TK-003",
+            "services": [
+                "Orthopedics",
+                "ENT",
+                "Dermatology",
+                "Physiotherapy"
+            ],
+            "doctors": [
+                {
+                    "name": "Dr. Shankar B",
+                    "specialty": "Orthopedics",
+                    "experience": 18,
+                    "fee": 400,
+                    "slots": ["09:00 AM", "12:00 PM", "05:00 PM"]
+                }
+            ]
+        },
 
-    {
-        "name": "Vinayaka Hospital",
-        "address": "Vinayaka Circle",
-        "city": "Tumkur",
-        "phone": "0816-2254321",
-        "h_type": "Private",
-        "beds": 80,
-        "established": 2010,
-        "reg_number": "PVT-TK-005",
-        "services": [
-            "General Medicine", "Cardiology",
-            "Diabetes Care", "Neurology", "Diagnostics"
-        ],
-        "doctors": [
-            {
-                "name": "Dr. Arjun V",
-                "specialty": "General Physician",
-                "experience": 10,
-                "fee": 300,
-                "slots": ["09:00 AM", "11:30 AM", "03:00 PM"]
-            },
-            {
-                "name": "Dr. Mohan R",
-                "specialty": "Cardiology",
-                "experience": 20,
-                "fee": 500,
-                "slots": ["10:00 AM", "01:00 PM", "05:00 PM"]
-            },
-            {
-                "name": "Dr. Priya K",
-                "specialty": "Diabetology",
-                "experience": 10,
-                "fee": 350,
-                "slots": ["10:30 AM", "04:00 PM"]
-            }
-        ]
-    }
-]
-    admin = User(name="Admin User", email="admin@medcare.com",
-                 password=generate_password_hash("admin123"), role="user", age=30, gender="Male")
+        {
+            "name": "Adarsha Nursing Home",
+            "address": "Gandhi Nagar",
+            "city": "Tumkur",
+            "phone": "0816-2289876",
+            "h_type": "Private",
+            "beds": 50,
+            "established": 2005,
+            "reg_number": "PVT-TK-004",
+            "services": [
+                "Dermatology",
+                "Gynecology",
+                "General Medicine"
+            ],
+            "doctors": [
+                {
+                    "name": "Dr. Suresh M",
+                    "specialty": "Dermatology",
+                    "experience": 12,
+                    "fee": 350,
+                    "slots": ["10:00 AM", "02:00 PM", "06:00 PM"]
+                }
+            ]
+        },
+
+        {
+            "name": "Vinayaka Hospital",
+            "address": "Vinayaka Circle",
+            "city": "Tumkur",
+            "phone": "0816-2254321",
+            "h_type": "Private",
+            "beds": 80,
+            "established": 2010,
+            "reg_number": "PVT-TK-005",
+            "services": [
+                "General Medicine",
+                "Cardiology",
+                "Diabetes Care"
+            ],
+            "doctors": [
+                {
+                    "name": "Dr. Arjun V",
+                    "specialty": "General Physician",
+                    "experience": 10,
+                    "fee": 300,
+                    "slots": ["09:00 AM", "11:30 AM", "03:00 PM"]
+                }
+            ]
+        }
+    ]
+
+    admin = User(
+        name="Admin User",
+        username="admin",
+        password=generate_password_hash("admin123"),
+        role="user",
+        age=30,
+        gender="Male"
+    )
+
     db.session.add(admin)
     db.session.flush()
+
     for s in seed:
-        u = User(name=s['name'], email=f"{s['name'].lower().replace(' ','.')}@hospital.com",
-                 password=generate_password_hash("hospital123"), role="hospital")
+
+        uname = s['name'].lower().replace(' ', '_')
+
+        u = User(
+            name=s['name'],
+            username=uname,
+            password=generate_password_hash("hospital123"),
+            role="hospital"
+        )
+
         db.session.add(u)
         db.session.flush()
-        h = Hospital(user_id=u.id, name=s['name'], address=s['address'], city=s['city'],
-                     state='Karnataka', phone=s['phone'], h_type=s['h_type'], beds=s['beds'],
-                     established=s['established'], reg_number=s['reg_number'],
-                     services=json.dumps(s['services']), doctors_json=json.dumps(s['doctors']))
+
+        h = Hospital(
+            user_id=u.id,
+            name=s['name'],
+            address=s['address'],
+            city=s['city'],
+            state='Karnataka',
+            phone=s['phone'],
+            h_type=s['h_type'],
+            beds=s['beds'],
+            established=s['established'],
+            reg_number=s['reg_number'],
+            services=json.dumps(s['services']),
+            doctors_json=json.dumps(s['doctors'])
+        )
+
         db.session.add(h)
+
     db.session.commit()
-    return jsonify({"msg": "Seeded successfully! Login: admin@medcare.com / admin123"})
 
-# ─────────────── SERVE ───────────────
-
-@app.route('/')
-@app.route('/<path:path>')
-def serve(path=''):
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    return jsonify({
+        "msg": "Seeded successfully!",
+        "login": {
+            "username": "admin",
+            "password": "admin123"
+        }
+    })

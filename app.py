@@ -13,9 +13,14 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///medcare.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
+
 CORS(app, supports_credentials=True)
+
 db = SQLAlchemy(app)
 
 client = None

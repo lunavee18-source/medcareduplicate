@@ -15,7 +15,6 @@ app.secret_key = secrets.token_hex(32)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///medcare.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
 
@@ -471,7 +470,6 @@ def ai_chat():
                 doctor_context_lines.append(f"Dr. {d['name']} ({spec}) at {h.name}, {h.city}")
         doctor_context = "\n".join(doctor_context_lines)
 
-        # Cancel appointment
         if "cancel" in msg:
             appt = Appointment.query.filter_by(user_id=uid).order_by(Appointment.id.desc()).first()
             if appt and appt.status not in ['cancelled','rejected']:
@@ -480,7 +478,6 @@ def ai_chat():
                 return jsonify({"reply": f"Your appointment with {appt.doctor_name} on {appt.slot_date} at {appt.slot_time} has been cancelled."})
             return jsonify({"reply": "No active appointment found to cancel."})
 
-        # Book appointment via AI
         is_booking = any(x in msg for x in ["book","appointment","doctor","consult","hospital"])
         if is_booking:
             for h in hospitals:
@@ -499,7 +496,6 @@ def ai_chat():
                         return jsonify({"reply": f"✅ Appointment requested!\n\n👨‍⚕️ Doctor: {d['name']}\n🏥 Hospital: {h.name}\n📅 Date: {date.today().isoformat()}\n⏰ Time: 10:00 AM\n\nStatus: Pending hospital confirmation."})
             return jsonify({"reply": f"I can help you book an appointment. Here are our available doctors:\n\n{doctor_context}\n\nPlease mention the doctor's name or go to the Hospitals section to book directly."})
 
-        # Groq AI fallback
         def simple_fallback(msg):
             if any(x in msg for x in ["stress","anxious","anxiety"]): return "Try deep breathing: inhale 4s, hold 4s, exhale 6s. A 10-minute walk also helps greatly. If persistent, consider speaking with a professional."
             if "back pain" in msg: return "Rest, apply warm compress, avoid heavy lifting. Gentle stretching helps. See a doctor if pain lasts more than 3 days."
@@ -551,7 +547,6 @@ def ai_calories():
         description = d.get('description', '')
         if not description: return jsonify({'error': 'No description'}), 400
         if client is None:
-            # Fallback estimate
             return jsonify({'total_calories':400,'total_protein':15,'total_carbs':50,'total_fat':12,'items':[{'name':description,'calories':400}]})
         response = client.chat.completions.create(
             model="llama-3.1-70b-versatile",
@@ -573,12 +568,10 @@ def ai_calories():
 
 @app.route('/api/init-data')
 def init_data():
-
     if Hospital.query.first():
         return jsonify({"msg": "Already initialized"})
 
     seed = [
-
         {
             "name": "District Hospital Tumakuru",
             "address": "B.H. Road, Near Bus Stand",
@@ -588,32 +581,12 @@ def init_data():
             "beds": 300,
             "established": 1960,
             "reg_number": "GOV-TK-001",
-            "services": [
-                "General Medicine",
-                "Pediatrics",
-                "Emergency",
-                "Surgery",
-                "Maternity",
-                "Orthopedics"
-            ],
+            "services": ["General Medicine","Pediatrics","Emergency","Surgery","Maternity","Orthopedics"],
             "doctors": [
-                {
-                    "name": "Dr. Ravi Kumar",
-                    "specialty": "General Medicine",
-                    "experience": 15,
-                    "fee": 200,
-                    "slots": ["09:00 AM", "11:00 AM", "03:00 PM"]
-                },
-                {
-                    "name": "Dr. Anita S",
-                    "specialty": "Pediatrics",
-                    "experience": 10,
-                    "fee": 250,
-                    "slots": ["10:00 AM", "02:00 PM"]
-                }
+                {"name": "Dr. Ravi Kumar","specialty": "General Medicine","experience": 15,"fee": 200,"slots": ["09:00 AM","11:00 AM","03:00 PM"]},
+                {"name": "Dr. Anita S","specialty": "Pediatrics","experience": 10,"fee": 250,"slots": ["10:00 AM","02:00 PM"]}
             ]
         },
-
         {
             "name": "Siddaganga Hospital",
             "address": "Siddaganga Road",
@@ -623,30 +596,12 @@ def init_data():
             "beds": 200,
             "established": 1980,
             "reg_number": "TRS-TK-002",
-            "services": [
-                "Cardiology",
-                "Neurology",
-                "Orthopedics",
-                "ICU"
-            ],
+            "services": ["Cardiology","Neurology","Orthopedics","ICU"],
             "doctors": [
-                {
-                    "name": "Dr. Mohan R",
-                    "specialty": "Cardiology",
-                    "experience": 20,
-                    "fee": 500,
-                    "slots": ["09:30 AM", "01:00 PM", "04:00 PM"]
-                },
-                {
-                    "name": "Dr. Priya K",
-                    "specialty": "Neurology",
-                    "experience": 12,
-                    "fee": 450,
-                    "slots": ["10:30 AM", "03:30 PM"]
-                }
+                {"name": "Dr. Mohan R","specialty": "Cardiology","experience": 20,"fee": 500,"slots": ["09:30 AM","01:00 PM","04:00 PM"]},
+                {"name": "Dr. Priya K","specialty": "Neurology","experience": 12,"fee": 450,"slots": ["10:30 AM","03:30 PM"]}
             ]
         },
-
         {
             "name": "Shridevi Hospital",
             "address": "Shridevi Nagar",
@@ -656,23 +611,11 @@ def init_data():
             "beds": 150,
             "established": 1995,
             "reg_number": "PVT-TK-003",
-            "services": [
-                "Orthopedics",
-                "ENT",
-                "Dermatology",
-                "Physiotherapy"
-            ],
+            "services": ["Orthopedics","ENT","Dermatology","Physiotherapy"],
             "doctors": [
-                {
-                    "name": "Dr. Shankar B",
-                    "specialty": "Orthopedics",
-                    "experience": 18,
-                    "fee": 400,
-                    "slots": ["09:00 AM", "12:00 PM", "05:00 PM"]
-                }
+                {"name": "Dr. Shankar B","specialty": "Orthopedics","experience": 18,"fee": 400,"slots": ["09:00 AM","12:00 PM","05:00 PM"]}
             ]
         },
-
         {
             "name": "Adarsha Nursing Home",
             "address": "Gandhi Nagar",
@@ -682,22 +625,11 @@ def init_data():
             "beds": 50,
             "established": 2005,
             "reg_number": "PVT-TK-004",
-            "services": [
-                "Dermatology",
-                "Gynecology",
-                "General Medicine"
-            ],
+            "services": ["Dermatology","Gynecology","General Medicine"],
             "doctors": [
-                {
-                    "name": "Dr. Suresh M",
-                    "specialty": "Dermatology",
-                    "experience": 12,
-                    "fee": 350,
-                    "slots": ["10:00 AM", "02:00 PM", "06:00 PM"]
-                }
+                {"name": "Dr. Suresh M","specialty": "Dermatology","experience": 12,"fee": 350,"slots": ["10:00 AM","02:00 PM","06:00 PM"]}
             ]
         },
-
         {
             "name": "Vinayaka Hospital",
             "address": "Vinayaka Circle",
@@ -707,72 +639,42 @@ def init_data():
             "beds": 80,
             "established": 2010,
             "reg_number": "PVT-TK-005",
-            "services": [
-                "General Medicine",
-                "Cardiology",
-                "Diabetes Care"
-            ],
+            "services": ["General Medicine","Cardiology","Diabetes Care"],
             "doctors": [
-                {
-                    "name": "Dr. Arjun V",
-                    "specialty": "General Physician",
-                    "experience": 10,
-                    "fee": 300,
-                    "slots": ["09:00 AM", "11:30 AM", "03:00 PM"]
-                }
+                {"name": "Dr. Arjun V","specialty": "General Physician","experience": 10,"fee": 300,"slots": ["09:00 AM","11:30 AM","03:00 PM"]}
             ]
         }
     ]
 
     admin = User(
         name="Admin User",
-        username="admin",
+        email="admin@medcare.com",
         password=generate_password_hash("admin123"),
         role="user",
         age=30,
         gender="Male"
     )
-
     db.session.add(admin)
     db.session.flush()
 
     for s in seed:
-
-        uname = s['name'].lower().replace(' ', '_')
-
         u = User(
             name=s['name'],
-            username=uname,
+            email=s['name'].lower().replace(' ','_') + "@medcare.com",
             password=generate_password_hash("hospital123"),
             role="hospital"
         )
-
         db.session.add(u)
         db.session.flush()
-
         h = Hospital(
-            user_id=u.id,
-            name=s['name'],
-            address=s['address'],
-            city=s['city'],
-            state='Karnataka',
-            phone=s['phone'],
-            h_type=s['h_type'],
-            beds=s['beds'],
-            established=s['established'],
+            user_id=u.id, name=s['name'], address=s['address'],
+            city=s['city'], state='Karnataka', phone=s['phone'],
+            h_type=s['h_type'], beds=s['beds'], established=s['established'],
             reg_number=s['reg_number'],
             services=json.dumps(s['services']),
             doctors_json=json.dumps(s['doctors'])
         )
-
         db.session.add(h)
 
     db.session.commit()
-
-    return jsonify({
-        "msg": "Seeded successfully!",
-        "login": {
-            "username": "admin",
-            "password": "admin123"
-        }
-    })
+    return jsonify({"msg": "Seeded successfully!"})

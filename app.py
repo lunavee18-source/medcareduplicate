@@ -93,6 +93,8 @@ class HealthLog(db.Model):
     fat          = db.Column(db.Float, default=0)
     food_log     = db.Column(db.Text, default='[]')
     exercises    = db.Column(db.Text, default='[]')
+    steps_today  = db.Column(db.Integer, default=0)
+    steps_total  = db.Column(db.Integer, default=0)
 
 class Appointment(db.Model):
     id           = db.Column(db.Integer, primary_key=True)
@@ -267,6 +269,8 @@ def get_health_log():
         'food_log': json.loads(log.food_log or '[]'),
         'exercises': json.loads(log.exercises or '[]'),
         'log_date': log.log_date,
+        'steps_today': log.steps_today or 0,
+        'steps_total': log.steps_total or 0,
     })
 
 @app.route('/api/health/food', methods=['POST'])
@@ -332,6 +336,20 @@ def set_goal():
     if 'cal_goal' in d: log.cal_goal = int(d['cal_goal'])
     db.session.commit()
     return jsonify({'success': True})
+
+@app.route('/api/health/steps', methods=['POST'])
+def update_steps():
+    uid = session.get('user_id')
+    if not uid: return jsonify({'error': 'Not logged in'}), 401
+    d = request.json or {}
+    steps = int(d.get('steps', 0))
+    log = get_or_create_log(uid)
+    log.steps_today = steps
+    # Accumulate total steps across all days
+    all_logs = HealthLog.query.filter_by(user_id=uid).all()
+    log.steps_total = sum((l.steps_today or 0) for l in all_logs if l.log_date != log.log_date) + steps
+    db.session.commit()
+    return jsonify({'success': True, 'steps_today': log.steps_today, 'steps_total': log.steps_total})
 
 # ─────────────── HOSPITALS ───────────────
 
@@ -646,7 +664,6 @@ def init_data():
                 {"name": "Dr. Arjun V","specialty": "General Physician","experience": 10,"fee": 300,"slots": ["09:00 AM","11:30 AM","03:00 PM"]}
             ]
         },
-    
         {
             "name": "Kasturba Hospital",
             "address": "Kasturba Road, Tumkur",

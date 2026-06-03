@@ -46,21 +46,7 @@ def service_worker():
 def icons(filename):
     return send_from_directory('static/icons', filename)
 
-@app.route("/")
-def home():
-    return send_from_directory('static', 'index.html')
 
-@app.route("/manifest.json")
-def manifest():
-    return send_from_directory('static', 'manifest.json')
-
-@app.route("/sw.js")
-def service_worker():
-    return send_from_directory('static', 'sw.js')
-
-@app.route("/icons/<path:filename>")
-def icons(filename):
-    return send_from_directory('static/icons', filename)
 
 # ─────────────── MODELS ───────────────
 

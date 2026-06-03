@@ -23,15 +23,28 @@ CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
 
 client = None
-if GROQ_API_KEY:
-    client = Groq(api_key=GROQ_API_KEY)
-    print("GROQ READY")
 else:
     print("GROQ KEY MISSING — fallback mode")
 
 @app.before_request
 def make_session_permanent():
     session.permanent = True
+
+@app.route("/")
+def home():
+    return send_from_directory('static', 'index.html')
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+@app.route("/sw.js")
+def service_worker():
+    return send_from_directory('static', 'sw.js')
+
+@app.route("/icons/<path:filename>")
+def icons(filename):
+    return send_from_directory('static/icons', filename)
 
 @app.route("/")
 def home():

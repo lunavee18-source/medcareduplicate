@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session, render_template, send_from_directory
+from flask import Flask, jsonify, request, session, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,7 +19,6 @@ app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
 
 CORS(app, supports_credentials=True)
-
 db = SQLAlchemy(app)
 
 client = None
@@ -27,7 +26,7 @@ if GROQ_API_KEY:
     client = Groq(api_key=GROQ_API_KEY)
     print("GROQ READY")
 else:
-    print("GROQ KEY MISSING — fallback mode")
+    print("GROQ KEY MISSING - fallback mode")
 
 @app.before_request
 def make_session_permanent():
@@ -49,20 +48,18 @@ def service_worker():
 def icons(filename):
     return send_from_directory('static/icons', filename)
 
-
-
-# ─────────────── MODELS ───────────────
+# MODELS
 
 class User(db.Model):
-    id           = db.Column(db.Integer, primary_key=True)
-    name         = db.Column(db.String(120))
-    email        = db.Column(db.String(120), unique=True, nullable=False)
-    password     = db.Column(db.String(256), nullable=False)
-    role         = db.Column(db.String(20), default='user')
-    age          = db.Column(db.Integer, default=25)
-    gender       = db.Column(db.String(20))
-    phone        = db.Column(db.String(20))
-    created_at   = db.Column(db.DateTime, default=datetime.utcnow)
+    id         = db.Column(db.Integer, primary_key=True)
+    name       = db.Column(db.String(120))
+    email      = db.Column(db.String(120), unique=True, nullable=False)
+    password   = db.Column(db.String(256), nullable=False)
+    role       = db.Column(db.String(20), default='user')
+    age        = db.Column(db.Integer, default=25)
+    gender     = db.Column(db.String(20))
+    phone      = db.Column(db.String(20))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Hospital(db.Model):
     id           = db.Column(db.Integer, primary_key=True)
@@ -95,31 +92,31 @@ class HealthLog(db.Model):
     exercises    = db.Column(db.Text, default='[]')
 
 class Appointment(db.Model):
-    id           = db.Column(db.Integer, primary_key=True)
-    user_id      = db.Column(db.Integer)
-    hospital_id  = db.Column(db.Integer)
-    doctor_name  = db.Column(db.String(120))
-    doctor_spec  = db.Column(db.String(100))
-    slot_date    = db.Column(db.String(30))
-    slot_time    = db.Column(db.String(20))
-    fee          = db.Column(db.Integer, default=0)
-    notes        = db.Column(db.Text, default='')
-    reminder_at  = db.Column(db.String(50), default='')
-    status       = db.Column(db.String(20), default='pending')
-    created_at   = db.Column(db.DateTime, default=datetime.utcnow)
+    id          = db.Column(db.Integer, primary_key=True)
+    user_id     = db.Column(db.Integer)
+    hospital_id = db.Column(db.Integer)
+    doctor_name = db.Column(db.String(120))
+    doctor_spec = db.Column(db.String(100))
+    slot_date   = db.Column(db.String(30))
+    slot_time   = db.Column(db.String(20))
+    fee         = db.Column(db.Integer, default=0)
+    notes       = db.Column(db.Text, default='')
+    reminder_at = db.Column(db.String(50), default='')
+    status      = db.Column(db.String(20), default='pending')
+    created_at  = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Reminder(db.Model):
-    id           = db.Column(db.Integer, primary_key=True)
-    user_id      = db.Column(db.Integer)
-    name         = db.Column(db.String(200))
-    time_str     = db.Column(db.String(10))
-    frequency    = db.Column(db.String(30), default='Daily')
-    active       = db.Column(db.Boolean, default=True)
+    id        = db.Column(db.Integer, primary_key=True)
+    user_id   = db.Column(db.Integer)
+    name      = db.Column(db.String(200))
+    time_str  = db.Column(db.String(10))
+    frequency = db.Column(db.String(30), default='Daily')
+    active    = db.Column(db.Boolean, default=True)
 
 with app.app_context():
     db.create_all()
 
-# ─────────────── HELPERS ───────────────
+# HELPERS
 
 def get_or_create_log(uid):
     today = date.today().isoformat()
@@ -162,7 +159,7 @@ def appt_dict(a):
         'status':a.status,'created_at':str(a.created_at)
     }
 
-# ─────────────── AUTH ───────────────
+# AUTH
 
 @app.route('/api/signup/user', methods=['POST'])
 def signup_user():
@@ -254,7 +251,7 @@ def me():
         if h: result['hospital'] = hospital_dict(h)
     return jsonify(result)
 
-# ─────────────── HEALTH ───────────────
+# HEALTH
 
 @app.route('/api/health/log', methods=['GET'])
 def get_health_log():
@@ -333,7 +330,7 @@ def set_goal():
     db.session.commit()
     return jsonify({'success': True})
 
-# ─────────────── HOSPITALS ───────────────
+# HOSPITALS
 
 @app.route('/api/hospitals', methods=['GET'])
 def get_hospitals():
@@ -367,7 +364,7 @@ def update_hospital(hid):
     db.session.commit()
     return jsonify(hospital_dict(h))
 
-# ─────────────── APPOINTMENTS ───────────────
+# APPOINTMENTS
 
 @app.route('/api/appointments', methods=['POST'])
 def book_appointment():
@@ -414,7 +411,7 @@ def update_appt_status(aid):
     db.session.commit()
     return jsonify({'success': True, 'appointment': appt_dict(a)})
 
-# ─────────────── REMINDERS ───────────────
+# REMINDERS
 
 @app.route('/api/reminders', methods=['GET'])
 def get_reminders():
@@ -445,7 +442,7 @@ def delete_reminder(rid):
         db.session.commit()
     return jsonify({'success': True})
 
-# ─────────────── AI ───────────────
+# AI
 
 @app.route('/api/ai/chat', methods=['POST'])
 def ai_chat():
@@ -495,33 +492,31 @@ def ai_chat():
                         )
                         db.session.add(appt)
                         db.session.commit()
-                        return jsonify({"reply": f"✅ Appointment requested!\n\n👨‍⚕️ Doctor: {d['name']}\n🏥 Hospital: {h.name}\n📅 Date: {date.today().isoformat()}\n⏰ Time: 10:00 AM\n\nStatus: Pending hospital confirmation."})
-            return jsonify({"reply": f"I can help you book an appointment. Here are our available doctors:\n\n{doctor_context}\n\nPlease mention the doctor's name or go to the Hospitals section to book directly."})
+                        return jsonify({"reply": f"Appointment requested!\n\nDoctor: {d['name']}\nHospital: {h.name}\nDate: {date.today().isoformat()}\nTime: 10:00 AM\n\nStatus: Pending hospital confirmation."})
+            return jsonify({"reply": f"I can help you book an appointment. Available doctors:\n\n{doctor_context}\n\nPlease mention the doctor's name or go to the Hospitals section to book directly."})
 
         def simple_fallback(msg):
             if any(x in msg for x in ["stress","anxious","anxiety"]): return "Try deep breathing: inhale 4s, hold 4s, exhale 6s. A 10-minute walk also helps greatly. If persistent, consider speaking with a professional."
             if "back pain" in msg: return "Rest, apply warm compress, avoid heavy lifting. Gentle stretching helps. See a doctor if pain lasts more than 3 days."
-            if any(x in msg for x in ["fever","temperature"]): return "Rest and stay hydrated. Monitor temperature. If above 103°F / 39.4°C or lasting more than 3 days, please see a doctor."
-            if any(x in msg for x in ["sugar","diabetes"]): return "Avoid refined sugars and white rice. Eat fiber-rich foods — vegetables, whole grains, legumes. Stay hydrated and walk 30 mins daily."
-            if any(x in msg for x in ["chest","heart"]): return "⚠️ Chest pain can be serious. If severe or accompanied by shortness of breath, please go to the emergency room immediately or call emergency services."
+            if any(x in msg for x in ["fever","temperature"]): return "Rest and stay hydrated. Monitor temperature. If above 103F / 39.4C or lasting more than 3 days, please see a doctor."
+            if any(x in msg for x in ["sugar","diabetes"]): return "Avoid refined sugars and white rice. Eat fiber-rich foods like vegetables, whole grains, legumes. Stay hydrated and walk 30 mins daily."
+            if any(x in msg for x in ["chest","heart"]): return "Chest pain can be serious. If severe or with shortness of breath, please go to the emergency room immediately."
             if any(x in msg for x in ["headache","head"]): return "Rest in a quiet, dark room. Stay hydrated. A cold or warm compress on your forehead may help. If severe or sudden, see a doctor."
             if any(x in msg for x in ["cold","cough","flu"]): return "Rest, drink warm fluids, honey-ginger tea helps. Steam inhalation for congestion. See a doctor if symptoms worsen after 5 days."
-            return f"I'm here to help with your health questions. Based on your age ({user_age}), I can give personalized advice. Please describe your symptoms in detail."
+            if any(x in msg for x in ["weight","fat","diet","food"]): return "For weight management: eat more vegetables, fruits, whole grains. Avoid processed foods and sugary drinks. Exercise 30 mins daily. Stay hydrated."
+            return f"I am here to help with your health questions. Based on your age ({user_age}), I can give personalized advice. Please describe your symptoms in detail."
 
         try:
             if client:
-                system_prompt = f"""You are MedCare AI, a helpful health assistant app.
+                system_prompt = f"""You are MedCare AI, a helpful health assistant.
 User age: {user_age} years old.
-Available doctors in our network:
+Available doctors:
 {doctor_context}
-
 Rules:
-- Give helpful, clear health advice appropriate for age {user_age}
-- For serious symptoms (chest pain, difficulty breathing), always recommend emergency care
-- For booking appointments, refer to the doctors listed above
+- Give helpful, clear health advice
+- For serious symptoms, recommend emergency care
 - Keep responses concise and friendly
-- Use emojis sparingly for readability
-- Never diagnose — suggest and recommend professional consultation"""
+- Never diagnose, only suggest and recommend professional consultation"""
                 response = client.chat.completions.create(
                     model="llama-3.1-70b-versatile",
                     messages=[{"role":"system","content":system_prompt}] + messages,
@@ -538,7 +533,7 @@ Rules:
         return jsonify({"reply": reply})
     except Exception as e:
         print("AI crash:", e)
-        return jsonify({"reply": "I'm having trouble right now. Please try again."}), 200
+        return jsonify({"reply": "I am having trouble right now. Please try again."}), 200
 
 @app.route('/api/ai/calories', methods=['POST'])
 def ai_calories():
@@ -553,7 +548,7 @@ def ai_calories():
         response = client.chat.completions.create(
             model="llama-3.1-70b-versatile",
             messages=[
-                {"role":"system","content":"You are a nutrition expert. Return ONLY valid JSON. No markdown, no backticks, no explanation. Format: {\"total_calories\":number,\"total_protein\":number,\"total_carbs\":number,\"total_fat\":number,\"items\":[{\"name\":string,\"calories\":number}]}"},
+                {"role":"system","content":"You are a nutrition expert. Return ONLY valid JSON. No markdown, no backticks. Format: {\"total_calories\":number,\"total_protein\":number,\"total_carbs\":number,\"total_fat\":number,\"items\":[{\"name\":string,\"calories\":number}]}"},
                 {"role":"user","content":f"Estimate nutrition for: {description}"}
             ],
             max_tokens=400
@@ -566,22 +561,18 @@ def ai_calories():
         print("Calories error:", e)
         return jsonify({'total_calories':350,'total_protein':12,'total_carbs':45,'total_fat':10,'items':[{'name':'Estimated meal','calories':350}]})
 
-# ─────────────── SEED DATA ───────────────
+# SEED DATA - auto seeds on startup
 
-@app.route('/api/init-data')
-def init_data():
+def seed_hospitals():
     if Hospital.query.first():
-        return jsonify({"msg": "Already initialized"})
+        return
 
     seed = [
         {
             "name": "District Hospital Tumakuru",
             "address": "B.H. Road, Near Bus Stand",
-            "city": "Tumkur",
-            "phone": "0816-2271234",
-            "h_type": "Government",
-            "beds": 300,
-            "established": 1960,
+            "city": "Tumkur", "phone": "0816-2271234",
+            "h_type": "Government", "beds": 300, "established": 1960,
             "reg_number": "GOV-TK-001",
             "services": ["General Medicine","Pediatrics","Emergency","Surgery","Maternity","Orthopedics"],
             "doctors": [
@@ -592,11 +583,8 @@ def init_data():
         {
             "name": "Siddaganga Hospital",
             "address": "Siddaganga Road",
-            "city": "Tumkur",
-            "phone": "0816-2277890",
-            "h_type": "Trust",
-            "beds": 200,
-            "established": 1980,
+            "city": "Tumkur", "phone": "0816-2277890",
+            "h_type": "Trust", "beds": 200, "established": 1980,
             "reg_number": "TRS-TK-002",
             "services": ["Cardiology","Neurology","Orthopedics","ICU"],
             "doctors": [
@@ -607,11 +595,8 @@ def init_data():
         {
             "name": "Shridevi Hospital",
             "address": "Shridevi Nagar",
-            "city": "Tumkur",
-            "phone": "0816-2265432",
-            "h_type": "Private",
-            "beds": 150,
-            "established": 1995,
+            "city": "Tumkur", "phone": "0816-2265432",
+            "h_type": "Private", "beds": 150, "established": 1995,
             "reg_number": "PVT-TK-003",
             "services": ["Orthopedics","ENT","Dermatology","Physiotherapy"],
             "doctors": [
@@ -621,11 +606,8 @@ def init_data():
         {
             "name": "Adarsha Nursing Home",
             "address": "Gandhi Nagar",
-            "city": "Tumkur",
-            "phone": "0816-2289876",
-            "h_type": "Private",
-            "beds": 50,
-            "established": 2005,
+            "city": "Tumkur", "phone": "0816-2289876",
+            "h_type": "Private", "beds": 50, "established": 2005,
             "reg_number": "PVT-TK-004",
             "services": ["Dermatology","Gynecology","General Medicine"],
             "doctors": [
@@ -635,34 +617,37 @@ def init_data():
         {
             "name": "Vinayaka Hospital",
             "address": "Vinayaka Circle",
-            "city": "Tumkur",
-            "phone": "0816-2254321",
-            "h_type": "Private",
-            "beds": 80,
-            "established": 2010,
+            "city": "Tumkur", "phone": "0816-2254321",
+            "h_type": "Private", "beds": 80, "established": 2010,
             "reg_number": "PVT-TK-005",
             "services": ["General Medicine","Cardiology","Diabetes Care"],
             "doctors": [
                 {"name": "Dr. Arjun V","specialty": "General Physician","experience": 10,"fee": 300,"slots": ["09:00 AM","11:30 AM","03:00 PM"]}
             ]
+        },
+        {
+            "name": "Kasturba Hospital",
+            "address": "Kasturba Road, Tumkur",
+            "city": "Tumkur", "phone": "0816-2256789",
+            "h_type": "Private", "beds": 120, "established": 1998,
+            "reg_number": "PVT-TK-006",
+            "services": ["General Medicine","Gynecology","Pediatrics","Surgery","Orthopedics","Cardiology","Dermatology","ENT"],
+            "doctors": [
+                {"name": "Dr. Durgaprasad","specialty": "General Medicine","experience": 18,"fee": 400,"slots": ["09:00 AM","11:00 AM","03:00 PM"]},
+                {"name": "Dr. Kavitha R","specialty": "Gynecology","experience": 14,"fee": 450,"slots": ["10:00 AM","02:00 PM"]},
+                {"name": "Dr. Sunil K","specialty": "Pediatrics","experience": 10,"fee": 350,"slots": ["09:30 AM","01:00 PM"]},
+                {"name": "Dr. Ramesh T","specialty": "Orthopedics","experience": 16,"fee": 500,"slots": ["11:00 AM","04:00 PM"]},
+                {"name": "Dr. Nisha P","specialty": "Dermatology","experience": 8,"fee": 300,"slots": ["10:30 AM","03:00 PM"]}
+            ]
         }
     ]
 
-    admin = User(
-        name="Admin User",
-        email="admin@medcare.com",
-        password=generate_password_hash("admin123"),
-        role="user",
-        age=30,
-        gender="Male"
-    )
-    db.session.add(admin)
-    db.session.flush()
-
     for s in seed:
+        email = s['name'].lower().replace(' ','_') + "@medcare.com"
+        if User.query.filter_by(email=email).first():
+            continue
         u = User(
-            name=s['name'],
-            email=s['name'].lower().replace(' ','_') + "@medcare.com",
+            name=s['name'], email=email,
             password=generate_password_hash("hospital123"),
             role="hospital"
         )
@@ -679,4 +664,16 @@ def init_data():
         db.session.add(h)
 
     db.session.commit()
-    return jsonify({"msg": "Seeded successfully!"})
+    print("Hospitals seeded!")
+
+with app.app_context():
+    db.create_all()
+    seed_hospitals()
+
+@app.route('/api/init-data')
+def init_data():
+    seed_hospitals()
+    hospitals = Hospital.query.all()
+    return jsonify({"msg": f"Done! {len(hospitals)} hospitals in database."})
+ENDOFFILE
+echo "Done"

@@ -23,6 +23,9 @@ CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
 
 client = None
+if GROQ_API_KEY:
+    client = Groq(api_key=GROQ_API_KEY)
+    print("GROQ READY")
 else:
     print("GROQ KEY MISSING — fallback mode")
 

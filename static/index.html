@@ -1,157 +1,1508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>MedCare</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0a0f2e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>MedCare — Your Health Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════ RESET & ROOT ═══════════════ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#060b1f;--bg2:#0c1230;--bg3:#111830;--card:#141a35;--card2:#1b2242;
+  --accent:#4f8ef7;--accent2:#7c5ffc;--green:#00e5a0;--red:#ff4d6d;
+  --amber:#ffb830;--cyan:#00d4ff;--pink:#ff6eb4;--white:#f0f4ff;
+  --text:#e8eeff;--text2:#8892b0;--text3:#4a5568;
+  --border:rgba(79,142,247,0.18);--border2:rgba(255,255,255,0.07);
+  --glow:rgba(79,142,247,0.25);--shadow:0 20px 60px rgba(0,0,0,0.5);
+  --r:14px;--r2:20px;--r3:28px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+input,select,textarea{font-family:inherit;outline:none}
 
-  <!-- PWA Meta -->
-  <meta name="theme-color" content="#2563eb" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="MedCare" />
-  <meta name="description" content="Your personal health companion — appointments, reminders, AI health chat." />
+/* ═══════════════ ANIMATED BG ═══════════════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.12;animation:orbFloat 12s ease-in-out infinite}
+.glow-orb:nth-child(1){width:700px;height:700px;background:radial-gradient(circle,#4f8ef7,transparent);top:-20%;left:-10%;animation-delay:0s}
+.glow-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,#7c5ffc,transparent);bottom:-10%;right:-5%;animation-delay:-4s}
+.glow-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,#00d4ff,transparent);top:40%;left:30%;animation-delay:-8s;opacity:0.08}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-60px) scale(1.1)}66%{transform:translate(-30px,40px) scale(0.9)}}
+.grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(79,142,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,142,247,0.04) 1px,transparent 1px);
+  background-size:50px 50px}
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json" />
+/* ═══════════════ MAIN LAYOUT ═══════════════ */
+#app{position:relative;z-index:1;min-height:100vh}
+.page{display:none;min-height:100vh}
+.page.active{display:block}
 
-  <!-- Apple Touch Icons -->
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png" />
+/* ═══════════════ AUTH ═══════════════ */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.auth-card{background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:480px;backdrop-filter:blur(30px);box-shadow:var(--shadow),0 0 60px var(--glow);animation:cardIn .5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes cardIn{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.auth-logo{text-align:center;margin-bottom:2rem}
+.auth-logo .logo-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem;box-shadow:0 0 30px var(--glow);animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 30px var(--glow)}50%{box-shadow:0 0 60px var(--glow),0 0 100px rgba(79,142,247,0.2)}}
+.auth-logo h1{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.auth-logo p{color:var(--text2);font-size:0.85rem;margin-top:0.3rem}
+.role-tabs{display:flex;gap:8px;margin-bottom:1.5rem;background:var(--bg2);border-radius:12px;padding:5px}
+.role-tab{flex:1;padding:.55rem;text-align:center;border-radius:9px;font-size:.85rem;font-weight:600;color:var(--text2);transition:all .25s;background:none;border:none}
+.role-tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 15px var(--glow)}
+.form-section{margin-bottom:1.5rem}
+.section-head{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.section-head::after{content:'';flex:1;height:1px;background:var(--border2)}
+.form-row{display:grid;gap:.75rem;margin-bottom:.75rem}
+.form-row.cols2{grid-template-columns:1fr 1fr}
+.form-row.cols3{grid-template-columns:1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:.3rem}
+.fg label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text2)}
+.fg input,.fg select,.fg textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:.7rem .9rem;color:var(--text);font-size:.9rem;transition:all .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.12)}
+.fg input::placeholder{color:var(--text3)}
+.fg select option{background:var(--bg3)}
+.fg textarea{resize:vertical;min-height:80px}
+.doctor-entry{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:.75rem;margin-bottom:.6rem;position:relative}
+.doctor-entry .rem-doc{position:absolute;top:.5rem;right:.5rem;background:rgba(255,77,109,0.15);border:1px solid rgba(255,77,109,0.3);border-radius:6px;color:var(--red);font-size:.75rem;padding:.2rem .5rem}
+.add-doctor-btn{width:100%;padding:.6rem;background:rgba(79,142,247,0.08);border:1px dashed var(--border);border-radius:10px;color:var(--accent);font-size:.85rem;font-weight:600;transition:all .2s;margin-top:.5rem}
+.add-doctor-btn:hover{background:rgba(79,142,247,0.15)}
+.err-msg{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);border-radius:8px;padding:.6rem .9rem;font-size:.82rem;color:var(--red);margin-bottom:1rem;display:none}
+.err-msg.show{display:block}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;color:#fff;font-size:1rem;font-weight:700;letter-spacing:.04em;transition:all .25s;position:relative;overflow:hidden}
+.submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.1),transparent);transform:translateX(-100%);transition:transform .4s}
+.submit-btn:hover::after{transform:translateX(100%)}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow)}
+.submit-btn:active{transform:translateY(0)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.alt-link{text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text2)}
+.alt-link span{color:var(--accent);cursor:pointer;font-weight:600}
+.alt-link span:hover{text-decoration:underline}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png" />
+/* ═══════════════ APP SHELL ═══════════════ */
+.app-shell{display:flex;min-height:100vh}
+.sidebar{width:260px;background:rgba(12,18,48,0.98);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.5rem 1rem;position:fixed;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1)}
+.sidebar.hidden{transform:translateX(-260px)}
+.sb-logo{display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;margin-bottom:2rem}
+.sb-logo .li{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px var(--glow)}
+.sb-logo h2{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-group{margin-bottom:.5rem}
+.nav-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:.3rem .75rem;margin-bottom:.3rem}
+.nav-btn{display:flex;align-items:center;gap:.75rem;width:100%;padding:.65rem .75rem;border-radius:10px;background:none;border:none;color:var(--text2);font-size:.88rem;font-weight:500;transition:all .2s;text-align:left;position:relative;overflow:hidden}
+.nav-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent2));opacity:0;transition:opacity .2s;border-radius:10px}
+.nav-btn .ni{font-size:1.15rem;flex-shrink:0;z-index:1}
+.nav-btn span{z-index:1}
+.nav-btn:hover{color:var(--text);background:rgba(79,142,247,0.08)}
+.nav-btn.active::before{opacity:1}
+.nav-btn.active{color:#fff;font-weight:700;box-shadow:0 4px 15px var(--glow)}
+.nav-btn.active .ni,.nav-btn.active span{z-index:1}
+.sb-footer{margin-top:auto;border-top:1px solid var(--border2);padding-top:1rem}
+.user-chip{display:flex;align-items:center;gap:.75rem;padding:.75rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)}
+.uc-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+.uc-info{flex:1;min-width:0}
+.uc-name{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uc-role{font-size:.7rem;color:var(--text3)}
+.logout-btn{background:none;border:none;color:var(--text3);font-size:1.1rem;padding:.25rem;transition:color .2s}
+.logout-btn:hover{color:var(--red)}
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0ea5e9 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    }
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 48px 40px;
-      text-align: center;
-      max-width: 360px;
-      width: 90%;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-    }
-    .logo {
-      width: 96px;
-      height: 96px;
-      margin: 0 auto 24px;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(37,99,235,0.3);
-    }
-    .logo img { width: 100%; height: 100%; object-fit: cover; }
-    h1 { font-size: 32px; font-weight: 800; color: #1e40af; letter-spacing: -0.5px; }
-    p  { margin-top: 8px; color: #64748b; font-size: 15px; line-height: 1.5; }
-    .status {
-      margin-top: 24px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #f0fdf4;
-      color: #16a34a;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 999px;
-    }
-    .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .install-hint {
-      margin-top: 28px;
-      background: #eff6ff;
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 13px;
-      color: #1e40af;
-      line-height: 1.6;
-    }
-    .install-hint strong { display: block; margin-bottom: 4px; font-size: 14px; }
-    .btn {
-      display: block;
-      margin-top: 24px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 24px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .btn:hover { background: #1d4ed8; }
-    #install-btn { display: none; }
-  </style>
+/* Mobile header */
+.mob-header{display:none;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:rgba(12,18,48,0.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:150;backdrop-filter:blur(20px)}
+.mob-logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.menu-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.4rem .6rem;color:var(--text2);font-size:1.1rem}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199}
+.sidebar-overlay.show{display:block}
+
+.main-content{margin-left:260px;flex:1;padding:2rem;min-height:100vh}
+.content-inner{max-width:1100px;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.page-head{margin-bottom:2rem}
+.page-head h1{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem}
+.page-head p{color:var(--text2);font-size:.875rem}
+
+/* ═══════════════ CARDS ═══════════════ */
+.card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;backdrop-filter:blur(10px);transition:all .3s}
+.card:hover{border-color:rgba(79,142,247,0.35);box-shadow:0 8px 40px rgba(79,142,247,0.08)}
+.card-sm{padding:1rem}
+
+/* ═══════════════ STATS GRID ═══════════════ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:rgba(20,26,53,0.9);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden;border:1px solid var(--border);transition:all .3s;animation:statIn .5s ease both}
+@keyframes statIn{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.stat-card:nth-child(1){animation-delay:.05s}.stat-card:nth-child(2){animation-delay:.1s}.stat-card:nth-child(3){animation-delay:.15s}.stat-card:nth-child(4){animation-delay:.2s}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.stat-card.blue::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.stat-card.green::before{background:linear-gradient(90deg,var(--green),#00ff88)}
+.stat-card.red::before{background:linear-gradient(90deg,var(--red),var(--pink))}
+.stat-card.amber::before{background:linear-gradient(90deg,var(--amber),#ffdd00)}
+.stat-icon-wrap{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:.75rem}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:1.7rem;font-weight:700;line-height:1;margin-bottom:.25rem}
+.stat-lbl{font-size:.78rem;color:var(--text2)}
+.stat-sub{font-size:.72rem;color:var(--text3);margin-top:.3rem}
+.progress-wrap{margin-top:.75rem}
+.progress-bar{height:5px;background:rgba(255,255,255,0.06);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;position:relative;transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1)}
+.progress-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);animation:progressShimmer 2.5s infinite}
+@keyframes progressShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.progress-fill.blue{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.progress-fill.green{background:linear-gradient(90deg,var(--green),#00ff88)}
+.progress-fill.amber{background:linear-gradient(90deg,var(--amber),#ffdd00)}
+.progress-fill.red{background:linear-gradient(90deg,var(--red),var(--pink))}
+
+/* ═══════════════ GRIDS ═══════════════ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+
+/* ═══════════════ STEP COUNTER ═══════════════ */
+.step-hero{text-align:center;padding:2.5rem 1.5rem;background:linear-gradient(135deg,rgba(79,142,247,0.08),rgba(124,95,252,0.08));border-radius:var(--r2);border:1px solid rgba(79,142,247,0.2);position:relative;overflow:hidden}
+.step-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(79,142,247,0.12),transparent 60%)}
+.step-rings{display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.step-big{font-family:'Orbitron',sans-serif;font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:numberCount .8s ease;line-height:1}
+@keyframes numberCount{from{opacity:0;transform:scale(0.5)}to{opacity:1;transform:scale(1)}}
+.step-sub{font-size:.85rem;color:var(--text2);margin-top:.5rem}
+.step-stats{display:flex;justify-content:center;gap:2rem;margin-top:1.25rem}
+.step-stat{text-align:center}
+.step-stat-val{font-size:1.1rem;font-weight:700;color:var(--cyan)}
+.step-stat-lbl{font-size:.7rem;color:var(--text3)}
+.step-pulse-ring{position:absolute;top:50%;left:50%;width:200px;height:200px;border-radius:50%;border:2px solid var(--accent);transform:translate(-50%,-50%);animation:ringPulse 2s ease-in-out infinite;opacity:0;pointer-events:none}
+.step-pulse-ring:nth-child(2){animation-delay:.5s;width:260px;height:260px}
+.step-pulse-ring:nth-child(3){animation-delay:1s;width:320px;height:320px}
+@keyframes ringPulse{0%{opacity:.4;transform:translate(-50%,-50%) scale(0.8)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+
+/* ═══════════════ CALORIE RING ═══════════════ */
+.cal-ring-section{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
+.cal-ring-svg{flex-shrink:0}
+.cal-ring-info{flex:1;min-width:180px}
+.macro-row{margin-bottom:.9rem}
+.macro-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text2);margin-bottom:.3rem}
+.macro-label span{color:var(--text);font-weight:600}
+
+/* ═══════════════ EXERCISE GRID ═══════════════ */
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ex-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.ex-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 30px var(--glow)}
+.ex-card.done{border-color:rgba(0,229,160,0.4);background:rgba(0,229,160,0.05)}
+.ex-card.done::after{content:'✓';position:absolute;top:.75rem;right:.75rem;width:26px;height:26px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#000;font-weight:700;text-align:center;line-height:26px;animation:checkBounce .3s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes checkBounce{from{transform:scale(0)}to{transform:scale(1)}}
+.ex-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent2));opacity:0;transition:opacity .2s}
+.ex-card:hover::before{opacity:.04}
+.ex-icon{font-size:2rem;margin-bottom:.6rem;display:block}
+.ex-name{font-weight:700;font-size:.9rem;margin-bottom:.2rem}
+.ex-dur{font-size:.75rem;color:var(--text2)}
+.ex-cal{font-size:.78rem;color:var(--amber);margin-top:.4rem}
+.ex-benefit{font-size:.7rem;color:var(--text3);margin-top:.25rem}
+.ex-badge{display:inline-block;margin-top:.6rem;padding:.15rem .5rem;border-radius:5px;font-size:.7rem;font-weight:600}
+.ex-badge.done{background:rgba(0,229,160,0.15);color:var(--green)}
+.ex-badge.todo{background:rgba(79,142,247,0.12);color:var(--accent)}
+.age-note{font-size:.72rem;color:var(--amber);background:rgba(255,184,48,0.08);border:1px solid rgba(255,184,48,0.2);border-radius:8px;padding:.5rem .75rem;margin-bottom:1rem;display:none}
+.age-note.show{display:block}
+
+/* ═══════════════ HOSPITALS ═══════════════ */
+.hospitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.hosp-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;cursor:pointer;transition:all .3s;animation:cardFade .4s ease both}
+@keyframes cardFade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.hosp-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 15px 50px var(--glow)}
+.hosp-head{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
+.hosp-logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 20px var(--glow)}
+.hosp-name{font-size:1rem;font-weight:700;margin-bottom:.25rem;line-height:1.3}
+.hosp-addr{font-size:.75rem;color:var(--text2)}
+.hosp-meta{display:flex;gap:1.25rem;flex-wrap:wrap;margin:.75rem 0}
+.hosp-meta-item{text-align:center}
+.hosp-meta-val{font-size:1rem;font-weight:700}
+.hosp-meta-lbl{font-size:.65rem;color:var(--text3)}
+.hosp-services{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.75rem}
+.svc-tag{padding:.18rem .5rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:5px;font-size:.68rem;color:var(--accent)}
+.hosp-cta{margin-top:.9rem;font-size:.8rem;color:var(--accent);font-weight:600}
+
+/* Hospital Detail */
+.hosp-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.back-btn{display:flex;align-items:center;gap:.5rem;background:rgba(79,142,247,0.08);border:1px solid var(--border);border-radius:10px;padding:.5rem 1rem;color:var(--accent);font-size:.85rem;font-weight:600;transition:all .2s}
+.back-btn:hover{background:rgba(79,142,247,0.15)}
+.doctors-list{display:flex;flex-direction:column;gap:1rem}
+.doc-card{background:rgba(27,34,66,0.9);border:1px solid var(--border2);border-radius:var(--r);padding:1.1rem;display:flex;gap:1rem;align-items:flex-start;transition:all .2s}
+.doc-card:hover{border-color:var(--accent);background:rgba(20,26,53,0.9)}
+.doc-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;flex-shrink:0}
+.doc-info{flex:1}
+.doc-name{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
+.doc-spec{font-size:.78rem;color:var(--accent);margin-bottom:.25rem}
+.doc-meta{font-size:.75rem;color:var(--text2)}
+.slots-wrap{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.slot{padding:.25rem .55rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:.72rem;color:var(--cyan);cursor:pointer;transition:all .15s;font-weight:500}
+.slot:hover,.slot.sel{background:rgba(0,212,255,0.2);border-color:var(--cyan);transform:scale(1.05)}
+.book-section{margin-top:.75rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+
+/* ═══════════════ CHATBOT ═══════════════ */
+.chat-page{display:flex;flex-direction:column;height:calc(100vh - 120px);max-height:750px}
+.chat-top{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:var(--r2) var(--r2) 0 0;border-bottom:none}
+.bot-avatar-wrap{position:relative;flex-shrink:0}
+.bot-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 20px var(--glow)}
+.bot-ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent);animation:botRing 2s ease-in-out infinite}
+.bot-ring2{position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(79,142,247,0.3);animation:botRing 2s ease-in-out infinite .5s}
+@keyframes botRing{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.1);opacity:.3}}
+.bot-name{font-weight:700;font-size:1rem}
+.bot-status{font-size:.75rem;color:var(--green);display:flex;align-items:center;gap:.4rem}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:statusPulse 1.5s infinite}
+@keyframes statusPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(0.8)}}
+.bot-floating{position:absolute;right:20px;animation:botFloat 4s ease-in-out infinite}
+@keyframes botFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-8px) rotate(5deg)}}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:1.25rem;background:rgba(6,11,31,0.8);display:flex;flex-direction:column;gap:.9rem}
+.chat-msgs::-webkit-scrollbar{width:4px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.msg{max-width:78%;animation:msgSlide .3s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes msgSlide{from{opacity:0;transform:translateY(12px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.msg.user{align-self:flex-end}
+.msg.bot{align-self:flex-start;display:flex;gap:.6rem}
+.msg-bot-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;margin-top:.2rem}
+.msg-bubble{padding:.75rem 1rem;border-radius:16px;font-size:.87rem;line-height:1.6}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-bottom-right-radius:4px}
+.msg.bot .msg-bubble{background:rgba(27,34,66,0.95);border:1px solid var(--border2);color:var(--text);border-bottom-left-radius:4px;white-space:pre-wrap}
+.msg-time{font-size:.65rem;color:var(--text3);margin-top:.3rem}
+.msg.user .msg-time{text-align:right}
+.typing-bubble{background:rgba(27,34,66,0.95);border:1px solid var(--border2);border-radius:16px;border-bottom-left-radius:4px;padding:.75rem 1rem}
+.typing-dots{display:flex;gap:5px}
+.typing-dot{width:9px;height:9px;border-radius:50%;background:var(--text3);animation:typDot 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typDot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+.chat-bottom{padding:1rem;background:rgba(20,26,53,0.95);border:1px solid var(--border);border-radius:0 0 var(--r2) var(--r2);border-top:none;display:flex;gap:.75rem;align-items:flex-end}
+.chat-inp{flex:1;padding:.75rem 1rem;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:.9rem;resize:none;max-height:120px;line-height:1.5;transition:border-color .2s}
+.chat-inp:focus{border-color:var(--accent)}
+.chat-inp::placeholder{color:var(--text3)}
+.chat-send{padding:.75rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;color:#fff;font-size:1.1rem;transition:all .2s;min-width:48px;display:flex;align-items:center;justify-content:center}
+.chat-send:hover{transform:scale(1.08);box-shadow:0 4px 20px var(--glow)}
+.chat-send:disabled{opacity:.5;transform:none}
+.quick-actions{padding:.6rem 1.25rem;background:rgba(20,26,53,0.9);border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;gap:.5rem;overflow-x:auto}
+.quick-actions::-webkit-scrollbar{height:2px}
+.qa-btn{padding:.3rem .7rem;background:rgba(79,142,247,0.1);border:1px solid var(--border);border-radius:20px;color:var(--accent);font-size:.75rem;white-space:nowrap;flex-shrink:0;transition:all .2s}
+.qa-btn:hover{background:rgba(79,142,247,0.2)}
+
+/* ═══════════════ APPOINTMENTS ═══════════════ */
+.appt-card{background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;transition:all .2s;animation:cardFade .4s ease both}
+.appt-card:hover{border-color:rgba(79,142,247,0.3)}
+.appt-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem}
+.appt-doctor{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
+.appt-spec{font-size:.78rem;color:var(--accent)}
+.appt-hosp{font-size:.75rem;color:var(--text2);margin-top:.1rem}
+.appt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;font-size:.8rem;margin-bottom:.75rem}
+.appt-field{color:var(--text2);margin-bottom:.15rem;font-size:.72rem}
+.appt-val{color:var(--text);font-weight:600}
+.appt-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.appt-reminder{font-size:.72rem;color:var(--amber);display:flex;align-items:center;gap:.4rem;margin-top:.5rem}
+
+/* ═══════════════ REMINDERS ═══════════════ */
+.reminder-list{display:flex;flex-direction:column;gap:.75rem}
+.rem-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:rgba(20,26,53,0.9);border:1px solid var(--border);border-radius:var(--r);transition:all .2s}
+.rem-card:hover{border-color:rgba(79,142,247,0.3)}
+.rem-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:linear-gradient(135deg,rgba(79,142,247,0.2),rgba(124,95,252,0.2));border:1px solid var(--border)}
+.rem-info{flex:1}
+.rem-name{font-weight:600;font-size:.9rem}
+.rem-time{font-size:.78rem;color:var(--text2);margin-top:.15rem}
+.rem-badge{font-size:.7rem;font-weight:600;padding:.2rem .55rem;border-radius:5px}
+.rem-active{background:rgba(0,229,160,0.1);color:var(--green)}
+.rem-inactive{background:rgba(255,77,109,0.1);color:var(--red)}
+.alarm-ring{animation:alarmBell .4s ease-in-out infinite alternate}
+@keyframes alarmBell{from{transform:rotate(-20deg)}to{transform:rotate(20deg)}}
+
+/* ═══════════════ BADGE / BUTTON ═══════════════ */
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .55rem;border-radius:6px;font-size:.73rem;font-weight:700}
+.b-green{background:rgba(0,229,160,0.12);color:var(--green)}
+.b-red{background:rgba(255,77,109,0.12);color:var(--red)}
+.b-amber{background:rgba(255,184,48,0.12);color:var(--amber)}
+.b-blue{background:rgba(79,142,247,0.12);color:var(--accent)}
+.b-purple{background:rgba(124,95,252,0.12);color:var(--accent2)}
+
+.btn{padding:.5rem 1rem;border-radius:9px;font-size:.82rem;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-sm{padding:.35rem .75rem;font-size:.76rem}
+.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none}
+.btn-accent:hover{box-shadow:0 4px 20px var(--glow);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.btn-danger{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);color:var(--red)}
+.btn-danger:hover{background:rgba(255,77,109,0.2)}
+.btn-success{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--green)}
+.btn-success:hover{background:rgba(0,229,160,0.2)}
+
+/* Section title */
+.sec-title{font-size:.95rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.65rem;color:var(--text)}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ═══════════════ FOOD LOG ═══════════════ */
+.food-row{display:grid;grid-template-columns:1fr 80px 70px 70px 70px auto;gap:.5rem;align-items:flex-end;margin-bottom:.75rem}
+.food-items{display:flex;flex-direction:column;gap:.5rem}
+.food-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;background:rgba(27,34,66,0.8);border-radius:10px;border:1px solid var(--border2)}
+.fi-name{flex:1;font-size:.875rem;font-weight:600}
+.fi-macros{font-size:.72rem;color:var(--text3);display:flex;gap:.6rem}
+.fi-cal{font-size:.82rem;color:var(--amber);font-weight:600}
+.fi-del{background:none;border:none;color:var(--text3);font-size:1rem;transition:color .2s;padding:.2rem}
+.fi-del:hover{color:var(--red)}
+
+/* ═══════════════ MODAL ═══════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px)}
+.modal-box{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:cardIn .35s cubic-bezier(0.34,1.56,0.64,1);box-shadow:var(--shadow)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.modal-title{font-size:1.1rem;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.2rem;transition:color .2s;padding:.25rem}
+.modal-close:hover{color:var(--red)}
+
+/* ═══════════════ NOTIFICATION ═══════════════ */
+.notif-container{position:fixed;top:1rem;right:1rem;z-index:1000;display:flex;flex-direction:column;gap:.5rem}
+.notif{background:rgba(20,26,53,0.98);border:1px solid var(--border);border-radius:12px;padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow);animation:notifIn .35s cubic-bezier(0.34,1.56,0.64,1);max-width:340px;backdrop-filter:blur(20px)}
+@keyframes notifIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+.notif.out{animation:notifOut .3s ease forwards}
+@keyframes notifOut{to{opacity:0;transform:translateX(110%)}}
+.notif.success{border-color:rgba(0,229,160,0.4)}
+.notif.error{border-color:rgba(255,77,109,0.4)}
+.notif.alarm{border-color:rgba(255,184,48,0.4);animation:notifIn .35s cubic-bezier(0.34,1.56,0.64,1),alarmGlow .6s ease-in-out infinite alternate}
+@keyframes alarmGlow{from{box-shadow:var(--shadow)}to{box-shadow:0 0 30px rgba(255,184,48,0.3),var(--shadow)}}
+.notif-icon{font-size:1.3rem}
+.notif-text{font-size:.85rem;font-weight:500}
+
+/* ═══════════════ HOSPITAL PORTAL ═══════════════ */
+.hosp-portal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.appts-table{width:100%;border-collapse:collapse}
+.appts-table th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:.6rem 1rem;border-bottom:1px solid var(--border2)}
+.appts-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border2);font-size:.85rem;vertical-align:middle}
+.appts-table tr:hover td{background:rgba(79,142,247,0.04)}
+
+/* ═══════════════ LOADING ═══════════════ */
+.loading{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3)}
+.spin{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin-right:.75rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════════ EMPTY STATE ═══════════════ */
+.empty-state{text-align:center;padding:3.5rem 1.5rem}
+.empty-icon{font-size:3.5rem;margin-bottom:1rem;display:block;animation:emptyFloat 3s ease-in-out infinite}
+@keyframes emptyFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.empty-state h3{font-size:1.1rem;margin-bottom:.5rem}
+.empty-state p{font-size:.85rem;color:var(--text2);margin-bottom:1.5rem}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-260px)}
+  .sidebar.open{transform:translateX(0);box-shadow:var(--shadow)}
+  .mob-header{display:flex}
+  .main-content{margin-left:0;padding:1rem}
+  .stats-grid,.hosp-portal-stats{grid-template-columns:1fr 1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .hospitals-grid{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr 1fr}
+  .doctors-list .doc-card{flex-direction:column}
+  .food-row{grid-template-columns:1fr 1fr;row-gap:.5rem}
+  .food-row .fg:not(:first-child):not(:last-child){display:none}
+  .form-row.cols3{grid-template-columns:1fr 1fr}
+  .appt-grid{grid-template-columns:1fr 1fr}
+  .chat-page{height:calc(100vh - 80px)}
+}
+@media(max-width:480px){
+  .stats-grid,.hosp-portal-stats{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr}
+  .auth-card{padding:1.75rem}
+  .form-row.cols2,.form-row.cols3{grid-template-columns:1fr}
+  .step-big{font-size:2.8rem}
+}
+</style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">
-      <img src="/icons/icon-512.png" alt="MedCare Logo" />
+<div class="bg-glow">
+  <div class="glow-orb"></div>
+  <div class="glow-orb"></div>
+  <div class="glow-orb"></div>
+</div>
+<div class="grid-overlay"></div>
+<div class="notif-container" id="notif-container"></div>
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STATE & UTILS
+// ═══════════════════════════════════════════════════════════
+const API = '';
+let STATE = { user: null, hospital: null, page: 'health', hospitalDetail: null, chatHistory: [], selectedSlot: null, reminderIntervals: {} };
+let alarmCheckInterval = null;
+
+async function api(path, method='GET', body=null){
+  const opts = { method, credentials:'include', headers:{'Content-Type':'application/json'} };
+  if(body) opts.body = JSON.stringify(body);
+  const r = await fetch(API+path, opts);
+  return r.json();
+}
+
+function el(id){ return document.getElementById(id); }
+function qs(sel){ return document.querySelector(sel); }
+
+function showNotif(msg, type='success', dur=4000){
+  const icons = {success:'✅', error:'❌', alarm:'🔔', info:'ℹ️', warning:'⚠️'};
+  const div = document.createElement('div');
+  div.className = `notif ${type}`;
+  div.innerHTML = `<span class="notif-icon">${icons[type]||'📢'}</span><span class="notif-text">${msg}</span>`;
+  el('notif-container').appendChild(div);
+  setTimeout(()=>{ div.classList.add('out'); setTimeout(()=>div.remove(), 300); }, dur);
+}
+
+function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function now(){ return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+
+// ═══════════════════════════════════════════════════════════
+// ALARM SYSTEM
+// ═══════════════════════════════════════════════════════════
+function startAlarmCheck(){
+  if(alarmCheckInterval) clearInterval(alarmCheckInterval);
+  alarmCheckInterval = setInterval(async ()=>{
+    if(!STATE.user) return;
+    const rems = await api('/api/reminders');
+    if(!Array.isArray(rems)) return;
+    const nowH = new Date().getHours();
+    const nowM = new Date().getMinutes();
+    rems.forEach(r=>{
+      if(!r.time_str) return;
+      const [h,m] = r.time_str.split(':').map(Number);
+      if(h===nowH && Math.abs(m-nowM)<1){
+        const key = `alarm_${r.id}_${h}_${m}`;
+        if(!STATE.reminderIntervals[key]){
+          STATE.reminderIntervals[key] = true;
+          showNotif(`⏰ Time to take <strong>${r.name}</strong>!`, 'alarm', 10000);
+          if('vibrate' in navigator) navigator.vibrate([400,200,400,200,400]);
+        }
+      }
+    });
+    // Check appointment reminders
+    const appts = await api('/api/appointments/user');
+    if(Array.isArray(appts)){
+      appts.forEach(a=>{
+        if(a.reminder_at && a.status === 'accepted'){
+          const remDate = new Date(a.reminder_at);
+          const diff = Math.abs(new Date() - remDate);
+          if(diff < 60000){
+            const key = `appt_${a.id}`;
+            if(!STATE.reminderIntervals[key]){
+              STATE.reminderIntervals[key] = true;
+              showNotif(`🗓️ Appointment reminder: ${a.doctor_name} at ${a.slot_time}`, 'alarm', 15000);
+            }
+          }
+        }
+      });
+    }
+  }, 30000);
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════
+function render(){
+  if(!STATE.user){ renderAuth(); return; }
+  if(STATE.user.role === 'hospital'){ renderHospitalPortal(); return; }
+  renderUserApp();
+}
+
+// ═══════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════
+function renderAuth(tab='user', mode='login'){
+  document.title = 'MedCare — Sign In';
+  el('app').innerHTML = `
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">🩺</div>
+        <h1>MEDCARE</h1>
+        <p>Your Complete Health Companion</p>
+      </div>
+      <div id="auth-inner"></div>
     </div>
-    <h1>MedCare</h1>
-    <p>Your personal health companion — book appointments, set reminders, and chat with AI health guidance.</p>
+  </div>`;
+  renderAuthInner(tab, mode);
+}
 
-    <div class="status">
-      <span class="dot"></span>
-      Backend is Live
-    </div>
-
-    <div class="install-hint" id="ios-hint" style="display:none">
-      <strong>📱 Add to Home Screen (iOS)</strong>
-      Tap the <b>Share</b> button in Safari, then choose <b>"Add to Home Screen"</b> to install MedCare as an app.
-    </div>
-
-    <button class="btn" id="install-btn">📲 Install MedCare App</button>
-
-    <a class="btn" href="/api/hospitals" style="margin-top:12px; background:#0ea5e9;">
-      View API →
-    </a>
+function renderAuthInner(tab, mode){
+  const inner = el('auth-inner');
+  if(!inner) return;
+  const isHosp = tab === 'hospital';
+  inner.innerHTML = `
+  <div class="role-tabs">
+    <button class="role-tab ${!isHosp?'active':''}" onclick="renderAuthInner('user','${mode}')">👤 Patient</button>
+    <button class="role-tab ${isHosp?'active':''}" onclick="renderAuthInner('hospital','${mode}')">🏥 Hospital</button>
   </div>
+  ${mode==='login' ? renderLoginForm(isHosp) : (isHosp ? renderHospitalSignup() : renderUserSignup())}
+  <div class="alt-link" style="margin-top:1rem">
+    ${mode==='login'
+      ? `Don't have an account? <span onclick="renderAuthInner('${tab}','signup')">Register here</span>`
+      : `Already have an account? <span onclick="renderAuthInner('${tab}','login')">Sign In</span>`}
+  </div>`;
+}
 
-  <script>
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log('SW registered');
-      }).catch(console.error);
+function renderLoginForm(isHosp){
+  return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-row"><div class="fg"><label>Email</label><input id="l-email" type="email" placeholder="your@email.com"/></div></div>
+  <div class="form-row"><div class="fg"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"/></div></div>
+  <button class="submit-btn" style="margin-top:1rem" onclick="doLogin('${isHosp?'hospital':'user'}')">Sign In →</button>`;
+}
+
+function renderUserSignup(){
+  return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-row cols2"><div class="fg"><label>First Name</label><input id="s-fn" type="text" placeholder="Arun"/></div><div class="fg"><label>Last Name</label><input id="s-ln" type="text" placeholder="Kumar"/></div></div>
+  <div class="form-row"><div class="fg"><label>Email</label><input id="s-email" type="email" placeholder="arun@email.com"/></div></div>
+  <div class="form-row cols3"><div class="fg"><label>Age</label><input id="s-age" type="number" placeholder="28" min="1" max="120"/></div><div class="fg"><label>Gender</label><select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div><div class="fg"><label>Phone</label><input id="s-phone" type="tel" placeholder="9876543210"/></div></div>
+  <div class="form-row cols2"><div class="fg"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 chars"/></div><div class="fg"><label>Confirm Password</label><input id="s-cpass" type="password" placeholder="Repeat"/></div></div>
+  <button class="submit-btn" style="margin-top:1rem" onclick="doUserSignup()">Create Account →</button>`;
+}
+
+function renderHospitalSignup(){
+  return `
+  <div id="auth-err" class="err-msg"></div>
+  <div class="form-section">
+    <div class="section-head">Hospital Details</div>
+    <div class="form-row"><div class="fg"><label>Hospital Name *</label><input id="h-name" type="text" placeholder="City General Hospital"/></div></div>
+    <div class="form-row cols2"><div class="fg"><label>Registration No. *</label><input id="h-reg" type="text" placeholder="KA-H-2024-XXX"/></div><div class="fg"><label>Type</label><select id="h-type"><option>Government</option><option>Private</option><option>Trust</option><option>Teaching</option></select></div></div>
+    <div class="form-row cols3"><div class="fg"><label>Beds</label><input id="h-beds" type="number" placeholder="200" min="1"/></div><div class="fg"><label>Established Year</label><input id="h-est" type="number" placeholder="1985" min="1900" max="2025"/></div><div class="fg"><label>Phone *</label><input id="h-phone" type="tel" placeholder="0816-2271234"/></div></div>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Address</div>
+    <div class="form-row"><div class="fg"><label>Full Address *</label><input id="h-addr" type="text" placeholder="B.H. Road, Near Bus Stand"/></div></div>
+    <div class="form-row cols3"><div class="fg"><label>City</label><input id="h-city" type="text" value="Tumkur"/></div><div class="fg"><label>State</label><input id="h-state" type="text" value="Karnataka"/></div><div class="fg"><label>Pincode</label><input id="h-pin" type="text" placeholder="572101"/></div></div>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Services (comma separated)</div>
+    <div class="form-row"><div class="fg"><label>Services Offered</label><input id="h-services" type="text" placeholder="Cardiology, Neurology, Pediatrics, Emergency, ICU"/></div></div>
+    <div class="form-row"><div class="fg"><label>Description</label><textarea id="h-desc" placeholder="Brief about your hospital, specialties, achievements..."></textarea></div></div>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Doctors</div>
+    <div id="doctors-list"></div>
+    <button class="add-doctor-btn" onclick="addDoctorField()">+ Add Doctor</button>
+  </div>
+  <div class="form-section">
+    <div class="section-head">Account Credentials</div>
+    <div class="form-row cols2"><div class="fg"><label>Login Email *</label><input id="h-email" type="email" placeholder="hospital@email.com"/></div><div class="fg"><label>Password *</label><input id="h-pass" type="password" placeholder="Min 6 characters"/></div></div>
+    <div class="form-row cols2" style="margin-top:.75rem"><div class="fg"><label>Confirm Password</label><input id="h-cpass" type="password" placeholder="Repeat password"/></div></div>
+  </div>
+  <button class="submit-btn" onclick="doHospitalSignup()">Register Hospital →</button>`;
+}
+
+let doctorCount = 0;
+function addDoctorField(){
+  doctorCount++;
+  const id = doctorCount;
+  const div = document.createElement('div');
+  div.className = 'doctor-entry';
+  div.id = `doc-entry-${id}`;
+  div.innerHTML = `
+  <button class="rem-doc btn-sm" onclick="el('doc-entry-${id}').remove()">✕ Remove</button>
+  <div class="form-row cols2" style="margin-bottom:.5rem"><div class="fg"><label>Doctor Name *</label><input id="doc-name-${id}" type="text" placeholder="Dr. Ravi Kumar"/></div><div class="fg"><label>Specialization *</label><input id="doc-spec-${id}" type="text" placeholder="Cardiologist"/></div></div>
+  <div class="form-row cols3"><div class="fg"><label>Experience (yrs)</label><input id="doc-exp-${id}" type="number" placeholder="10" min="0"/></div><div class="fg"><label>Consultation Fee (₹)</label><input id="doc-fee-${id}" type="number" placeholder="500" min="0"/></div><div class="fg"><label>Available Slots</label><input id="doc-slots-${id}" type="text" placeholder="09:00 AM, 11:00 AM, 03:00 PM"/></div></div>`;
+  el('doctors-list').appendChild(div);
+}
+
+function getVal(id){ const e = el(id); return e ? e.value.trim() : ''; }
+function setErr(msg){ const e = el('auth-err'); if(e){e.textContent=msg; e.classList.toggle('show', !!msg);} }
+
+async function doLogin(role){
+  setErr('');
+  const email = getVal('l-email'), pass = getVal('l-pass');
+  if(!email || !pass){ setErr('Please enter email and password.'); return; }
+  const btn = qs('.submit-btn'); if(btn) btn.disabled = true;
+  const res = await api('/api/login', 'POST', {email, password:pass});
+  if(btn) btn.disabled = false;
+  if(res.error){ setErr(res.error); return; }
+  if(res.user.role !== role){ setErr(`This account is a ${res.user.role} account. Please select the right type.`); return; }
+  STATE.user = res.user;
+  STATE.hospital = res.hospital || null;
+  startAlarmCheck();
+  render();
+}
+
+async function doUserSignup(){
+  setErr('');
+  const fn=getVal('s-fn'),ln=getVal('s-ln'),email=getVal('s-email'),age=getVal('s-age'),gender=getVal('s-gender'),phone=getVal('s-phone'),pass=getVal('s-pass'),cpass=getVal('s-cpass');
+  if(!fn||!ln||!email||!age||!gender||!pass){ setErr('Please fill all required fields.'); return; }
+  if(pass !== cpass){ setErr('Passwords do not match.'); return; }
+  if(pass.length < 6){ setErr('Password must be at least 6 characters.'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('Enter a valid email address.'); return; }
+  const btn = qs('.submit-btn'); if(btn) btn.disabled = true;
+  const res = await api('/api/signup/user','POST',{name:`${fn} ${ln}`,email,password:pass,age:parseInt(age),gender,phone});
+  if(btn) btn.disabled = false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user = res.user;
+  startAlarmCheck();
+  showNotif(`Welcome to MedCare, ${fn}! 🎉`,'success');
+  render();
+}
+
+async function doHospitalSignup(){
+  setErr('');
+  const name=getVal('h-name'),reg=getVal('h-reg'),phone=getVal('h-phone'),addr=getVal('h-addr'),email=getVal('h-email'),pass=getVal('h-pass'),cpass=getVal('h-cpass');
+  if(!name||!reg||!phone||!addr||!email||!pass){ setErr('Please fill all required fields marked with *.'); return; }
+  if(pass!==cpass){ setErr('Passwords do not match.'); return; }
+  if(pass.length<6){ setErr('Password must be at least 6 characters.'); return; }
+  // Collect doctors
+  const doctors = [];
+  document.querySelectorAll('.doctor-entry').forEach(entry=>{
+    const i = entry.id.split('-').pop();
+    const dname = getVal(`doc-name-${i}`), spec = getVal(`doc-spec-${i}`);
+    if(dname && spec){
+      const slots = getVal(`doc-slots-${i}`).split(',').map(s=>s.trim()).filter(Boolean);
+      doctors.push({name:dname, specialization:spec, experience:parseInt(getVal(`doc-exp-${i}`)||0), fee:parseInt(getVal(`doc-fee-${i}`)||0), slots: slots.length ? slots : ['10:00 AM','02:00 PM']});
     }
+  });
+  const btn = qs('.submit-btn'); if(btn) btn.disabled = true;
+  const res = await api('/api/signup/hospital','POST',{
+    name, reg_number:reg, phone, address:addr, city:getVal('h-city')||'Tumkur',
+    state:getVal('h-state')||'Karnataka', pincode:getVal('h-pin'), email,
+    password:pass, h_type:getVal('h-type')||'Private',
+    beds:parseInt(getVal('h-beds')||100), established:parseInt(getVal('h-est')||2000),
+    description:getVal('h-desc'), services:getVal('h-services'), doctors
+  });
+  if(btn) btn.disabled = false;
+  if(res.error){ setErr(res.error); return; }
+  STATE.user = res.user; STATE.hospital = res.hospital;
+  startAlarmCheck();
+  showNotif(`Hospital registered successfully! 🏥`,'success');
+  render();
+}
 
-    // iOS install hint
-    const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-    const isInStandalone = window.navigator.standalone;
-    if (isIOS && !isInStandalone) {
-      document.getElementById('ios-hint').style.display = 'block';
-    }
+async function logout(){
+  await api('/api/logout','POST');
+  clearInterval(alarmCheckInterval);
+  STATE = { user:null, hospital:null, page:'health', hospitalDetail:null, chatHistory:[], selectedSlot:null, reminderIntervals:{} };
+  render();
+}
 
-    // Android / Chrome install prompt
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('install-btn').style.display = 'block';
-    });
+// ═══════════════════════════════════════════════════════════
+// USER APP SHELL
+// ═══════════════════════════════════════════════════════════
+const USER_PAGES = [
+  {id:'health', icon:'💚', label:'Health Dashboard'},
+  {id:'calories', icon:'🔥', label:'Calories'},
+  {id:'exercise', icon:'🏋️', label:'Exercise'},
+  {id:'hospitals', icon:'🏥', label:'Hospitals'},
+  {id:'chatbot', icon:'🤖', label:'AI Doctor'},
+  {id:'appointments', icon:'📅', label:'Appointments'},
+  {id:'reminders', icon:'⏰', label:'Reminders'},
+];
 
-    document.getElementById('install-btn').addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log('Install outcome:', outcome);
-      deferredPrompt = null;
-      document.getElementById('install-btn').style.display = 'none';
-    });
-  </script>
+function renderUserApp(){
+  document.title = 'MedCare';
+  const u = STATE.user;
+  const initials = u.name ? u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2) : 'U';
+  el('app').innerHTML = `
+  <div class="mob-header">
+    <span class="mob-logo">MEDCARE</span>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+  <div class="app-shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sb-logo"><div class="li">🩺</div><h2>MEDCARE</h2></div>
+      <div class="nav-group">
+        <div class="nav-label">Navigation</div>
+        ${USER_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="goTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
+      </div>
+      <div class="sb-footer">
+        <div class="user-chip">
+          <div class="uc-av">${initials}</div>
+          <div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-role">Age ${u.age} • ${u.gender}</div></div>
+          <button class="logout-btn" onclick="logout()" title="Logout">⏏</button>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content"><div class="content-inner" id="page-content"></div></main>
+  </div>`;
+  goTo(STATE.page);
+}
+
+function toggleSidebar(){
+  const sb = el('sidebar'), ov = el('sb-overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+function closeSidebar(){ const sb=el('sidebar'),ov=el('sb-overlay'); sb?.classList.remove('open'); ov?.classList.remove('show'); }
+
+function goTo(page){
+  STATE.page = page;
+  STATE.hospitalDetail = null;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.getAttribute('onclick')===`goTo('${page}')`));
+  closeSidebar();
+  renderPage(page);
+}
+
+async function renderPage(page){
+  const pc = el('page-content');
+  if(!pc) return;
+  pc.innerHTML = `<div class="loading"><div class="spin"></div> Loading…</div>`;
+  switch(page){
+    case 'health': await renderHealth(pc); break;
+    case 'calories': await renderCalories(pc); break;
+    case 'exercise': await renderExercise(pc); break;
+    case 'hospitals': await renderHospitals(pc); break;
+    case 'chatbot': renderChatbot(pc); break;
+    case 'appointments': await renderAppointments(pc); break;
+    case 'reminders': await renderReminders(pc); break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// HEALTH DASHBOARD
+// ═══════════════════════════════════════════════════════════
+async function renderHealth(pc){
+  const log = await api('/api/health/log');
+  const stepsP = Math.min(100, Math.round((log.steps/log.step_goal)*100));
+  const calP = Math.min(100, Math.round((log.cal_consumed/log.cal_goal)*100));
+  const exDone = Array.isArray(log.exercises) ? log.exercises : [];
+  const EXERCISES = getExerciseList(STATE.user.age);
+  const calBurned = exDone.reduce((a,id)=>{ const ex=EXERCISES.find(e=>e.id===id); return a+(ex?ex.cal:0); },0);
+  const stepsCal = Math.round((log.steps||0)*0.04);
+  const totalBurned = calBurned + stepsCal;
+  const netCal = log.cal_consumed - totalBurned;
+
+  pc.innerHTML = `
+  <div class="page-head"><h1>Health Dashboard</h1><p>${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">👣</div>
+      <div class="stat-val" style="color:var(--accent)">${(log.steps||0).toLocaleString()}</div>
+      <div class="stat-lbl">Steps Today</div>
+      <div class="stat-sub">Goal: ${(log.step_goal||8000).toLocaleString()} steps</div>
+      <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill blue" style="width:${stepsP}%"></div></div></div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div>
+      <div class="stat-val" style="color:var(--amber)">${totalBurned}</div>
+      <div class="stat-lbl">Calories Burned</div>
+      <div class="stat-sub">Exercise + Steps</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">🍽️</div>
+      <div class="stat-val" style="color:var(--green)">${log.cal_consumed||0}</div>
+      <div class="stat-lbl">Calories In</div>
+      <div class="stat-sub">Goal: ${log.cal_goal||2000} kcal</div>
+      <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill green" style="width:${calP}%"></div></div></div>
+    </div>
+    <div class="stat-card ${netCal>200?'red':netCal<-200?'green':'amber'}">
+      <div class="stat-icon-wrap" style="background:rgba(124,95,252,0.12)">⚖️</div>
+      <div class="stat-val" style="color:${netCal>200?'var(--red)':netCal<-200?'var(--green)':'var(--amber)'}">${netCal>0?'+':''}${netCal}</div>
+      <div class="stat-lbl">Net Calories</div>
+      <div class="stat-sub">${netCal>200?'Surplus 📈':netCal<-200?'Deficit 📉':'Balanced ✓'}</div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="sec-title">Step Counter</div>
+      <div class="step-hero">
+        <div class="step-pulse-ring"></div><div class="step-pulse-ring"></div><div class="step-pulse-ring"></div>
+        <div class="step-big">${(log.steps||0).toLocaleString()}</div>
+        <div class="step-sub">steps • ${stepsCal} kcal burned</div>
+        <div class="step-stats">
+          <div class="step-stat"><div class="step-stat-val">${((log.steps||0)*0.00075).toFixed(2)} km</div><div class="step-stat-lbl">Distance</div></div>
+          <div class="step-stat"><div class="step-stat-val">${stepsP}%</div><div class="step-stat-lbl">Goal</div></div>
+          <div class="step-stat"><div class="step-stat-val">${Math.max(0,(log.step_goal||8000)-(log.steps||0)).toLocaleString()}</div><div class="step-stat-lbl">Remaining</div></div>
+        </div>
+        <div style="display:flex;gap:.75rem;justify-content:center;margin-top:1.25rem;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="showAddStepsModal()">+ Log Steps</button>
+          <button class="btn btn-ghost btn-sm" onclick="showStepGoalModal()">🎯 Change Goal</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Today's Activity</div>
+      ${exDone.length === 0 ? `<div class="empty-state" style="padding:2rem 1rem"><span class="empty-icon">🏃</span><p style="color:var(--text2);font-size:.85rem">No exercises logged. Go to Exercise page!</p></div>` :
+      `<div style="display:flex;flex-direction:column;gap:.6rem">
+        ${exDone.map(id=>{ const ex=EXERCISES.find(e=>e.id===id); return ex?`<div style="display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px"><span style="font-size:1.3rem">${ex.icon}</span><div style="flex:1"><div style="font-weight:600;font-size:.85rem">${ex.name}</div><div style="font-size:.72rem;color:var(--text2)">${ex.duration} • ${ex.cal} cal</div></div><span class="badge b-green">✓</span></div>`:'' }).join('')}
+        <div style="padding:.6rem .9rem;background:var(--bg3);border-radius:10px;display:flex;justify-content:space-between;margin-top:.25rem"><span style="font-size:.8rem;color:var(--text2)">Total Burned</span><span style="font-weight:700;color:var(--green)">${totalBurned} kcal</span></div>
+      </div>`}
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Daily Wellness Summary</div>
+    <div class="g3" style="margin:0">
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+        <div style="font-size:2rem;margin-bottom:.4rem">💧</div>
+        <div style="font-size:1.2rem;font-weight:700;color:var(--cyan)">${Math.round((log.steps||0)*0.001+2)} L</div>
+        <div style="font-size:.72rem;color:var(--text2)">Estimated Water Need</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+        <div style="font-size:2rem;margin-bottom:.4rem">🌙</div>
+        <div style="font-size:1.2rem;font-weight:700;color:var(--accent2)">7–8 hrs</div>
+        <div style="font-size:.72rem;color:var(--text2)">Recommended Sleep</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border2)">
+        <div style="font-size:2rem;margin-bottom:.4rem">🧘</div>
+        <div style="font-size:1.2rem;font-weight:700;color:var(--green)">${exDone.length > 0 ? 'Active 💪' : 'Rest Day'}</div>
+        <div style="font-size:.72rem;color:var(--text2)">Today's Status</div>
+      </div>
+    </div>
+  </div>`;
+
+  // Modals
+  window.showAddStepsModal = () => showModal('Add Steps', `
+    <div class="fg" style="margin-bottom:1rem"><label>Steps to add</label><input id="m-steps" type="number" placeholder="1000" min="1"/></div>
+    <button class="btn btn-accent" style="width:100%" onclick="addSteps()">Add Steps</button>`);
+  window.showStepGoalModal = () => showModal('Change Step Goal', `
+    <div class="fg" style="margin-bottom:1rem"><label>New Daily Goal</label><input id="m-goal" type="number" placeholder="8000" min="100"/></div>
+    <button class="btn btn-accent" style="width:100%" onclick="setStepGoal()">Set Goal</button>`);
+  window.addSteps = async () => {
+    const v = parseInt(el('m-steps')?.value||0);
+    if(v<1){ showNotif('Enter valid steps','error'); return; }
+    const cur = await api('/api/health/log');
+    await api('/api/health/steps','POST',{steps:(cur.steps||0)+v});
+    closeModal(); showNotif(`Added ${v} steps! 👣`,'success'); renderPage('health');
+  };
+  window.setStepGoal = async () => {
+    const v = parseInt(el('m-goal')?.value||0);
+    if(v<100){ showNotif('Enter valid goal','error'); return; }
+    await api('/api/health/goal','POST',{step_goal:v});
+    closeModal(); showNotif(`Step goal updated to ${v.toLocaleString()}! 🎯`,'success'); renderPage('health');
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALORIES
+// ═══════════════════════════════════════════════════════════
+async function renderCalories(pc){
+  const log = await api('/api/health/log');
+  const calP = Math.min(100, Math.round(((log.cal_consumed||0)/(log.cal_goal||2000))*100));
+  const protP = Math.min(100, Math.round(((log.protein||0)/150)*100));
+  const carbP = Math.min(100, Math.round(((log.carbs||0)/250)*100));
+  const fatP = Math.min(100, Math.round(((log.fat||0)/65)*100));
+  const food = Array.isArray(log.food_log) ? log.food_log : [];
+
+  pc.innerHTML = `
+  <div class="page-head"><h1>Calorie Tracker</h1><p>Monitor your daily nutrition and macros</p></div>
+  <div class="g2">
+    <div class="card">
+      <div class="sec-title">Today's Calories</div>
+      <div class="cal-ring-section">
+        <div class="cal-ring-svg">
+          <svg viewBox="0 0 140 140" width="140" height="140">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="url(#calGrad)" stroke-width="14" stroke-linecap="round"
+              stroke-dasharray="${Math.round(calP*3.64)},364" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>
+            <defs><linearGradient id="calGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4f8ef7"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+            <text x="70" y="65" text-anchor="middle" fill="#f0f4ff" font-size="18" font-weight="700" font-family="Orbitron">${calP}%</text>
+            <text x="70" y="82" text-anchor="middle" fill="#8892b0" font-size="9">of daily goal</text>
+          </svg>
+        </div>
+        <div class="cal-ring-info">
+          <div style="font-size:2rem;font-weight:700;color:var(--amber);font-family:Orbitron">${log.cal_consumed||0}</div>
+          <div style="font-size:.8rem;color:var(--text2);margin-bottom:1.25rem">of ${log.cal_goal||2000} kcal goal</div>
+          <div class="macro-row"><div class="macro-label">Protein <span>${Math.round(log.protein||0)}g</span></div><div class="progress-bar"><div class="progress-fill green" style="width:${protP}%"></div></div></div>
+          <div class="macro-row"><div class="macro-label">Carbs <span>${Math.round(log.carbs||0)}g</span></div><div class="progress-bar"><div class="progress-fill amber" style="width:${carbP}%"></div></div></div>
+          <div class="macro-row"><div class="macro-label">Fat <span>${Math.round(log.fat||0)}g</span></div><div class="progress-bar"><div class="progress-fill red" style="width:${fatP}%"></div></div></div>
+          <div style="margin-top:.75rem;padding:.5rem .75rem;background:var(--bg3);border-radius:8px;display:flex;justify-content:space-between;font-size:.8rem">
+            <span style="color:var(--text2)">Remaining</span>
+            <span style="font-weight:700;color:${(log.cal_goal||2000)-(log.cal_consumed||0)>=0?'var(--green)':'var(--red)'}">
+              ${Math.abs((log.cal_goal||2000)-(log.cal_consumed||0))} kcal ${(log.cal_goal||2000)-(log.cal_consumed||0)>=0?'left':'over'}
+            </span>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.75rem" onclick="showCalGoalModal()">Change Cal Goal</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title">🤖 AI Calorie Estimator</div>
+      <p style="font-size:.8rem;color:var(--text2);margin-bottom:.75rem">Describe your meal and AI will estimate nutrition</p>
+      <div class="fg" style="margin-bottom:.75rem"><label>Describe your meal</label><textarea id="food-desc" placeholder="e.g. 2 idlis with sambar and coconut chutney, one banana, black coffee" rows="3"></textarea></div>
+      <button class="btn btn-accent" style="width:100%" id="ai-est-btn" onclick="aiEstimateCalories()">🤖 Estimate Calories</button>
+      <div id="ai-cal-result" style="margin-top:.75rem"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Log Food Manually</div>
+    <div class="food-row">
+      <div class="fg"><label>Food Name</label><input id="fn-name" type="text" placeholder="Chapati, Dal, Rice..."/></div>
+      <div class="fg"><label>Cal</label><input id="fn-cal" type="number" placeholder="250" min="0"/></div>
+      <div class="fg"><label>Protein(g)</label><input id="fn-prot" type="number" placeholder="8" min="0"/></div>
+      <div class="fg"><label>Carbs(g)</label><input id="fn-carb" type="number" placeholder="40" min="0"/></div>
+      <div class="fg"><label>Fat(g)</label><input id="fn-fat" type="number" placeholder="5" min="0"/></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" onclick="logFood()">Add</button></div>
+    </div>
+    <div class="food-items" id="food-list">
+      ${food.length === 0 ? '<p style="color:var(--text3);font-size:.8rem;text-align:center;padding:1rem">No food logged today</p>' :
+        food.map(f=>`<div class="food-item">
+          <span style="font-size:1.2rem">🍽️</span>
+          <div class="fi-name">${f.name}</div>
+          <div class="fi-macros"><span>P:${f.protein||0}g</span><span>C:${f.carbs||0}g</span><span>F:${f.fat||0}g</span></div>
+          <div class="fi-cal">${f.cal} kcal</div>
+          <button class="fi-del" onclick="deleteFood(${f.id})">✕</button>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  window.showCalGoalModal = () => showModal('Change Calorie Goal', `
+    <div class="fg" style="margin-bottom:1rem"><label>Daily Calorie Goal (kcal)</label><input id="m-calg" type="number" placeholder="2000" min="500"/></div>
+    <button class="btn btn-accent" style="width:100%" onclick="setCalGoal()">Set Goal</button>`);
+  window.setCalGoal = async () => {
+    const v = parseInt(el('m-calg')?.value||0);
+    if(v<500){ showNotif('Enter valid goal (min 500)','error'); return; }
+    await api('/api/health/goal','POST',{cal_goal:v});
+    closeModal(); showNotif('Calorie goal updated! 🎯','success'); renderPage('calories');
+  };
+}
+
+async function aiEstimateCalories(){
+  const desc = el('food-desc')?.value.trim();
+  if(!desc){ showNotif('Describe your meal first','error'); return; }
+  const btn = el('ai-est-btn'); if(btn) btn.disabled = true;
+  const res = el('ai-cal-result');
+  res.innerHTML = `<div style="text-align:center;padding:1rem"><div style="display:flex;align-items:center;justify-content:center;gap:.5rem;color:var(--text2)"><div class="spin" style="width:20px;height:20px"></div>Analyzing with AI...</div></div>`;
+  const data = await api('/api/ai/calories','POST',{description:desc});
+  if(btn) btn.disabled = false;
+  if(data.error){ res.innerHTML = `<p style="color:var(--red);font-size:.8rem;margin-top:.5rem">${data.error}</p>`; return; }
+  res.innerHTML = `
+  <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:1rem">
+    <div style="font-weight:700;font-size:.9rem;margin-bottom:.6rem;color:var(--cyan)">📊 Nutritional Breakdown</div>
+    ${(data.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--text2);margin-bottom:.3rem"><span>${i.name}</span><span style="color:var(--amber);font-weight:600">${i.calories} kcal</span></div>`).join('')}
+    <div style="border-top:1px solid var(--border2);margin-top:.5rem;padding-top:.5rem;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--amber)">${data.total_calories} kcal</span></div>
+    <div style="display:flex;gap:.75rem;margin-top:.5rem;font-size:.75rem;color:var(--text2)">
+      <span>P: <strong>${Math.round(data.total_protein||0)}g</strong></span>
+      <span>C: <strong>${Math.round(data.total_carbs||0)}g</strong></span>
+      <span>F: <strong>${Math.round(data.total_fat||0)}g</strong></span>
+    </div>
+    <button class="btn btn-accent btn-sm" style="width:100%;margin-top:.75rem" onclick="addAiFood(${JSON.stringify(data).replace(/"/g,'&quot;')})">+ Add to My Log</button>
+  </div>`;
+}
+
+async function addAiFood(data){
+  const desc = el('food-desc')?.value.trim() || 'AI Meal';
+  await api('/api/health/food','POST',{name:`AI: ${desc.slice(0,40)}`,cal:data.total_calories||0,protein:data.total_protein||0,carbs:data.total_carbs||0,fat:data.total_fat||0});
+  showNotif(`Added ${data.total_calories} kcal to your log! 🍽️`,'success');
+  renderPage('calories');
+}
+
+async function logFood(){
+  const name=el('fn-name')?.value.trim(),cal=parseInt(el('fn-cal')?.value||0);
+  if(!name||cal<1){ showNotif('Enter food name and calories','error'); return; }
+  await api('/api/health/food','POST',{name,cal,protein:parseFloat(el('fn-prot')?.value||0),carbs:parseFloat(el('fn-carb')?.value||0),fat:parseFloat(el('fn-fat')?.value||0)});
+  showNotif(`${name} logged! 🍽️`,'success'); renderPage('calories');
+}
+
+async function deleteFood(id){
+  await api(`/api/health/food/${id}`,'DELETE');
+  showNotif('Food removed','success'); renderPage('calories');
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXERCISES — AGE-BASED
+// ═══════════════════════════════════════════════════════════
+function getExerciseList(age){
+  const ALL = [
+    {id:'walk',name:'Morning Walk',icon:'🚶',duration:'30 min',cal:120,benefit:'Cardio & metabolism boost',minAge:0,maxAge:150,category:'cardio'},
+    {id:'yoga',name:'Yoga',icon:'🧘',duration:'40 min',cal:150,benefit:'Flexibility, stress relief',minAge:0,maxAge:150,category:'flexibility'},
+    {id:'breath',name:'Breathing Exercises',icon:'🌬️',duration:'15 min',cal:30,benefit:'Lung capacity, calm mind',minAge:0,maxAge:150,category:'mindfulness'},
+    {id:'stretch',name:'Light Stretching',icon:'🤸',duration:'20 min',cal:50,benefit:'Flexibility & joint health',minAge:0,maxAge:150,category:'flexibility'},
+    {id:'swim',name:'Swimming',icon:'🏊',duration:'30 min',cal:300,benefit:'Full body, low impact',minAge:12,maxAge:65,category:'cardio'},
+    {id:'cycle',name:'Cycling',icon:'🚴',duration:'30 min',cal:280,benefit:'Leg strength & cardio',minAge:12,maxAge:60,category:'cardio'},
+    {id:'pushup',name:'Push-ups',icon:'💪',duration:'3×15 reps',cal:60,benefit:'Upper body & core',minAge:15,maxAge:50,category:'strength'},
+    {id:'squat',name:'Squats',icon:'🏋️',duration:'3×20 reps',cal:80,benefit:'Lower body power',minAge:15,maxAge:55,category:'strength'},
+    {id:'plank',name:'Plank',icon:'🪨',duration:'3×45 sec',cal:40,benefit:'Core strength',minAge:15,maxAge:55,category:'strength'},
+    {id:'hiit',name:'HIIT Training',icon:'⚡',duration:'20 min',cal:350,benefit:'Fat burn, endurance',minAge:18,maxAge:40,category:'cardio'},
+    {id:'jog',name:'Jogging',icon:'🏃',duration:'25 min',cal:250,benefit:'Cardio & weight loss',minAge:15,maxAge:45,category:'cardio'},
+    {id:'chair',name:'Chair Exercises',icon:'🪑',duration:'20 min',cal:60,benefit:'Strength, safe for seniors',minAge:60,maxAge:150,category:'strength'},
+    {id:'meditate',name:'Meditation',icon:'🌟',duration:'20 min',cal:20,benefit:'Mental wellness & focus',minAge:0,maxAge:150,category:'mindfulness'},
+    {id:'dance',name:'Dance / Zumba',icon:'💃',duration:'30 min',cal:220,benefit:'Fun cardio, mood boost',minAge:12,maxAge:50,category:'cardio'},
+    {id:'weights',name:'Weight Training',icon:'🏋️',duration:'45 min',cal:320,benefit:'Muscle & bone density',minAge:18,maxAge:45,category:'strength'},
+  ];
+  return ALL.filter(e => age >= e.minAge && age <= e.maxAge);
+}
+
+async function renderExercise(pc){
+  const log = await api('/api/health/log');
+  const age = STATE.user.age || 25;
+  const EXERCISES = getExerciseList(age);
+  const exDone = Array.isArray(log.exercises) ? log.exercises : [];
+  const totalCal = exDone.reduce((a,id)=>{ const ex=EXERCISES.find(e=>e.id===id); return a+(ex?ex.cal:0); },0);
+  let ageNote = '';
+  if(age >= 65) ageNote = '⚠️ Exercises shown are specifically selected for your age group (65+). Focus on gentle movements, balance and breathing. Always consult your doctor before starting any new exercise routine.';
+  else if(age >= 51) ageNote = '💡 Exercises are tailored for ages 51–64. Low-impact, joint-friendly options are prioritized.';
+  else if(age < 15) ageNote = '👶 Gentle exercises shown for your age. Focus on fun and flexibility!';
+
+  pc.innerHTML = `
+  <div class="page-head"><h1>Exercise Dashboard</h1><p>Personalized for age ${age} • ${EXERCISES.length} exercises available</p></div>
+  ${ageNote ? `<div class="age-note show">${ageNote}</div>` : ''}
+  <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${exDone.length}</div><div class="stat-lbl">Completed</div></div>
+    <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">🔥</div><div class="stat-val" style="color:var(--amber)">${totalCal}</div><div class="stat-lbl">Kcal Burned</div></div>
+    <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">🎯</div><div class="stat-val" style="color:var(--accent)">${EXERCISES.length - exDone.length}</div><div class="stat-lbl">Remaining</div></div>
+  </div>
+  <div class="sec-title">Your Workout Plan</div>
+  <div class="ex-grid">
+    ${EXERCISES.map(ex=>{
+      const done = exDone.includes(ex.id);
+      return `<div class="ex-card ${done?'done':''}" onclick="toggleEx('${ex.id}')">
+        <span class="ex-icon">${ex.icon}</span>
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-dur">${ex.duration}</div>
+        <div class="ex-cal">🔥 ${ex.cal} kcal</div>
+        <div class="ex-benefit">${ex.benefit}</div>
+        <span class="ex-badge ${done?'done':'todo'}">${done?'✓ Completed':'Tap to complete'}</span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+async function toggleEx(exId){
+  await api('/api/health/exercise','POST',{exercise_id:exId});
+  const EXERCISES = getExerciseList(STATE.user.age);
+  const ex = EXERCISES.find(e=>e.id===exId);
+  if(ex) showNotif(`${ex.icon} ${ex.name} updated! 🔥`,'success');
+  renderPage('exercise');
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOSPITALS
+// ═══════════════════════════════════════════════════════════
+async function renderHospitals(pc){
+  if(STATE.hospitalDetail){ await renderHospitalDetail(pc, STATE.hospitalDetail); return; }
+  const hospitals = await api('/api/hospitals');
+  if(!hospitals.length){
+    pc.innerHTML = `<div class="page-head"><h1>Hospitals</h1></div><div class="empty-state"><span class="empty-icon">🏥</span><h3>No Hospitals Registered</h3><p>Hospitals can register via the Hospital signup page.</p></div>`;
+    return;
+  }
+  pc.innerHTML = `
+  <div class="page-head"><h1>Hospitals</h1><p>${hospitals.length} hospital${hospitals.length!==1?'s':''} available for appointments</p></div>
+  <div class="hospitals-grid">
+    ${hospitals.map((h,i)=>`
+    <div class="hosp-card" style="animation-delay:${i*0.07}s" onclick="viewHospital(${h.id})">
+      <div class="hosp-head">
+        <div class="hosp-logo">🏥</div>
+        <div>
+          <div class="hosp-name">${h.name}</div>
+          <div class="hosp-addr">📍 ${h.address}, ${h.city}</div>
+          <div style="font-size:.72rem;color:var(--text2);margin-top:.15rem">📞 ${h.phone||'—'}</div>
+        </div>
+      </div>
+      <div class="hosp-meta">
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--cyan)">${h.beds||'?'}</div><div class="hosp-meta-lbl">Beds</div></div>
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--green)">${(h.doctors||[]).length}</div><div class="hosp-meta-lbl">Doctors</div></div>
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--amber)">${h.established||'—'}</div><div class="hosp-meta-lbl">Est.</div></div>
+        <div class="hosp-meta-item"><div class="hosp-meta-val" style="color:var(--accent2)">${h.h_type||'—'}</div><div class="hosp-meta-lbl">Type</div></div>
+      </div>
+      ${h.services?.length ? `<div class="hosp-services">${h.services.slice(0,5).map(s=>`<span class="svc-tag">${s}</span>`).join('')}${h.services.length>5?`<span class="svc-tag">+${h.services.length-5} more</span>`:''}</div>` : ''}
+      ${h.description ? `<p style="font-size:.75rem;color:var(--text2);margin-top:.75rem;line-height:1.5">${h.description.slice(0,120)}${h.description.length>120?'…':''}</p>` : ''}
+      <div class="hosp-cta">View Doctors & Book →</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function viewHospital(hid){ STATE.hospitalDetail = hid; renderPage('hospitals'); }
+
+async function renderHospitalDetail(pc, hid){
+  const h = await api(`/api/hospitals/${hid}`);
+  const doctors = h.doctors || [];
+  pc.innerHTML = `
+  <div>
+    <div class="hosp-detail-header">
+      <button class="back-btn" onclick="STATE.hospitalDetail=null;renderPage('hospitals')">← Back</button>
+      <div><h2 style="font-size:1.2rem;font-weight:700">${h.name}</h2><p style="font-size:.8rem;color:var(--text2)">${h.address}, ${h.city} • ${h.phone}</p></div>
+    </div>
+    ${h.services?.length ? `<div class="card" style="margin-bottom:1.25rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>` : ''}
+    ${h.description ? `<div class="card" style="margin-bottom:1.25rem"><div class="sec-title">About</div><p style="font-size:.875rem;color:var(--text2);line-height:1.7">${h.description}</p></div>` : ''}
+    <div class="sec-title">Available Doctors</div>
+    ${doctors.length === 0 ? `<div class="empty-state"><span class="empty-icon">👨‍⚕️</span><p>No doctors listed yet</p></div>` :
+    `<div class="doctors-list">
+      ${doctors.map(d=>`
+      <div class="doc-card" id="doc-${h.id}-${d.name.replace(/\s/g,'_')}">
+        <div class="doc-av">${d.name.split(' ').slice(-1)[0][0] || 'D'}</div>
+        <div class="doc-info">
+          <div class="doc-name">${d.name}</div>
+          <div class="doc-spec">${d.specialization}</div>
+          <div class="doc-meta">${d.experience ? `${d.experience} yrs experience` : ''} ${d.fee ? `• ₹${d.fee} consultation` : ''}</div>
+          <div class="slots-wrap">
+            ${(d.slots||[]).map(slot=>`<div class="slot" onclick="selectSlot('${h.id}','${d.name}','${d.specialization}','${slot}','${d.fee||0}')">${slot}</div>`).join('')}
+          </div>
+          <div class="book-section" id="book-${h.id}-${d.name.replace(/\s/g,'_')}"></div>
+        </div>
+      </div>`).join('')}
+    </div>`}
+  </div>`;
+}
+
+let selSlot = {};
+function selectSlot(hid, dname, dspec, slot, fee){
+  document.querySelectorAll('.slot.sel').forEach(s=>s.classList.remove('sel'));
+  event.target.classList.add('sel');
+  selSlot = {hid, dname, dspec, slot, fee};
+  const bookId = `book-${hid}-${dname.replace(/\s/g,'_')}`;
+  const el2 = el(bookId);
+  if(el2) el2.innerHTML = `
+  <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.5rem">
+    <input type="date" id="book-date" style="padding:.4rem .7rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:.8rem" min="${new Date().toISOString().split('T')[0]}"/>
+    <button class="btn btn-accent btn-sm" onclick="bookAppointment()">Book ${slot}</button>
+  </div>`;
+}
+
+async function bookAppointment(){
+  const dateEl = el('book-date');
+  const dateVal = dateEl ? dateEl.value : '';
+  if(!dateVal){ showNotif('Please select a date','error'); return; }
+  const {hid, dname, dspec, slot, fee} = selSlot;
+  if(!hid){ showNotif('Select a slot first','error'); return; }
+  // Build reminder: appointment date at slot time - 1 hour
+  const slotTime = slot.replace(' AM','').replace(' PM','');
+  const reminder_at = dateVal + 'T' + (slot.includes('PM') && !slot.startsWith('12') ? (parseInt(slotTime.split(':')[0])+12) + ':' + slotTime.split(':')[1] : slotTime.split(':')[0].padStart(2,'0') + ':' + (slotTime.split(':')[1]||'00'));
+  const res = await api('/api/appointments','POST',{hospital_id:hid, doctor_name:dname, doctor_spec:dspec, slot_date:dateVal, slot_time:slot, fee:parseInt(fee||0), reminder_at});
+  if(res.error){ showNotif(res.error,'error'); return; }
+  showNotif(`✅ Appointment booked with ${dname} on ${fmtDate(dateVal)} at ${slot}!`,'success',6000);
+  selSlot = {};
+  STATE.hospitalDetail = null;
+  goTo('appointments');
+}
+
+// ═══════════════════════════════════════════════════════════
+// CHATBOT
+// ═══════════════════════════════════════════════════════════
+function renderChatbot(pc){
+  pc.innerHTML = `
+  <div class="page-head"><h1>AI Health Assistant</h1><p>MedCare AI — Always here for you</p></div>
+  <div class="chat-page card" style="padding:0;overflow:hidden">
+    <div class="chat-top">
+      <div class="bot-avatar-wrap">
+        <div class="bot-avatar" style="animation:botFloat 3s ease-in-out infinite">🤖</div>
+        <div class="bot-ring"></div>
+        <div class="bot-ring2"></div>
+      </div>
+      <div>
+        <div class="bot-name">MedCare AI</div>
+        <div class="bot-status"><span class="status-dot"></span> Online — Ready to help</div>
+        <div style="font-size:.72rem;color:var(--text3)">Age-aware health advice • Not a substitute for professional care</div>
+      </div>
+    </div>
+    <div class="quick-actions">
+      <button class="qa-btn" onclick="quickChat('I have a headache and fever since yesterday')">🤒 Headache & Fever</button>
+      <button class="qa-btn" onclick="quickChat('What exercises are safe for me at my age?')">🏃 Safe Exercises</button>
+      <button class="qa-btn" onclick="quickChat('I have back pain, what should I do?')">🦴 Back Pain</button>
+      <button class="qa-btn" onclick="quickChat('What are good foods to reduce weight?')">🥗 Diet Tips</button>
+      <button class="qa-btn" onclick="quickChat('I feel very stressed and anxious lately')">😰 Stress & Anxiety</button>
+      <button class="qa-btn" onclick="quickChat('My blood sugar is high. What should I eat?')">🩸 Blood Sugar</button>
+      <button class="qa-btn" onclick="quickChat('I have chest pain, what should I do?')">❤️ Chest Pain</button>
+    </div>
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="msg bot">
+        <div class="msg-bot-av">🤖</div>
+        <div>
+          <div class="msg-bubble">👋 Hi! I'm <strong>MedCare AI</strong> — your personal health assistant!\n\nI know you're ${STATE.user.age} years old, so I'll give you age-appropriate advice. Tell me:\n• Your symptoms\n• Health questions\n• Exercise guidance\n• Diet tips\n\n🏥 I'll suggest home remedies first, then recommend doctors if needed. What can I help you with today?</div>
+          <div class="msg-time">Just now</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-bottom">
+      <textarea class="chat-inp" id="chat-inp" placeholder="Describe symptoms or ask a health question…" rows="1" onkeydown="chatKey(event)"></textarea>
+      <button class="chat-send" id="chat-send-btn" onclick="sendChat()">➤</button>
+    </div>
+  </div>`;
+}
+
+function quickChat(msg){ const inp=el('chat-inp'); if(inp){inp.value=msg;} sendChat(); }
+function chatKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();} }
+
+async function sendChat(){
+  const inp = el('chat-inp'), btn = el('chat-send-btn'), msgs = el('chat-msgs');
+  if(!inp||!msgs) return;
+  const text = inp.value.trim(); if(!text) return;
+  inp.value = ''; btn.disabled = true;
+  const t = now();
+  msgs.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div><div class="msg-time">${t}</div></div>`;
+  const typId = 'typ-' + Date.now();
+  msgs.innerHTML += `<div class="msg bot" id="${typId}"><div class="msg-bot-av">🤖</div><div class="typing-bubble"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  STATE.chatHistory.push({role:'user',content:text});
+  const res = await api('/api/ai/chat','POST',{messages:STATE.chatHistory});
+  const reply = res.reply || 'I encountered an issue. Please try again.';
+  STATE.chatHistory.push({role:'assistant',content:reply});
+  el(typId)?.remove();
+  msgs.innerHTML += `<div class="msg bot"><div class="msg-bot-av">🤖</div><div><div class="msg-bubble">${reply.replace(/\n/g,'<br/>')}</div><div class="msg-time">${now()}</div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════════════════════
+// APPOINTMENTS
+// ═══════════════════════════════════════════════════════════
+async function renderAppointments(pc){
+  const appts = await api('/api/appointments/user');
+  pc.innerHTML = `
+  <div class="page-head"><h1>My Appointments</h1><p>Track and manage your bookings</p></div>
+  ${!appts.length ? `<div class="empty-state"><span class="empty-icon">📋</span><h3>No Appointments Yet</h3><p>Book appointments from the Hospitals section</p><button class="btn btn-accent" style="margin-top:1rem" onclick="goTo('hospitals')">Browse Hospitals →</button></div>` :
+  `<div style="display:flex;flex-direction:column;gap:1rem">
+    ${appts.map((a,i)=>`
+    <div class="appt-card" style="animation-delay:${i*0.06}s">
+      <div class="appt-top">
+        <div>
+          <div class="appt-doctor">${a.doctor_name}</div>
+          <div class="appt-spec">${a.doctor_spec || '—'}</div>
+          <div class="appt-hosp">🏥 ${a.hospital_name}</div>
+        </div>
+        <span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status==='pending'?'⏳ Pending':a.status==='accepted'?'✅ Confirmed':a.status==='rejected'?'❌ Rejected':'🚫 Cancelled'}</span>
+      </div>
+      <div class="appt-grid">
+        <div><div class="appt-field">Date</div><div class="appt-val">${fmtDate(a.slot_date)}</div></div>
+        <div><div class="appt-field">Time</div><div class="appt-val">${a.slot_time}</div></div>
+        <div><div class="appt-field">Fee</div><div class="appt-val">₹${a.fee||0}</div></div>
+      </div>
+      ${a.reminder_at ? `<div class="appt-reminder">⏰ Reminder set for ${fmtDate(a.slot_date)} • ${a.slot_time}</div>` : ''}
+      <div class="appt-actions">
+        ${a.status==='pending'||a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="cancelAppt(${a.id})">Cancel</button>`:''}
+        <span style="font-size:.72rem;color:var(--text3)">Booked ${fmtDate(a.created_at)}</span>
+      </div>
+    </div>`).join('')}
+  </div>`}`;
+}
+
+async function cancelAppt(id){
+  if(!confirm('Cancel this appointment?')) return;
+  await api(`/api/appointments/${id}/status`,'PUT',{status:'cancelled'});
+  showNotif('Appointment cancelled','success');
+  renderPage('appointments');
+}
+
+// ═══════════════════════════════════════════════════════════
+// REMINDERS
+// ═══════════════════════════════════════════════════════════
+async function renderReminders(pc){
+  const rems = await api('/api/reminders');
+  pc.innerHTML = `
+  <div class="page-head"><h1>Medication Reminders</h1><p>Never miss a dose — alarm will fire at the set time</p></div>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="sec-title">Add New Reminder</div>
+    <div class="form-row cols2" style="margin-bottom:.75rem">
+      <div class="fg"><label>Medication Name *</label><input id="rem-name" type="text" placeholder="e.g. Metformin 500mg"/></div>
+      <div class="fg"><label>Time *</label><input id="rem-time" type="time"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Frequency</label><select id="rem-freq"><option>Daily</option><option>Twice Daily</option><option>Three times Daily</option><option>Weekly</option><option>As Needed</option></select></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-accent" style="width:100%" onclick="addReminder()">+ Set Alarm</button></div>
+    </div>
+  </div>
+  <div class="sec-title">Active Reminders</div>
+  ${!rems.length ? `<div class="empty-state"><span class="empty-icon">💊</span><h3>No Reminders</h3><p>Add medications above — you'll get an alarm notification at the set time</p></div>` :
+  `<div class="reminder-list">
+    ${rems.map(r=>`
+    <div class="rem-card">
+      <div class="rem-icon">💊</div>
+      <div class="rem-info">
+        <div class="rem-name">${r.name}</div>
+        <div class="rem-time">⏰ ${r.time_str} • ${r.frequency}</div>
+      </div>
+      <span class="badge rem-badge rem-active">Active</span>
+      <button class="btn btn-danger btn-sm" onclick="deleteReminder(${r.id})">Remove</button>
+    </div>`).join('')}
+  </div>`}`;
+}
+
+async function addReminder(){
+  const name = el('rem-name')?.value.trim(), time = el('rem-time')?.value, freq = el('rem-freq')?.value;
+  if(!name||!time){ showNotif('Enter medication name and time','error'); return; }
+  await api('/api/reminders','POST',{name, time_str:time, frequency:freq||'Daily'});
+  showNotif(`Reminder set for ${name} at ${time}! ⏰ You'll get an alarm notification.`,'success',5000);
+  renderPage('reminders');
+}
+
+async function deleteReminder(id){
+  await api(`/api/reminders/${id}`,'DELETE');
+  showNotif('Reminder removed','success');
+  renderPage('reminders');
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOSPITAL PORTAL
+// ═══════════════════════════════════════════════════════════
+const HOSP_PAGES = [
+  {id:'hdash', icon:'📊', label:'Dashboard'},
+  {id:'happts', icon:'📅', label:'Appointments'},
+  {id:'hprofile', icon:'⚙️', label:'Hospital Profile'},
+];
+
+function renderHospitalPortal(){
+  document.title = 'MedCare Hospital Portal';
+  const u = STATE.user, h = STATE.hospital;
+  const initials = u.name ? u.name.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2) : 'H';
+  if(!STATE.page || !HOSP_PAGES.find(p=>p.id===STATE.page)) STATE.page = 'hdash';
+  el('app').innerHTML = `
+  <div class="mob-header">
+    <span class="mob-logo">MEDCARE</span>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+  <div class="app-shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sb-logo"><div class="li">🏥</div><h2>HOSPITAL</h2></div>
+      <div class="nav-group">
+        <div class="nav-label">Portal</div>
+        ${HOSP_PAGES.map(p=>`<button class="nav-btn ${STATE.page===p.id?'active':''}" onclick="hGoTo('${p.id}')"><span class="ni">${p.icon}</span><span>${p.label}</span></button>`).join('')}
+      </div>
+      <div class="sb-footer">
+        <div class="user-chip">
+          <div class="uc-av" style="background:linear-gradient(135deg,var(--accent),var(--cyan))">${initials}</div>
+          <div class="uc-info"><div class="uc-name">${h?.name||u.name}</div><div class="uc-role">${h?.h_type||'Hospital'}</div></div>
+          <button class="logout-btn" onclick="logout()">⏏</button>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content"><div class="content-inner" id="page-content"></div></main>
+  </div>`;
+  hGoTo(STATE.page);
+}
+
+function hGoTo(page){
+  STATE.page = page;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.getAttribute('onclick')===`hGoTo('${page}')`));
+  closeSidebar();
+  hRenderPage(page);
+}
+
+async function hRenderPage(page){
+  const pc = el('page-content');
+  if(!pc) return;
+  pc.innerHTML = `<div class="loading"><div class="spin"></div> Loading…</div>`;
+  if(page==='hdash') await renderHDash(pc);
+  if(page==='happts') await renderHAppts(pc);
+  if(page==='hprofile') await renderHProfile(pc);
+}
+
+async function renderHDash(pc){
+  const appts = await api('/api/appointments/hospital');
+  const h = STATE.hospital;
+  const pending = appts.filter(a=>a.status==='pending').length;
+  const accepted = appts.filter(a=>a.status==='accepted').length;
+  const rejected = appts.filter(a=>a.status==='rejected'||a.status==='cancelled').length;
+  pc.innerHTML = `
+  <div class="page-head"><h1>Hospital Dashboard</h1><p>${h?.name} • ${h?.city}, ${h?.state}</p></div>
+  <div class="hosp-portal-stats">
+    <div class="stat-card amber"><div class="stat-icon-wrap" style="background:rgba(255,184,48,0.12)">⏳</div><div class="stat-val" style="color:var(--amber)">${pending}</div><div class="stat-lbl">Pending</div></div>
+    <div class="stat-card green"><div class="stat-icon-wrap" style="background:rgba(0,229,160,0.12)">✅</div><div class="stat-val" style="color:var(--green)">${accepted}</div><div class="stat-lbl">Confirmed</div></div>
+    <div class="stat-card red"><div class="stat-icon-wrap" style="background:rgba(255,77,109,0.12)">❌</div><div class="stat-val" style="color:var(--red)">${rejected}</div><div class="stat-lbl">Rejected</div></div>
+    <div class="stat-card blue"><div class="stat-icon-wrap" style="background:rgba(79,142,247,0.12)">📋</div><div class="stat-val" style="color:var(--accent)">${appts.length}</div><div class="stat-lbl">Total</div></div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Recent Appointments</div>
+    ${appts.length===0?`<div class="empty-state" style="padding:2rem"><span class="empty-icon">📭</span><p>No appointments yet</p></div>`:
+    `<div style="overflow-x:auto"><table class="appts-table">
+      <thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Fee</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        ${appts.slice(0,10).map(a=>`<tr>
+          <td style="font-weight:600">${a.user_name}</td>
+          <td><div style="font-weight:500">${a.doctor_name}</div><div style="font-size:.72rem;color:var(--text3)">${a.doctor_spec||''}</div></td>
+          <td>${fmtDate(a.slot_date)}</td>
+          <td>${a.slot_time}</td>
+          <td>₹${a.fee||0}</td>
+          <td><span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span></td>
+          <td>
+            ${a.status==='pending'?`<div style="display:flex;gap:.4rem"><button class="btn btn-success btn-sm" onclick="hUpdateAppt(${a.id},'accepted')">Accept</button><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Reject</button></div>`:
+            a.status==='accepted'?`<button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button>`:'—'}
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`}
+  </div>`;
+}
+
+async function renderHAppts(pc){
+  const appts = await api('/api/appointments/hospital');
+  pc.innerHTML = `
+  <div class="page-head"><h1>Manage Appointments</h1><p>Accept or reject patient bookings</p></div>
+  ${appts.length===0?`<div class="empty-state"><span class="empty-icon">📭</span><h3>No Appointments</h3><p>Appointments booked by patients will appear here</p></div>`:
+  `<div style="display:flex;flex-direction:column;gap:1rem">
+    ${appts.map((a,i)=>`
+    <div class="appt-card" style="animation-delay:${i*0.05}s">
+      <div class="appt-top">
+        <div>
+          <div class="appt-doctor">${a.user_name}</div>
+          <div class="appt-spec">Dr: ${a.doctor_name} — ${a.doctor_spec||''}</div>
+          <div class="appt-hosp">📞 Booked ${fmtDate(a.created_at)}</div>
+        </div>
+        <span class="badge ${a.status==='pending'?'b-amber':a.status==='accepted'?'b-green':a.status==='rejected'?'b-red':'b-purple'}">${a.status}</span>
+      </div>
+      <div class="appt-grid">
+        <div><div class="appt-field">Date</div><div class="appt-val">${fmtDate(a.slot_date)}</div></div>
+        <div><div class="appt-field">Time</div><div class="appt-val">${a.slot_time}</div></div>
+        <div><div class="appt-field">Fee</div><div class="appt-val">₹${a.fee||0}</div></div>
+      </div>
+      ${a.status==='pending'?`<div class="appt-actions">
+        <button class="btn btn-success" onclick="hUpdateAppt(${a.id},'accepted')">✅ Accept Appointment</button>
+        <button class="btn btn-danger" onclick="hUpdateAppt(${a.id},'rejected')">❌ Reject</button>
+      </div>`:
+      a.status==='accepted'?`<div class="appt-actions"><button class="btn btn-danger btn-sm" onclick="hUpdateAppt(${a.id},'rejected')">Cancel</button></div>`:''}
+    </div>`).join('')}
+  </div>`}`;
+}
+
+async function hUpdateAppt(id, status){
+  await api(`/api/appointments/${id}/status`,'PUT',{status});
+  showNotif(`Appointment ${status}! ${status==='accepted'?'✅':'❌'}`,'success');
+  hRenderPage(STATE.page);
+}
+
+async function renderHProfile(pc){
+  const h = STATE.hospital;
+  const doctors = h?.doctors || [];
+  pc.innerHTML = `
+  <div class="page-head"><h1>Hospital Profile</h1><p>View and update your hospital information</p></div>
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="sec-title">Basic Info</div>
+    <div class="g2">
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Hospital Name</div><div style="font-weight:700">${h?.name||'—'}</div></div>
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Registration No.</div><div style="font-weight:700">${h?.reg_number||'—'}</div></div>
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Address</div><div style="font-weight:700">${h?.address||'—'}, ${h?.city}, ${h?.state} ${h?.pincode||''}</div></div>
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Type / Beds</div><div style="font-weight:700">${h?.h_type} • ${h?.beds} beds</div></div>
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Phone</div><div style="font-weight:700">${h?.phone||'—'}</div></div>
+      <div><div style="font-size:.72rem;color:var(--text2);margin-bottom:.25rem">Established</div><div style="font-weight:700">${h?.established||'—'}</div></div>
+    </div>
+    ${h?.description?`<div style="margin-top:1rem;padding:1rem;background:var(--bg3);border-radius:10px;font-size:.85rem;color:var(--text2);line-height:1.7">${h.description}</div>`:''}
+  </div>
+  ${h?.services?.length?`<div class="card" style="margin-bottom:1.25rem"><div class="sec-title">Services</div><div class="hosp-services">${h.services.map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div></div>`:''}
+  <div class="card">
+    <div class="sec-title">Doctors (${doctors.length})</div>
+    ${doctors.length===0?`<p style="color:var(--text3);font-size:.85rem">No doctors added yet.</p>`:
+    doctors.map(d=>`<div class="doc-card" style="margin-bottom:.75rem">
+      <div class="doc-av">${(d.name||'D').split(' ').slice(-1)[0][0]}</div>
+      <div class="doc-info">
+        <div class="doc-name">${d.name}</div>
+        <div class="doc-spec">${d.specialization}</div>
+        <div class="doc-meta">${d.experience||0} yrs • ₹${d.fee||0}</div>
+        <div class="slots-wrap">${(d.slots||[]).map(s=>`<span class="slot">${s}</span>`).join('')}</div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════
+function showModal(title, body){
+  const div = document.createElement('div');
+  div.className = 'modal-overlay';
+  div.id = 'modal-overlay';
+  div.innerHTML = `
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">${title}</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    ${body}
+  </div>`;
+  div.onclick = e => { if(e.target===div) closeModal(); };
+  document.body.appendChild(div);
+}
+function closeModal(){ el('modal-overlay')?.remove(); }
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+async function init(){
+  try {
+    const res = await api('/api/me');
+    if(res.user){ STATE.user = res.user; STATE.hospital = res.hospital||null; startAlarmCheck(); }
+  } catch(e){ /* not logged in */ }
+  render();
+}
+init();
+</script>
 </body>
 </html>
